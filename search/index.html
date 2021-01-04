@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>搜索 | 周闖的博客</title>
+    <meta property="og:title" content="搜索 - 周闖的博客">
+    <meta property="og:type" content="article">
+        
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,博客,项目管理,python,公众号">
+    <meta name="description" content="搜索页面">
+        
+    <meta name="author" content="周闖">
+    <meta property="og:url" content="https://aszhou.cn/search/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-4031353640611810",
+        enable_page_level_ads: true
+    });
+    </script>
+    
+
+
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://aszhou.cn">
+                        周闖的博客
+                    </a>
+                
+                <p class="description">Golang</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="" href="https://aszhou.cn">首页</a>
+                    
+                    <a  href="https://aszhou.cn/tools/" title="随笔">随笔</a>
+                    
+                    <a  href="https://aszhou.cn/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://aszhou.cn/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <h3 class="archive-title">
+        搜索
+        <span class="keyword">哈哈</span>
+        的结果
+    </h3>
+
+    <article class="post">
+        <header>
+            <h1 class="post-title">
+                <a href="链接">标题</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年12月01日
+        </date>
+        <div class="post-content">
+            概要……
+            <p class="readmore"><a href="链接">阅读全文</a></p>
+        </div>
+    </article>
+
+</div>
+
+<script type="text/javascript">
+
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+    };
+
+    $(document).ready(function () {
+        var q = getUrlParameter("q");
+        $("span.keyword").text(q);
+        $("article.post").remove();
+        $.ajax({
+            url: 'https:\/\/aszhou.cn\/index.xml',
+            dataType: "xml",
+            success: function (data) {
+                $(data).find("item").each(function () {
+                    var item = $(this);
+                    var title = item.find("title").text();
+                    if (title.toLowerCase().indexOf(q.toLowerCase()) >= 0) {
+                        var url = item.find("link").text();
+                        var searchItem = `<article class="post"><header><h1 class="post-title"><a href="` + url + `">` + title + `</a></h1></header>`;
+                        var pubDate = new Date(item.find("pubDate").text())
+                        searchItem += `<date class="post-meta meta-date">` + pubDate.getFullYear() + `年` + (pubDate.getMonth() + 1) + `月` + pubDate.getDate() + `日</date>`;
+                        searchItem += `<div class="post-content">` + item.find("description").text() + `……<p class="readmore"><a href="` + url + `">阅读全文</a></p></div></article>`;
+
+                        $("div.res-cons").append(searchItem);
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://aszhou.cn/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://aszhou.cn">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://aszhou.cn/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/" title="哈希映射和集合练习">哈希映射和集合练习</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhou.cn/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/" title="栈和队列练习题">栈和队列练习题</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhou.cn/post/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/" title="数组、链表练习题">数组、链表练习题</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhou.cn/post/%E9%80%92%E5%BD%92/" title="递归">递归</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhou.cn/post/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" title="动态规划">动态规划</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhou.cn/post/%E6%8E%A5%E9%9B%A8%E6%B0%B4/" title="接雨水">接雨水</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li><a href="https://aszhou.cn/categories/%E7%AE%97%E6%B3%95/">算法 (6)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://aszhou.cn/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
+    
+    <a href="https://aszhou.cn/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">双指针</a>
+    
+    <a href="https://aszhou.cn/tags/%E5%93%88%E5%B8%8C/">哈希</a>
+    
+    <a href="https://aszhou.cn/tags/%E6%95%B0%E7%BB%84/">数组</a>
+    
+    <a href="https://aszhou.cn/tags/%E6%A0%88/">栈</a>
+    
+    <a href="https://aszhou.cn/tags/%E9%80%92%E5%BD%92/">递归</a>
+    
+    <a href="https://aszhou.cn/tags/%E9%93%BE%E8%A1%A8/">链表</a>
+    
+    <a href="https://aszhou.cn/tags/%E9%98%9F%E5%88%97/">队列</a>
+    
+    <a href="https://aszhou.cn/tags/%E9%9B%86%E5%90%88/">集合</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Andrew_ZhouC" title="我的CSDN博客">我的CSDN博客</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://github.com/aszhc" title="我的github">我的github</a>
+        </li>
+        
+    </ul>
+</section>
+
+	
+	<section class="widget">
+        <h3 class="widget-title">公众号</h3>
+		<ul class="widget-list">
+        <li>
+            
+                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJ%0AChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/%0A2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgo%0AKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABkAGQDASIAAhEBAxEB/8QA%0AHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUF%0ABAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkK%0AFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1%0Adnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXG%0Ax8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEB%0AAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAEC%0AAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRom%0AJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOE%0AhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU%0A1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6jvLqCytJ%0Arq8mjgtoEaSWWVgqRqBksxPAAHJJrmf+FkeB/wDocfDn/gzh/wDiqX4tf8kr%0A8Y/9ga8/9EPXzJ4h1rwv4C8B+AZJfAOgaxdarpKXE89zGFcsAuSTtOSc0AfT%0A9r8QfBt1cxW9r4s8PzTyuI4449RhZnYnAUANkknjFaE/ibQrddRafWtNiXTS%0Aq3pe6RRaljhRJk/JntnGa+Wmm0DxB4O8A+J9J8K6VoF7J4ytbN/sUYBKLk4L%0AYBwTg49hR8Vvhb8T9V8deLpvDlhM2g6xcI8iJfwxpcqgG3chcHg5xkUAfWwu%0AoDaC6E0ZtinmiXcNmzGd2emMc5rP0LxLoXiAzDQdZ03UzBt837HdJN5ec43b%0AScZwcZ9DXzl4E12bS7o2mg+LNS8aX9vamHUtC1APDBZW67RNIrP8rmMgIFXJ%0AIY4zWu0sOn6XqnjzwJptvovhXSkW6tWsMQpr6j5WSdOHQRuGA3LzuJFAHuVn%0A4s8O32qS6bZa9pVxqMJcSWsV3G8qbfvZQHIx3yOKdoXinQPEEssWha3pepyR%0AKGkWzu45igPQkKTgV87/ALLuu+F9d1TxC17BbQ+MtU1C7vIcQM0kdtIqEqJd%0AuMBi3BIPtzWbo/jbSPgX49PgoaRZS29vJFHe6+ylbiSKQCUlkQEnYJMAc8KK%0AAPrKsCTxn4Xi0qLU5fEejJps0hijumvYhE7jqofdgng8ZrhPFHxD8KeLPhvq%0A2oaN4yvdIsLWeGKbVLS1mEkLFlIULtDHd04HevKr7R/DS/D34X6ZoOpHX9Cn%0A8YRRvNcWzRCUM5DoUYA45I96APoP/hZPgf8A6HHw5/4M4f8A4qtHQ/FvhzXr%0At7XQ9f0nUrlEMrRWl5HM6oCAWIUk4yQM+4r5M+IHj/wn4V8a6zocXwu8MXEd%0AhcNAsrIFLgdyNvFepfD/AErTNJ/aSuI9E021021m8IpcGC2jCIGaeIk4H4fl%0AQB75RRRQBzHxRgmuvhp4st7WKSaeXSbuOOONSzOxhYAADkkntXzVcN4e8Q+E%0AfCmm+L/APxHlvdEsFsw9lp+xCcDcRk5IyOOBX1N4u1g+H/Cms6yIPtB06ymu%0AxCW2+Z5aFtucHGcYzg188+JvG/jrxppmmXGgS3PhbW72DztI0eCZLj+14jhn%0Ak80hVi2ICcNyelAGQ72kuneC/DHhDwX43sbSy8T22pyzarYEKq5KsdwJx1B5%0AGMA810/i3xF4l8UeIvHmi38X2zwXoc8EV5ZabCx1KZX5TySOCQ6gtkj5Qa5a%0A1+J/i7w1CPD3xF1O50XWtOP9ri5d1nbUkH3bIiMERh+f3mTjb0rM8ZN430/Q%0A5Pil4N1C5sdO8SD7ZqcEJjxZ7WEcSlmOZMlm5CjHegDufFF3puo+Jmi+G00M%0AfiiHw1tuZrx1e2SwUkPCwTLC5DFM5GMZya8b+Hfw7TxD4bija4mv9R1lTHp6%0A2EzPFpjqzBmvlA/dq/BXAOcGqfhHWNX+FvjW4uvFOmkz69pjIWedQViuHB8/%0A5Q2fuMdvB+lepeBCnwdTS5/BL/8ACdDxqxiteP7P2G3JHG/dnJkI5242980A%0Ad7oPiLXvDdjYTnQLtvD+iQJol5bxaeTe3N1GoU3EPQNbEY+YkHg8VB8YbbQ/%0AidoXiG2stM1S8udCs3vLHULRA1reymPhI5Fz5pB+UqOhBFN8N+OvF+jadrGm%0A+JNGk1DxleXst9ZaFLeIpTTmAGRMAUwpVxg4Y46VwFv458S6vpHgTSvB2jv4%0AE8O6pqLWtteWt2t0JN0hDjyyAww2484zQB1ng3WPGekeGfD3giRNIh8Tapp8%0ANxpJmtmEFvbxRjcl0CN3m4UjhSM964Twsl5H8Ffh1qNlpmoamumeK/ts8Nhb%0AtNJ5cbFjgD6YGcDJFeieHfFXgXwj4lupPHHj4eIPE+mzSWsV1cadNE9oBlJI%0AhtDKRnPNebeHrLxBoGntbeDviFeL4YuN0WiXEVkEXUdRb/l1CMd0ZLcb2+Wg%0ADS8TWHgTxJ4gv9Y1L4e/FI3l7KZpfLsQq7j6DdxXffDC+uPEHx6u9bh8Pa/p%0AGlx+GhYRtqtmYSXSeI4zyCce+eDV7xXdfFSH4W6JpeiaPc3Pia5tE+3aiL2F%0AJLSVXUkbTw+4BhkHAzWr8NLTVtG8cy6V4j+IV1r2qHS/tL6RNY+UIVLoPN8w%0AEqcHK4/2s0Aes0UUUAZviYTnw7qgs/sX2r7LL5X27/j337Djzf8AYz972zXz%0A9440JT4dTxN8W9RtrNtJjWPTI/Btx5bNDIyq2BIOeSv3SBtzX0Tqun2uraXd%0A6dqEQms7uF4J4ySN6MCrDI5GQT0rwvxp8JdE1Zf+EW1XxHbx6lcfL4Zia3bd%0Ap1rGQzxKA4835Vxuc5HWgDgfBvxL8a/EHVJY7fR/A0aQwkre61ZyKrqrBQnm%0Abjl/mzj2Ndf8Vdf/ALG8M+F7mS3i1PxVZxTeVY6LH5+kFiyBhPGDuxtOU/2g%0AT2rkvBuivqX7NZ06DwtN4nuf7ZuUhjhnMRtpPKZVuOPvbSfung7q0bHwv4i+%0AH/hPwhLol1L4NS+glbxPqckC3CwuhAgMiuSBksyjbj73OcUAcR+0ZdT6v8SP%0ADd5pltHeXUeiWkslvbRmRUcSSEoVXJABIGPeulsvDvi6K6XxzrOh3beIGIn0%0AXSdNjItrKVBscXELkGNWAVgEbJO4nFJ8NvsWifEqx0zwZdp4k1W6mN9qfiK1%0AHlgWbHElu0Jyo+cRvvBB+YDpXrkVi88m8JvB5Py5rzcwzD6ny+7e524TCLEc%0AzcrWOXh+FOk6x4gsb/V7jxjB4gv7IX1xcxXUa2ltK+We3yQXUBicJzwRzRZW%0AlnZ+IJNG8aaTrS69r6rZfaNFtx/ZNqTgLJas3zRsFK72xnduOOlV9a8U3Oie%0ANtPsAmnvotz+5kZ2AeObJ4Bz/u8Y711ut6zr9j4Q1mTwbptze6zMqwwrAVzC%0AzBsSgMCDt44PWjD491ZRi425vMdfBeyi5J7HkNl4JtviH8Qb6w8Q32maf4d8%0AL3M+jmSOdYL66EZYJK5YFZHJA3Nxnniq3ivxDqfxF+GEVo+n2/h3WNAml1iV%0AvIayt5I0RsLAcktMcg446daX4d+FYPiN8T7V9d8GTxQWQnt/Ec73LkXF/tYt%0AIwXb5ZL87V4GawfHWteIvEniQWE+uH4heGtC2atdm3t0tUMS/wCtBKDco2kq%0ATk9c4r0jhPQNJ+K/ivwT8KdHhvre11HWNTtI5dB8mKSfdEjDzftOWDbtpONu%0Aeete4eHL291Pxmt4snhyXTJNKXc0BzfrPuUsrdhEBnjrnFeAeFvHFj4a0WTx%0Af4k0MxNYBT4O0uW6KMtrJ+7mWOQL84CsCS4J44xXsvgH4X6X4d8ey+MdCK2d%0ApqGl+Q2nBWfEjukjSeYzHP3QMYFAHqNFFFAGJ441afQfBevavaJG9xp9hPdx%0ALKCUZo42YBsEHGRzgivAtU8Q+KfjL4RsZPA+n6ZDqsECLqGoSK9tcWkzEMVt%0AZd2QjBWU9cg4717z8QJrK38CeIptWtmu9Oj064e5t0coZYhGxdAw5BIyM+9f%0ALfgv4qeONG8X6JaWmiatL4OuI5G0nRI7VDLLarG3lhJSm9wnyktk5C8mgDZu%0AvG2peGPEVp4c+ItnF4a0/TjHqsbeE4nT7RKDgJNyQ0bLuLDAJIXmuK1r466l%0AF4w8Vf2Na2uvaBq88bw2msxSTJGqDgJHvAXJOSMfwg9q7a68feL/AIpapc2+%0AlaoPB/hK/gOnq2p20UkdzcMdjQLIVzvYMSADn5TitvSvhf4X+FviPwLrOpeI%0ANJ0u+sluTevczsn9oMU2gxh2wu3fzgDqKANXwT8PToeo2M9gttaaRNANae6R%0A1S8a6cc2nAGbXHOzGdwHPFYVt8RNRudGXTrPyYpbmHzPtsLr2+9lc/KBggZ5%0A5HFZHivxZoWp6/H8XL/TpbzStPn/AOEft7SObEn2hC0ouQwO0ptYjac9c1ye%0AheD9M1Cyg1a01HXbfRZNzJqF5om2CJNxB3yiXYMEEE9M1yYnD+1akt0dOHqx%0AinGezOT8SO1z4qhtIpWb7ECXlDlhv5YkHvzxmvqnwF4t0y0k/wBId99xdW9i%0AoRCf3khYLn06HmvAdW8AaJ4e8RWtrqHjxLWe/sxqMVxJYKIJImJ2ncZsHO04%0AHeu40uTR9J+Dl74nk8QJPd3Ba70WW5hFqRdW28JtjLtvYPk4OQeOKn6tJVIS%0AW0b/AImk68JQkur/AEOl+JGgLq3xu8O6FpOo6jodjqNpc3F/Jok32ZpZl3Nu%0AkKjBYkclgTXjPxR8YeJ/CviC10vUfDHhfRbi1ljuZl0i2aOO9jIz5E5DYkiY%0AfeQ9a9CsX8TQa94LsPA2sRaJqPjHSf7c1a5lt0nWe7Me95Nrg7M8/KmFGelc%0A3DF4m+JfgfRvEHj3xTZX2kR6iTBoptkgnv5Y8gwRPGFJeQblUDu1dpxEXwp+%0AJ3hdDrt58StIininmjfT7ddP8+2s48HckKvkRrnbwPSvbPgZ4M1fRJLrV/Ee%0Au6nc3t0siwWEl+ZraO2ZkaNwh5VxjHXABIqj4ih8PeJ/gHqHh2xvrTwzBaxW%0A0NxBfz7jphEyMsc2TkMduOecmuE/ZguvE3iP4pal4h17zb2yi0iTTIdRW3VI%0AX2TQlUBUAE4yfXFAH1PRRRQBynxa/wCSV+Mf+wNef+iHr5ej8A6hpfhzwR4y%0Av/F2vWnh2LTRJc38VwTLpnmKFSOBQd21mZVO0dDzX1b8QHsYvAfiN9Xilm01%0AdNuGuooW2u8QibeFPYlc4r5w1a88KeMNB8PxS/C/4iXem6baCCwltrZyrQnG%0ADuU4boOaAOX+Bdsdcsm0rRry41bU3ndpdPuyRDpsBZV/tGAt8ouVJGMfN8xr%0ArviHdrqXw1+Img6zBFql74MNpb2esXg827k86UF2LtkqSFA4PI60xrjwWfDu%0AieC9X+HvjnStGutXjNvLfRtAouZMoMuxGeCxwPQ+lV/Enw81T4da5faVZaNq%0AeveAfEb5vLLSreS4uo0hGYw0mPlJd89eQpoA4bxJ4v1TWPg3pbweEdE07wxZ%0A6xCry2uFNxdJCch4++5Ty2O2K9h8I+LIvGfgO28M+JNJsfC2keKI3tdDXSk3%0ACQq7ed8g4jw23qBncaq+OPgx4H0HwbFqlh4T8Uald3IVEs7J5JZoWdGYM6Do%0AFIAPuRXP+Etf+JHws8GeErnVdPuJfCamdrqyi01hc2cayEnzmZRs3FsqSelA%0AHYat4f8AG7xw6bJ8MfCet22m2406yv8AUJYXme3jyqMdxypI+bHYk1lTWmpe%0AAfhV8PvC+seEND13W7q/uLVLTUgkscbvK7KVblQSGGTmsT4teKPEOrePtE8Z%0A/DGxutUiOgpbzy2dqbxLZ3aRnhkKBlWRVdcqTkZHrXnnwX8HaLqdpqmpeN9O%0A1GSyNvu0pInaFtQnDENFbk4Er8Y2rk5oA9N+Nfiy/wDh546+Hmtpo9jDfWmi%0ANE+nIcQQMwKNGu3+FckDHHAr0nwn8NbnUtPu7vxFaQaDPPC8VppNhsa20yb+%0AG8twOEn77hgg968q8JeBpPCfjOxg0BH0/wAW63HJqGiPfBimn2hUloLlCMmU%0AJleAcN3rO+E3w48K638P9B1XWtB13Vr7U9Uawkk0532Wy7sCWQD7qDu1AHYa%0Az4H+Idn4jtk03w1p2saJal0uvtt5GBruR8k14hb946n5gWBIIBrS/ZHufEA0%0AfUrOfSbSDw8t1cut1HKN4ud0YMQTP3Quecdq5z4Z6Bo//CY/ED4aS6JrNz4f%0AvtQjjN3BuMVqsIaRRLL/AAlmUAep4ra/ZJ8WWEf9reBoLa4F1azXN+Jjgx+W%0AHjjC9c7uR2oA+j6KKKAOU+LX/JK/GP8A2Brz/wBEPXy58T/GfiPwr8PfhdF4%0Ad1m806OfRFaVYH2hyAmCfzr6z8caTPr3gvX9Is3iS51DT7i1iaUkIryRsoLE%0AAnGTzgGvHtF8GfGHSdC03SYrj4fT2unwLbwG5jnkYIowMkx+1AHA6br+q+JP%0AhP8ADy/12/nv7z/hOraPzpm3NtAbAz+NdPqnxp/4Qfxh8TINXvZL66t7m2XR%0A9NmLhGGD5oVgpCYDA84zjitfUvAHxR8Q3nh6LxBd+C49L0vVrfUzHp4njcmM%0A84zHgnaT6c45rvfiR8JvDPxCnsptdjuY5bXfta0dYy+/bncdpz90Y/GgDg/H%0A+oeIH8Y+HdbvfEt/4Y8G3lhagSW375Jb53LeQY1+f5k/jI2/L1rvtc8deBtQ%0A8Rz+A9YvY7jVLllt5NPktZWVyyhwpbZs5BB61kfG/wCHGo+NPh3pnhzw3c2l%0AvLY3UMqSXsjKPLjjdOqqx3fMO3rXnni74EeK9X8B+CtLs9R0ePWtH+1G8u3n%0AlHmmSQMm1xGWbAGOQMdqAOS8OeE/F2kfFzVvBcOtX3hLRr5rvVbZLN0lVoN7%0AKjbVbjKoBg4IC9K0/Ctl4Vtvh/4mPhnxrc+JJfD+nS32nRTWEluNNm+ZhNEX%0AA+Yt6V73c6H4jsPA2i2nh59GPiSztre1lub4O8bKigSYYLuOcHGQOvNZ978H%0AvDF145/4So/bYb8yRSNBDKEt38tVABj28g7RkZ55oA8+8K6JFquj+HYdY8b3%0A58e69p8Wo6Zftas89nCYw8saOPl2kbgckE56Vwf/AAgPxW8CfCtb/TNW1Kwk%0AtZJ57zS4rmER20CqztMGDkMTj7oyeelem/H74ReI/HuvaLfeFr7TLCOwtWty%0AJ5pImGWz8uxG4xx2p2ofCfxTBrHhzTdD1SwbwXpWpwai8d9cSteS4YGVGITa%0AykZAUkD1oA8b0PxPrfgv4U+KdS1jU7mx8S+Kmtb3SLkPvkulSQea+5chPlY8%0APtJzxmvpHwDZeBtH8Tpp+i2Vna+LZdKW8ufKt3V3gdk3MXxtOX28Zz7Vx3jn%0A4e/EfWPiDYa7pVx4OWy0gzJplvdLNxFIu0iRRGQTj0PWtr4d+CfG1n8Urvxd%0A43u/D8xl0k6aiaWZRj96jqdroBjCt39OKAPXqKKKACiiigAooooAKKKKACii%0AigAooooAKKKKACiiigD/2Q==">
+           
+        </li>
+    </ul>
+    </section>
+	
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://aszhou.cn/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+    <div class="container">
+        &copy; 2021 <a href="https://aszhou.cn">周闖的博客 By 周闖</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank"></a>         备案号 | 辽ICP备18005500号-2	</a>.
+        
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+</body>
+
+</html>

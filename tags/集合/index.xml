@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>集合 on 周闖的博客</title>
+    <link>https://aszhou.cn/tags/%E9%9B%86%E5%90%88/</link>
+    <description>Recent content in 集合 on 周闖的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 09 May 2020 18:19:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://aszhou.cn/tags/%E9%9B%86%E5%90%88/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>哈希映射和集合练习</title>
+      <link>https://aszhou.cn/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/</link>
+      <pubDate>Sat, 09 May 2020 18:19:00 +0800</pubDate>
+      
+      <guid>https://aszhou.cn/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/</guid>
+      <description>哈希映射和集合练习 1. 有效的字母异位词 给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。 示例 1: 输入: s = &amp;quot;anagram&amp;quot;, t = &amp;quot;nagaram&amp;quot; 输出: true 示例 2: 输</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title> | 周闖的博客</title>
+    <meta property="og:title" content=" - 周闖的博客">
+    <meta property="og:type" content="article">
+        
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,博客,项目管理,python,公众号">
+    <meta name="description" content="">
+        
+    <meta name="author" content="周闖">
+    <meta property="og:url" content="https://aszhou.cn/post/backtrack/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-4031353640611810",
+        enable_page_level_ads: true
+    });
+    </script>
+    
+
+
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://aszhou.cn">
+                        周闖的博客
+                    </a>
+                
+                <p class="description">Python、Go语言</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://aszhou.cn">首页</a>
+                    
+                    <a  href="https://aszhou.cn/tools/" title="工具">工具</a>
+                    
+                    <a  href="https://aszhou.cn/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://aszhou.cn/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title"></h1>
+        </header>
+        <date class="post-meta meta-date">
+            1年1月1日
+        </date>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="post-content">
+            <h1 id="回溯算法">回溯算法</h1>
+<p><strong>解决一个回溯问题，实际上就是一个决策树的遍历过程</strong>。你只需要思考 3 个问题：</p>
+<ol>
+<li><strong>路径</strong>：也就是做出的选择</li>
+<li><strong>选择列表</strong>：当前可以做的选择</li>
+<li><strong>结束条件</strong>：到达决策树的底层，无法在做选择的条件</li>
+</ol>
+<p>回溯算法的框架：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">result <span style="color:#000;font-weight:bold">=</span> []
+<span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">backtrack</span>(<span style="color:#a61717;background-color:#e3d2d2">路径</span>, <span style="color:#a61717;background-color:#e3d2d2">选择列表</span>):
+    <span style="color:#000;font-weight:bold">if</span> <span style="color:#a61717;background-color:#e3d2d2">满足结束条件</span>:
+        result<span style="color:#000;font-weight:bold">.</span>add(<span style="color:#a61717;background-color:#e3d2d2">路径</span>)
+ 		<span style="color:#000;font-weight:bold">return</span>
+   	
+    <span style="color:#000;font-weight:bold">for</span> <span style="color:#a61717;background-color:#e3d2d2">选择</span> <span style="color:#000;font-weight:bold">in</span> <span style="color:#a61717;background-color:#e3d2d2">选择列表</span>:
+        <span style="color:#a61717;background-color:#e3d2d2">做选择</span>
+        backtrack(<span style="color:#a61717;background-color:#e3d2d2">路径</span>, <span style="color:#a61717;background-color:#e3d2d2">选择列表</span>)
+        <span style="color:#a61717;background-color:#e3d2d2">撤销选择</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://pic.leetcode-cn.com/0bf18f9b86a2542d1f6aa8db6cc45475fce5aa329a07ca02a9357c2ead81eec1-image.png" alt=""></p>
+<h4 id="全排列">全排列</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>(<span style="color:#0086b3">object</span>):
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">permute</span>(<span style="color:#999">self</span>, nums):
+        <span style="color:#d14">&#34;&#34;&#34;
+</span><span style="color:#d14">        :type nums: List[int]
+</span><span style="color:#d14">        :rtype: List[List[int]]
+</span><span style="color:#d14">        &#34;&#34;&#34;</span>
+        res <span style="color:#000;font-weight:bold">=</span> []
+        list_one <span style="color:#000;font-weight:bold">=</span> []
+
+        <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">backtrack</span>(nums, list_one):
+            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">not</span> nums:
+                res<span style="color:#000;font-weight:bold">.</span>append(list_one[:])
+                <span style="color:#000;font-weight:bold">return</span>
+            <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#0086b3">len</span>(nums)):
+                list_one<span style="color:#000;font-weight:bold">.</span>append(nums[i])
+                backtrack(nums[:i] <span style="color:#000;font-weight:bold">+</span> nums[i<span style="color:#000;font-weight:bold">+</span><span style="color:#099">1</span>:], list_one)
+                list_one<span style="color:#000;font-weight:bold">.</span>pop()
+        backtrack(nums, list_one)
+        <span style="color:#000;font-weight:bold">return</span> res
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="全排列ii">全排列II</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>(<span style="color:#0086b3">object</span>):
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">permuteUnique</span>(<span style="color:#999">self</span>, nums):
+        <span style="color:#d14">&#34;&#34;&#34;
+</span><span style="color:#d14">        :type nums: List[int]
+</span><span style="color:#d14">        :rtype: List[List[int]]
+</span><span style="color:#d14">        &#34;&#34;&#34;</span>
+        nums<span style="color:#000;font-weight:bold">.</span>sort()
+        res <span style="color:#000;font-weight:bold">=</span> []
+        list_one <span style="color:#000;font-weight:bold">=</span> []
+
+        <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">backtrack</span>(nums, list_one):
+            <span style="color:#000;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">not</span> nums:
+                res<span style="color:#000;font-weight:bold">.</span>append(list_one[:])  <span style="color:#998;font-style:italic"># 切记 [:]</span>
+                <span style="color:#000;font-weight:bold">return</span>
+            <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#0086b3">len</span>(nums)):
+                <span style="color:#000;font-weight:bold">if</span> i <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#099">0</span> <span style="color:#000;font-weight:bold">and</span> nums[i] <span style="color:#000;font-weight:bold">==</span> nums[i<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>]:   <span style="color:#998;font-style:italic">#　隐含是ｉ&gt; 0</span>
+                    <span style="color:#000;font-weight:bold">continue</span>  <span style="color:#998;font-style:italic"># 避免重复。</span>
+                list_one<span style="color:#000;font-weight:bold">.</span>append(nums[i])
+                backtrack(nums[:i] <span style="color:#000;font-weight:bold">+</span> nums[i<span style="color:#000;font-weight:bold">+</span><span style="color:#099">1</span>:], list_one)
+                list_one<span style="color:#000;font-weight:bold">.</span>pop()
+
+        backtrack(nums, list_one)
+        <span style="color:#000;font-weight:bold">return</span> res
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="二进制手表">二进制手表</h4>
+<p><strong>直接遍历方法</strong>：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">readBinaryWatch</span>(<span style="color:#999">self</span>, num: <span style="color:#0086b3">int</span>) <span style="color:#000;font-weight:bold">-&gt;</span> List[<span style="color:#0086b3">str</span>]:
+
+    list1 <span style="color:#000;font-weight:bold">=</span> []
+    
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">count1</span>(n):
+        res <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>
+        <span style="color:#000;font-weight:bold">while</span> n<span style="color:#000;font-weight:bold">!=</span><span style="color:#099">0</span>:
+            n<span style="color:#000;font-weight:bold">=</span>n<span style="color:#000;font-weight:bold">&amp;</span>(n<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>)
+            res<span style="color:#000;font-weight:bold">+=</span><span style="color:#099">1</span>
+        
+        <span style="color:#000;font-weight:bold">return</span> res
+    
+    <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">12</span>):
+        <span style="color:#000;font-weight:bold">for</span> j <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">60</span>):
+            <span style="color:#000;font-weight:bold">if</span> (count1(i)<span style="color:#000;font-weight:bold">+</span>count1(j))<span style="color:#000;font-weight:bold">==</span>num:
+                <span style="color:#000;font-weight:bold">if</span> j<span style="color:#000;font-weight:bold">&lt;</span><span style="color:#099">10</span>:
+                    s <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">str</span>(i)<span style="color:#000;font-weight:bold">+</span><span style="color:#d14">&#39;:0&#39;</span><span style="color:#000;font-weight:bold">+</span><span style="color:#0086b3">str</span>(j)
+                <span style="color:#000;font-weight:bold">else</span>:
+                    s <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">str</span>(i)<span style="color:#000;font-weight:bold">+</span><span style="color:#d14">&#39;:&#39;</span><span style="color:#000;font-weight:bold">+</span><span style="color:#0086b3">str</span>(j)
+                list1<span style="color:#000;font-weight:bold">.</span>append(s)
+    
+    <span style="color:#000;font-weight:bold">return</span> list1
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>优化后：</strong></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>:
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">readBinaryWatch</span>(<span style="color:#999">self</span>, num: <span style="color:#0086b3">int</span>) <span style="color:#000;font-weight:bold">-&gt;</span> List[<span style="color:#0086b3">str</span>]:
+        <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">count_one</span>(tmp):
+            res <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>
+            <span style="color:#000;font-weight:bold">while</span> tmp <span style="color:#000;font-weight:bold">!=</span> <span style="color:#099">0</span>:
+                res <span style="color:#000;font-weight:bold">+=</span> <span style="color:#099">1</span>
+                tmp <span style="color:#000;font-weight:bold">&amp;=</span> (tmp <span style="color:#000;font-weight:bold">-</span> <span style="color:#099">1</span>)
+            <span style="color:#000;font-weight:bold">return</span> res
+        
+        dic <span style="color:#000;font-weight:bold">=</span> { i: count_one(i) <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">60</span>)}
+        
+        res <span style="color:#000;font-weight:bold">=</span> []
+        <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">12</span>):
+            <span style="color:#000;font-weight:bold">for</span> j <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">60</span>):
+                <span style="color:#000;font-weight:bold">if</span> dic[i] <span style="color:#000;font-weight:bold">+</span> dic[j] <span style="color:#000;font-weight:bold">==</span> num:
+                    hour <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">str</span>(i)
+                    minute <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">str</span>(j) <span style="color:#000;font-weight:bold">if</span> j <span style="color:#000;font-weight:bold">&gt;</span> <span style="color:#099">9</span> <span style="color:#000;font-weight:bold">else</span> <span style="color:#d14">&#39;0&#39;</span> <span style="color:#000;font-weight:bold">+</span> <span style="color:#0086b3">str</span>(j)
+                    res<span style="color:#000;font-weight:bold">.</span>append(hour <span style="color:#000;font-weight:bold">+</span> <span style="color:#d14">&#34;:&#34;</span> <span style="color:#000;font-weight:bold">+</span> minute)
+        
+        <span style="color:#000;font-weight:bold">return</span> res
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>回溯：</strong></p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">readBinaryWatch</span>(<span style="color:#999">self</span>, num: <span style="color:#0086b3">int</span>) <span style="color:#000;font-weight:bold">-&gt;</span> List[<span style="color:#0086b3">str</span>]:
+        hour <span style="color:#000;font-weight:bold">=</span> [<span style="color:#099">1</span>, <span style="color:#099">2</span>, <span style="color:#099">4</span>, <span style="color:#099">8</span>]
+        minute <span style="color:#000;font-weight:bold">=</span> [<span style="color:#099">1</span>, <span style="color:#099">2</span>, <span style="color:#099">4</span>, <span style="color:#099">8</span>, <span style="color:#099">16</span>, <span style="color:#099">32</span>]
+        h_len, m_len <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">len</span>(hour), <span style="color:#0086b3">len</span>(minute)
+        res <span style="color:#000;font-weight:bold">=</span> []
+        
+        <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">time</span>(combination, led,  start):
+            <span style="color:#000;font-weight:bold">if</span> led <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>:
+                <span style="color:#000;font-weight:bold">if</span> combination[<span style="color:#099">1</span>] <span style="color:#000;font-weight:bold">&lt;</span> <span style="color:#099">10</span>:
+                    res<span style="color:#000;font-weight:bold">.</span>append(<span style="color:#0086b3">str</span>(combination[<span style="color:#099">0</span>]) <span style="color:#000;font-weight:bold">+</span> <span style="color:#d14">&#39;:0&#39;</span> <span style="color:#000;font-weight:bold">+</span> <span style="color:#0086b3">str</span>(combination[<span style="color:#099">1</span>]))
+                <span style="color:#000;font-weight:bold">else</span>:
+                    res<span style="color:#000;font-weight:bold">.</span>append(<span style="color:#0086b3">str</span>(combination[<span style="color:#099">0</span>]) <span style="color:#000;font-weight:bold">+</span> <span style="color:#d14">&#39;:&#39;</span> <span style="color:#000;font-weight:bold">+</span> <span style="color:#0086b3">str</span>(combination[<span style="color:#099">1</span>]))
+            <span style="color:#000;font-weight:bold">else</span>:
+                <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(start, h_len <span style="color:#000;font-weight:bold">+</span> m_len):
+                    <span style="color:#000;font-weight:bold">if</span> i <span style="color:#000;font-weight:bold">&lt;</span> h_len:
+                        combination[<span style="color:#099">0</span>] <span style="color:#000;font-weight:bold">+=</span> hour[i]
+                        <span style="color:#000;font-weight:bold">if</span> combination[<span style="color:#099">0</span>] <span style="color:#000;font-weight:bold">&lt;</span> <span style="color:#099">12</span>:
+                            time(combination, led <span style="color:#000;font-weight:bold">-</span> <span style="color:#099">1</span>, i <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">1</span>)
+                        combination[<span style="color:#099">0</span>] <span style="color:#000;font-weight:bold">-=</span> hour[i]
+                    <span style="color:#000;font-weight:bold">else</span>:
+                        combination[<span style="color:#099">1</span>] <span style="color:#000;font-weight:bold">+=</span> minute[i <span style="color:#000;font-weight:bold">-</span> h_len]
+                        <span style="color:#000;font-weight:bold">if</span> combination[<span style="color:#099">1</span>] <span style="color:#000;font-weight:bold">&lt;</span> <span style="color:#099">60</span>:
+                            time(combination, led <span style="color:#000;font-weight:bold">-</span> <span style="color:#099">1</span>, i <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">1</span>)
+                        combination[<span style="color:#099">1</span>] <span style="color:#000;font-weight:bold">-=</span> minute[i <span style="color:#000;font-weight:bold">-</span> h_len]
+        
+        cur <span style="color:#000;font-weight:bold">=</span> [<span style="color:#099">0</span>] <span style="color:#000;font-weight:bold">*</span> <span style="color:#099">2</span>
+        time(cur, num, <span style="color:#099">0</span>)
+        <span style="color:#000;font-weight:bold">return</span> res
+</code></pre></td></tr></table>
+</div>
+</div>
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/example/">Example</a></li>
+        
+        <li><a href="/tools/new/">New</a></li>
+        
+        <li><a href="/about/">About</a></li>
+        
+        <li><a href="/post/%E6%8E%A5%E9%9B%A8%E6%B0%B4/">接雨水</a></li>
+        
+        <li><a href="/archives/">归档</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            没有标签
+            
+        </div>
+    </article>
+    
+    <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "yourdiscussshortname" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "your github repo"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://aszhou.cn/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://aszhou.cn">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://aszhou.cn/post/example/" title="Example">Example</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhou.cn/post/%E6%8E%A5%E9%9B%A8%E6%B0%B4/" title="接雨水">接雨水</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhou.cn/post/backtrack/" title=""></a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li><a href="https://aszhou.cn/categories/cat1/">cat1 (1)</a></li>
+    
+    <li><a href="https://aszhou.cn/categories/cat2/">cat2 (1)</a></li>
+    
+    <li><a href="https://aszhou.cn/categories/%E7%AE%97%E6%B3%95/">算法 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://aszhou.cn/tags/tag1/">tag1</a>
+    
+    <a href="https://aszhou.cn/tags/tag2/">tag2</a>
+    
+    <a href="https://aszhou.cn/tags/tag3/">tag3</a>
+    
+    <a href="https://aszhou.cn/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">双指针</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Andrew_ZhouC" title="我的CSDN博客">我的CSDN博客</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://github.com/zhouchuang1998" title="我的github">我的github</a>
+        </li>
+        
+    </ul>
+</section>
+
+	
+	<section class="widget">
+        <h3 class="widget-title">公众号</h3>
+		<ul class="widget-list">
+        <li>
+            
+                <img src="https://ae01.alicdn.com/kf/Hfa1fd7b6ee034203aaa5f06d965016b3B.png">
+           
+        </li>
+    </ul>
+    </section>
+	
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://aszhou.cn/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+    <div class="container">
+        &copy; 2020 <a href="https://aszhou.cn">周闖的博客 By 周闖</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank">Theme</a> based on <a href="https://github.com/flysnow-org/maupassant-hugo" target="_blank">maupassant</a>.
+        
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+</body>
+
+</html>

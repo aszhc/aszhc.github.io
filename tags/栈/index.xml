@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>栈 on 周闖的博客</title>
+    <link>https://aszhou.cn/tags/%E6%A0%88/</link>
+    <description>Recent content in 栈 on 周闖的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 05 May 2020 17:32:15 +0800</lastBuildDate>
+    
+	<atom:link href="https://aszhou.cn/tags/%E6%A0%88/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>栈和队列练习题</title>
+      <link>https://aszhou.cn/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/</link>
+      <pubDate>Tue, 05 May 2020 17:32:15 +0800</pubDate>
+      
+      <guid>https://aszhou.cn/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/</guid>
+      <description>栈和队列的练习题 1. 有效的括号 给定一个只包括 &amp;lsquo;(&#39;，&#39;)&#39;，&#39;{&#39;，&#39;}&#39;，&#39;[&#39;，&#39;]&amp;rsquo; 的字符串，判断字符串是否有效</description>
+    </item>
+    
+  </channel>
+</rss>

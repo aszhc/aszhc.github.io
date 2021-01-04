@@ -1,0 +1,936 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>动态规划 | 周闖的博客</title>
+    <meta property="og:title" content="动态规划 - 周闖的博客">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2020-02-01T12:56:21&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2020-02-01T12:56:21&#43;08:00'>
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,博客,项目管理,python,公众号">
+    <meta name="description" content="动态规划">
+        
+    <meta name="author" content="周闖">
+    <meta property="og:url" content="https://aszhou.cn/post/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-4031353640611810",
+        enable_page_level_ads: true
+    });
+    </script>
+    
+
+
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://aszhou.cn">
+                        周闖的博客
+                    </a>
+                
+                <p class="description">Golang</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://aszhou.cn">首页</a>
+                    
+                    <a  href="https://aszhou.cn/tools/" title="随笔">随笔</a>
+                    
+                    <a  href="https://aszhou.cn/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://aszhou.cn/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-基本思想与策略">1. 基本思想与策略</a>
+      <ul>
+        <li><a href="#分治与动态规划">分治与动态规划</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-使用的情况">2. 使用的情况</a></li>
+    <li><a href="#3-求解的基本步骤">3. 求解的基本步骤</a></li>
+    <li><a href="#4-举例">4. 举例</a>
+      <ul>
+        <li><a href="#例１斐波那契数列">例１：斐波那契数列</a></li>
+        <li><a href="#例2凑零钱问题">例2：凑零钱问题</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-leetcode">5. LeetCode</a>
+      <ul>
+        <li><a href="#64-最小路径和httpsleetcode-cncomproblemsminimum-path-sum"><a href="https://leetcode-cn.com/problems/minimum-path-sum/">64. 最小路径和</a></a></li>
+        <li><a href="#70-爬楼梯httpsleetcode-cncomproblemsclimbing-stairs"><a href="https://leetcode-cn.com/problems/climbing-stairs/">70. 爬楼梯</a></a></li>
+        <li><a href="#121-买卖股票的最佳时机httpsleetcode-cncomproblemsbest-time-to-buy-and-sell-stock"><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/">121. 买卖股票的最佳时机</a></a></li>
+        <li><a href="#198-打家劫舍httpsleetcode-cncomproblemshouse-robber"><a href="https://leetcode-cn.com/problems/house-robber/">198. 打家劫舍</a></a></li>
+      </ul>
+    </li>
+    <li><a href="#6参考资料">6.参考资料</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">动态规划</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2020年2月1日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://aszhou.cn/categories/%E7%AE%97%E6%B3%95'>算法</a></span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="post-content">
+            <h1 id="动态规划入门">动态规划入门</h1>
+<blockquote>
+<p>动态规划(Dynamic programming, 简称DP), 通过把原问题分解为相对简单的子问题的方式求解复杂问题的方法。</p>
+<p>DP常常适用于有重叠子问题和最优子结构性质的问题,动态规划方法所消耗的时间往往远小于朴素解法。</p>
+</blockquote>
+<h2 id="1-基本思想与策略">1. 基本思想与策略</h2>
+<p>基本思想与分治法类似，也是将待求解的问题分解为若干个子问题（阶段），按顺序求解子阶段，前一子问题的解，为后一子问题的求解提供了有用的信息。在求解任一子问题时，列出各种可能的局部解，通过决策保留那些有可能达到最优的局部解，丢弃其他局部解。依次解决各子问题，最后一个子问题就是初始问题的解。</p>
+<p>由于动态规划解决的问题多数有重叠子问题这个特点，为减少重复计算，对每一个子问题只解一次，将其不同阶段的不同状态保存在一个二维数组中。</p>
+<p><em>一言以蔽之</em>：<strong>大事化小，小事化了。</strong></p>
+<h3 id="分治与动态规划">分治与动态规划</h3>
+<p><strong>共同点</strong>：两者都要求原问题具有最优子结构性质，都是将原问题分而治之，分解成若干个规模较小的子问题，然后将子问题的解合并，最终得到答案。</p>
+<p><strong>不同点</strong>：分治法将分解后的子问题看成相互独立的，通常用递归来做。动态规划将分解后的子问题理解为相互间有联系，有重叠部分，需要记忆，通常用迭代来做。</p>
+<h2 id="2-使用的情况">2. 使用的情况</h2>
+<p>能采用动态规划求解的问题通常要具备３个性质：</p>
+<ol>
+<li>最优化原理：如果问题的最优解所包含的子问题的解也是最优的，就称该问题具有最优子结构，即满足最优化原理</li>
+<li>无后效性：即某阶段状态一旦确定，就不受这个状态以后决策的影响。也就是说，某状态以后的过程不会影响以前的状态，只与当前状态有关。</li>
+<li>有重叠子问题：即子问题之间是不独立的，一个子问题在下一阶段决策中可能被多次使用到。（该性质并不是动态规划适用的必要条件，但是如果没有这条性质，动态规划算法同其他算法相比就不具备优势）</li>
+</ol>
+<h2 id="3-求解的基本步骤">3. 求解的基本步骤</h2>
+<p>动态规划的设计都有一定的模式，一般要经历一下几个步骤。</p>
+<p><code>初始状态--&gt;|决策１|--&gt;|决策２|--&gt;...--&gt;|决策Ｎ|--&gt;结束状态</code></p>
+<ol>
+<li>
+<p><strong>划分阶段</strong>：按照问题的时间或空间特征，把问题分为若干个阶段。在划分阶段时，注意划分后的阶段一定要是有序的或者是可排序的，否则问题就无法求解。</p>
+</li>
+<li>
+<p><strong>确定状态和状态变量</strong>：将问题发展到各个阶段时所处于的各种客观情况用不同的状态表示出来。当然，状态的选择要满足无后效性。</p>
+</li>
+<li>
+<p><strong>确定决策并写出状态转移方程</strong>：因为决策和状态转移有着天然的联系，状态转移就是根据上一阶段的状态和决策来导出本阶段的状态。所以如果确定了决策，状态转移方程也就可写出。但事实上常常是反过来做，根据相邻两个阶段的状态之间的关系来确定决策方法和状态转移方程。</p>
+</li>
+<li>
+<p><strong>寻找边界条件</strong>：给出的状态转移方程是一个递推式，需要一个递推的终止条件或边界条件。</p>
+<p>一般，只要解决问题的阶段、状态和状态转移决策确定了，就可以写出状态转移方程（包括边界条件）。</p>
+</li>
+</ol>
+<p>实际应用中可以按以下几个简化的步骤进行设计：</p>
+<p>（1）分析最优解的性质，并刻画其结构特征。</p>
+<p>（2）递归的定义最优解。</p>
+<p>（3）以自底向上或自顶向下的记忆化方式（备忘录法）计算出最优值</p>
+<p>（4）根据计算最优值时得到的信息，构造问题的最优解</p>
+<p>参考流程：</p>
+<p><strong>递归的暴力解法 -&gt; 带备忘录的递归解法 -&gt; 非递归的动态规划解法</strong></p>
+<h2 id="4-举例">4. 举例</h2>
+<h3 id="例１斐波那契数列">例１：斐波那契数列</h3>
+<h4 id="暴力的递归算法">暴力的递归算法</h4>
+<p>时间复杂度:O(2^n)</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>:
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">fib</span>(<span style="color:#999">self</span>, N: <span style="color:#0086b3">int</span>):
+        <span style="color:#000;font-weight:bold">if</span> N <span style="color:#000;font-weight:bold">&lt;=</span> <span style="color:#099">1</span>:
+            <span style="color:#000;font-weight:bold">return</span> N
+        <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>fib(N<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>) <span style="color:#000;font-weight:bold">+</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>fib(N<span style="color:#000;font-weight:bold">-</span><span style="color:#099">2</span>)
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMuZ2l0ZWUuY29tL3VwbG9hZHMvaW1hZ2VzLzIwMjAvMDEzMS8xMzM4NTNfYThhYjBlZDRfNDc5ODIyNS5wbmc?x-oss-process=image/format,png" alt="递归树"></p>
+<p>观察递归树，很明显发现算法低效的原因：存在大量重复计算，如Ｆ(18）被计算了两遍。</p>
+<h4 id="带备忘录的递归算法">带备忘录的递归算法</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>:
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">fib</span>(<span style="color:#999">self</span>, N: <span style="color:#0086b3">int</span>) <span style="color:#000;font-weight:bold">-&gt;</span> <span style="color:#0086b3">int</span>:
+        <span style="color:#000;font-weight:bold">if</span> N <span style="color:#000;font-weight:bold">&lt;=</span> <span style="color:#099">1</span>:
+            <span style="color:#000;font-weight:bold">return</span> N
+        <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>cache <span style="color:#000;font-weight:bold">=</span> {<span style="color:#099">0</span>: <span style="color:#099">0</span>, <span style="color:#099">1</span>: <span style="color:#099">1</span>}
+        <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>memoize(N)
+
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">memoize</span>(<span style="color:#999">self</span>, N: <span style="color:#0086b3">int</span>) <span style="color:#000;font-weight:bold">-&gt;</span> {}:
+        <span style="color:#000;font-weight:bold">if</span> N <span style="color:#000;font-weight:bold">in</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>cache<span style="color:#000;font-weight:bold">.</span>keys():
+            <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>cache[N]
+        <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>cache[N] <span style="color:#000;font-weight:bold">=</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>memoize(N<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>) <span style="color:#000;font-weight:bold">+</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>memoize(N<span style="color:#000;font-weight:bold">-</span><span style="color:#099">2</span>)
+        <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>memoize(N)
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMuZ2l0ZWUuY29tL3VwbG9hZHMvaW1hZ2VzLzIwMjAvMDEzMS8xNDEzMDdfM2UzNjUwYWVfNDc5ODIyNS5wbmc?x-oss-process=image/format,png" alt="带备忘录"></p>
+<h4 id="动态规划的递归算法">动态规划的递归算法</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution2</span>:  <span style="color:#998;font-style:italic"># 动态规划</span>
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">fib</span>(<span style="color:#999">self</span>, N: <span style="color:#0086b3">int</span>) <span style="color:#000;font-weight:bold">-&gt;</span> <span style="color:#0086b3">int</span>:
+        <span style="color:#000;font-weight:bold">if</span> N <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>:
+            <span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>
+        a, b <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>, <span style="color:#099">1</span>
+        <span style="color:#000;font-weight:bold">for</span> _ <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">2</span>, N<span style="color:#000;font-weight:bold">+</span><span style="color:#099">1</span>):
+            a, b <span style="color:#000;font-weight:bold">=</span> b, a<span style="color:#000;font-weight:bold">+</span>b
+        <span style="color:#000;font-weight:bold">return</span> b
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="动态转移方程">动态转移方程</h4>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAxOS84LzE1LzE2Yzk1YWJkZDM5MTRlNWU?x-oss-process=image/format,png" alt="斐波那契数的动态转移方程"></p>
+<p><strong>DP问题最困难的就是写出状态转移方程，即这个暴力解</strong>。优化方法无非是用备忘录或者 DP table，再无奥妙可言。</p>
+<h3 id="例2凑零钱问题">例2：凑零钱问题</h3>
+<blockquote>
+<p>给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。</p>
+<p>示例 1:</p>
+<p>输入: coins = [1, 2, 5], amount = 11
+输出: 3
+解释: 11 = 5 + 5 + 1
+示例 2:</p>
+<p>输入: coins = [2], amount = 3
+输出: -1</p>
+<p>说明:
+你可以认为每种硬币的数量是无限的。</p>
+<p>来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/coin-change</p>
+</blockquote>
+<h4 id="状态转移方程">状态转移方程</h4>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9waWMubGVldGNvZGUtY24uY29tLzk4YTY0MWNkMTQ2MWYwMjZiYTQ5ZDRjODU5YjIwOWEwOTYyY2ZhYTJhOTU4YWU3NmM4ZmM0N2NhMzI3YTQ4NGYtZmlsZV8xNTYwMjM5MzE2MDQ4?x-oss-process=image/format,png" alt="状态转移方程"></p>
+<h4 id="递归方法">递归方法</h4>
+<p>根据状态转移方程写代码：</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>(<span style="color:#0086b3">object</span>):
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">coinChange</span>(<span style="color:#999">self</span>, coins, amount):
+        <span style="color:#d14">&#34;&#34;&#34;
+</span><span style="color:#d14">        :type coins: List[int]
+</span><span style="color:#d14">        :type amount: int
+</span><span style="color:#d14">        :rtype: int
+</span><span style="color:#d14">        &#34;&#34;&#34;</span>
+        <span style="color:#000;font-weight:bold">if</span> amount <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>:
+            <span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>
+        ans <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">float</span>(<span style="color:#d14">&#39;inf&#39;</span>)
+        <span style="color:#000;font-weight:bold">for</span> coin <span style="color:#000;font-weight:bold">in</span> coins:
+            <span style="color:#998;font-style:italic"># 金额不可达</span>
+            <span style="color:#000;font-weight:bold">if</span> amount <span style="color:#000;font-weight:bold">-</span> coin <span style="color:#000;font-weight:bold">&lt;</span> <span style="color:#099">0</span>:
+                <span style="color:#000;font-weight:bold">continue</span>
+            subProb <span style="color:#000;font-weight:bold">=</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>coinChange(coins, amount <span style="color:#000;font-weight:bold">-</span> coin)
+            <span style="color:#998;font-style:italic"># 子问题无解</span>
+            <span style="color:#000;font-weight:bold">if</span> subProb <span style="color:#000;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>:
+                <span style="color:#000;font-weight:bold">continue</span>
+            ans <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">min</span>(ans, subProb <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">1</span>)
+        <span style="color:#000;font-weight:bold">return</span> ans <span style="color:#000;font-weight:bold">if</span> ans <span style="color:#000;font-weight:bold">!=</span> <span style="color:#0086b3">float</span>(<span style="color:#d14">&#39;inf&#39;</span>) <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="带备忘录的递归算法-1">带备忘录的递归算法</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution3</span>(<span style="color:#0086b3">object</span>):
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">coinChange</span>(<span style="color:#999">self</span>, coins, amount):
+        <span style="color:#d14">&#34;&#34;&#34;
+</span><span style="color:#d14">        :type coins: List[int]
+</span><span style="color:#d14">        :type amount: int
+</span><span style="color:#d14">        :rtype: int
+</span><span style="color:#d14">        &#34;&#34;&#34;</span>
+        memo <span style="color:#000;font-weight:bold">=</span> {<span style="color:#099">0</span>: <span style="color:#099">0</span>}
+
+        <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">helper</span>(n):
+            <span style="color:#000;font-weight:bold">if</span> n <span style="color:#000;font-weight:bold">in</span> memo:
+                <span style="color:#000;font-weight:bold">return</span> memo[n]
+            res <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">float</span>(<span style="color:#d14">&#34;inf&#34;</span>)
+            <span style="color:#000;font-weight:bold">for</span> coin <span style="color:#000;font-weight:bold">in</span> coins:
+                <span style="color:#000;font-weight:bold">if</span> n <span style="color:#000;font-weight:bold">&gt;=</span> coin:
+                    res <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">min</span>(res, helper(n <span style="color:#000;font-weight:bold">-</span> coin) <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">1</span>)
+            memo[n] <span style="color:#000;font-weight:bold">=</span> res
+            <span style="color:#000;font-weight:bold">return</span> res
+
+        <span style="color:#000;font-weight:bold">return</span> helper(amount) <span style="color:#000;font-weight:bold">if</span> (helper(amount) <span style="color:#000;font-weight:bold">!=</span> <span style="color:#0086b3">float</span>(<span style="color:#d14">&#34;inf&#34;</span>)) <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="动态规划">动态规划</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>:
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">coinChange</span>(<span style="color:#999">self</span>, coins: List[<span style="color:#0086b3">int</span>], amount: <span style="color:#0086b3">int</span>) <span style="color:#000;font-weight:bold">-&gt;</span> <span style="color:#0086b3">int</span>:
+        
+        dp<span style="color:#000;font-weight:bold">=</span>[<span style="color:#0086b3">float</span>(<span style="color:#d14">&#34;inf&#34;</span>)]<span style="color:#000;font-weight:bold">*</span>(amount<span style="color:#000;font-weight:bold">+</span><span style="color:#099">1</span>)
+        dp[<span style="color:#099">0</span>]<span style="color:#000;font-weight:bold">=</span><span style="color:#099">0</span>
+        <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">1</span>,amount<span style="color:#000;font-weight:bold">+</span><span style="color:#099">1</span>):
+            <span style="color:#000;font-weight:bold">for</span> coin <span style="color:#000;font-weight:bold">in</span> coins:
+                <span style="color:#000;font-weight:bold">if</span>(i<span style="color:#000;font-weight:bold">&gt;=</span>coin):
+                    dp[i]<span style="color:#000;font-weight:bold">=</span><span style="color:#0086b3">min</span>(dp[i],dp[i<span style="color:#000;font-weight:bold">-</span>coin]<span style="color:#000;font-weight:bold">+</span><span style="color:#099">1</span>)
+        <span style="color:#000;font-weight:bold">return</span> dp[<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>] <span style="color:#000;font-weight:bold">if</span>(dp[<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>]<span style="color:#000;font-weight:bold">!=</span><span style="color:#0086b3">float</span>(<span style="color:#d14">&#34;inf&#34;</span>)) <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="5-leetcode">5. LeetCode</h2>
+<h3 id="64-最小路径和httpsleetcode-cncomproblemsminimum-path-sum"><a href="https://leetcode-cn.com/problems/minimum-path-sum/">64. 最小路径和</a></h3>
+<h4 id="题目描述">题目描述</h4>
+<blockquote>
+<p>给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。</p>
+<p>说明：每次只能向下或者向右移动一步。</p>
+<p>示例:</p>
+<p>输入:
+[
+[1,3,1],
+[1,5,1],
+[4,2,1]
+]
+输出: 7
+解释: 因为路径 1→3→1→1→1 的总和最小。</p>
+<p>来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/minimum-path-sum</p>
+</blockquote>
+<h4 id="解题思路">解题思路</h4>
+<p>二维动态规划:</p>
+<p>分情况：</p>
+<ol>
+<li>空矩阵</li>
+<li>只有1行</li>
+<li>只有1列</li>
+<li>左边和上边都是矩阵边界</li>
+</ol>
+<p>不需要建立DP矩阵，直接遍历<code>grid[i][j]</code>修改即可</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9waWMubGVldGNvZGUtY24uY29tL2Y3ZGU4NjQ5Y2MyNDk1MTVmYTRhNDQyNTA4MzEyYjY1ZTc2Njg0YzUxMTNkMzExMmQ1NTI2MGRjYzNjYmUxMTItaW1hZ2UucG5n?x-oss-process=image/format,png" alt="最短路径和"></p>
+<h4 id="代码实现">代码实现</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>(<span style="color:#0086b3">object</span>):
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">minPathSum</span>(<span style="color:#999">self</span>, grid):
+        <span style="color:#d14">&#34;&#34;&#34;
+</span><span style="color:#d14">        :type grid: List[List[int]]
+</span><span style="color:#d14">        :rtype: int
+</span><span style="color:#d14">        &#34;&#34;&#34;</span>
+        <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#0086b3">len</span>(grid)):  <span style="color:#998;font-style:italic"># 共i行</span>
+            <span style="color:#000;font-weight:bold">for</span> j <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#0086b3">len</span>(grid[<span style="color:#099">0</span>])):  <span style="color:#998;font-style:italic"># 共j列</span>
+                <span style="color:#000;font-weight:bold">if</span> i <span style="color:#000;font-weight:bold">==</span> j <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>:
+                    <span style="color:#000;font-weight:bold">continue</span>
+                <span style="color:#000;font-weight:bold">elif</span> i <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>:
+                    grid[i][j] <span style="color:#000;font-weight:bold">=</span> grid[i][j<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>] <span style="color:#000;font-weight:bold">+</span> grid[i][j]
+                <span style="color:#000;font-weight:bold">elif</span> j <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>:
+                    grid[i][j] <span style="color:#000;font-weight:bold">=</span> grid[i<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>][j] <span style="color:#000;font-weight:bold">+</span> grid[i][j]
+                <span style="color:#000;font-weight:bold">else</span>:
+                    grid[i][j] <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">min</span>(grid[i<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>][j], grid[i][j<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>]) <span style="color:#000;font-weight:bold">+</span> grid[i][j]
+        <span style="color:#000;font-weight:bold">return</span> grid[<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>][<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>]
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="70-爬楼梯httpsleetcode-cncomproblemsclimbing-stairs"><a href="https://leetcode-cn.com/problems/climbing-stairs/">70. 爬楼梯</a></h3>
+<h4 id="题目描述-1">题目描述</h4>
+<blockquote>
+<p>假设你正在爬楼梯。需要 n 阶你才能到达楼顶。</p>
+<p>每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？</p>
+<p>注意：给定 n 是一个正整数。</p>
+<p>示例 1：</p>
+<pre><code>输入： 2
+输出： 2
+解释： 有两种方法可以爬到楼顶。
+
+1.  1 阶 + 1 阶
+2.  2 阶
+</code></pre><p>示例 2：</p>
+<pre><code>输入： 3
+输出： 3
+解释： 有三种方法可以爬到楼顶。
+
+1.  1 阶 + 1 阶 + 1 阶
+2.  1 阶 + 2 阶
+3.  2 阶 + 1 阶
+</code></pre><p>来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/climbing-stairs</p>
+</blockquote>
+<h4 id="解题思路-1">解题思路</h4>
+<p>一维动态规划</p>
+<p>易得DP数组公式：</p>
+<p><code>dp[i] =dp[i-1]+dp[i-2]</code></p>
+<p>DP数组也可以省略</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMuZ2l0ZWUuY29tL3VwbG9hZHMvaW1hZ2VzLzIwMjAvMDEzMS8xNzU2MDJfYjVlMjZlYjhfNDc5ODIyNS5wbmc?x-oss-process=image/format,png" alt="爬楼梯"></p>
+<h4 id="代码实现-1">代码实现</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>(<span style="color:#0086b3">object</span>):
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">climbStairs</span>(<span style="color:#999">self</span>, n):
+        <span style="color:#d14">&#34;&#34;&#34;
+</span><span style="color:#d14">        :type n: int
+</span><span style="color:#d14">        :rtype: int
+</span><span style="color:#d14">        &#34;&#34;&#34;</span>
+        <span style="color:#000;font-weight:bold">if</span> n <span style="color:#000;font-weight:bold">&lt;=</span> <span style="color:#099">0</span>:
+            <span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>
+        res,last <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>,<span style="color:#099">1</span>
+        <span style="color:#000;font-weight:bold">for</span> _ <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">1</span>,n):
+            res,last <span style="color:#000;font-weight:bold">=</span> res<span style="color:#000;font-weight:bold">+</span>last,res
+        <span style="color:#000;font-weight:bold">return</span> res
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="121-买卖股票的最佳时机httpsleetcode-cncomproblemsbest-time-to-buy-and-sell-stock"><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/">121. 买卖股票的最佳时机</a></h3>
+<h4 id="题目描述-2">题目描述</h4>
+<blockquote>
+<p>给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。</p>
+<p>如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。</p>
+<p>注意你不能在买入股票前卖出股票。</p>
+<p><strong>示例 1:</strong></p>
+<p><strong>输入:</strong> [7,1,5,3,6,4]
+<strong>输出</strong>: 5
+<strong>解释</strong>: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
+注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。</p>
+<p><strong>示例 2:</strong></p>
+<p><strong>输入</strong>: [7,6,4,3,1]
+<strong>输出</strong>: 0
+<strong>解释</strong>: 在这种情况下, 没有交易完成, 所以最大利润为 0。</p>
+<p>来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock</p>
+</blockquote>
+<h4 id="解题思路-2">解题思路</h4>
+<p>变量buying_price记录买入价，一旦遇到更低的买入价则更新此变量，使用max_profit记录可获得的最大收益，当收益更高是更新max_profit</p>
+<h4 id="代码实现-2">代码实现</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>:
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">maxProfit</span>(<span style="color:#999">self</span>, prices: List[<span style="color:#0086b3">int</span>]) <span style="color:#000;font-weight:bold">-&gt;</span> <span style="color:#0086b3">int</span>:
+        <span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">len</span>(prices) <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>:
+            <span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>
+        max_profits <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>
+        buying_price <span style="color:#000;font-weight:bold">=</span> prices[<span style="color:#099">0</span>]
+        <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#0086b3">len</span>(prices)):
+            <span style="color:#000;font-weight:bold">if</span> prices[i]<span style="color:#000;font-weight:bold">&lt;</span>buying_price:
+                buying_price <span style="color:#000;font-weight:bold">=</span> prices[i]
+            <span style="color:#000;font-weight:bold">else</span>:
+                profit <span style="color:#000;font-weight:bold">=</span> prices[i] <span style="color:#000;font-weight:bold">-</span> buying_price
+                <span style="color:#000;font-weight:bold">if</span> profit<span style="color:#000;font-weight:bold">&gt;</span>max_profits:
+                    max_profits <span style="color:#000;font-weight:bold">=</span> profit
+        <span style="color:#000;font-weight:bold">return</span> max_profits
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="198-打家劫舍httpsleetcode-cncomproblemshouse-robber"><a href="https://leetcode-cn.com/problems/house-robber/">198. 打家劫舍</a></h3>
+<h4 id="题目描述-3">题目描述</h4>
+<blockquote>
+<p>你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。</p>
+<p>给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。</p>
+<p>示例 1:</p>
+<p>输入: [1,2,3,1]
+输出: 4
+解释: 偷窃 1 号房屋 (金额 = 1) ，然后偷窃 3 号房屋 (金额 = 3)。
+偷窃到的最高金额 = 1 + 3 = 4 。</p>
+<p>示例 2:</p>
+<p>输入: [2,7,9,3,1]
+输出: 12
+解释: 偷窃 1 号房屋 (金额 = 2), 偷窃 3 号房屋 (金额 = 9)，接着偷窃 5 号房屋 (金额 = 1)。
+偷窃到的最高金额 = 2 + 9 + 1 = 12 。</p>
+<p>来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/house-robber</p>
+</blockquote>
+<h4 id="解题思路-3">解题思路</h4>
+<p>动态规划方程：</p>
+<p><code>dp[n] = MAX( dp[n-1], dp[n-2] + num )</code></p>
+<p>由于不可以在相邻的房屋闯入，所以在当前位置 n 房屋可盗窃的最大值，要么就是 n-1 房屋可盗窃的最大值，要么就是 n-2 房屋可盗窃的最大值加上当前房屋的值，二者之间取最大值</p>
+<h4 id="代码实现-3">代码实现</h4>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>:
+    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">rob</span>(<span style="color:#999">self</span>, nums: List[<span style="color:#0086b3">int</span>]) <span style="color:#000;font-weight:bold">-&gt;</span> <span style="color:#0086b3">int</span>:
+        n <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">len</span>(nums)
+        <span style="color:#000;font-weight:bold">if</span> n <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>: <span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>
+        dp <span style="color:#000;font-weight:bold">=</span> [<span style="color:#099">0</span>] <span style="color:#000;font-weight:bold">*</span> (n <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">1</span>)
+        dp[<span style="color:#099">1</span>] <span style="color:#000;font-weight:bold">=</span> nums[<span style="color:#099">0</span>]
+        <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span>  <span style="color:#0086b3">range</span>(<span style="color:#099">2</span>,n <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">1</span>):
+            dp[i] <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">max</span>(dp[i <span style="color:#000;font-weight:bold">-</span> <span style="color:#099">1</span>], dp[i <span style="color:#000;font-weight:bold">-</span> <span style="color:#099">2</span>] <span style="color:#000;font-weight:bold">+</span> nums[i <span style="color:#000;font-weight:bold">-</span> <span style="color:#099">1</span>])
+        <span style="color:#000;font-weight:bold">return</span> dp[<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>]
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="6参考资料">6.参考资料</h2>
+<ul>
+<li>
+<p><a href="https://leetcode-cn.com/problems/coin-change/solution/dong-tai-gui-hua-tao-lu-xiang-jie-by-wei-lai-bu-ke">动态规划套路详解</a></p>
+</li>
+<li>
+<p><a href="https://juejin.im/post/5d556b7ef265da03aa2568d5#heading-12">动态规划套路详解</a></p>
+</li>
+<li>
+<p><a href="https://leetcode-cn.com/tag/dynamic-programming/">LeetCode</a></p>
+</li>
+</ul>
+
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/%E6%8E%A5%E9%9B%A8%E6%B0%B4/">接雨水</a></li>
+        
+        <li><a href="/archives/">归档</a></li>
+        
+        <li><a href="/search/">搜索</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='https://aszhou.cn/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92'>动态规划</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "aszhc/my-hugo-blog"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://aszhou.cn/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://aszhou.cn">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://aszhou.cn/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/" title="哈希映射和集合练习">哈希映射和集合练习</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhou.cn/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/" title="栈和队列练习题">栈和队列练习题</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhou.cn/post/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/" title="数组、链表练习题">数组、链表练习题</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhou.cn/post/%E9%80%92%E5%BD%92/" title="递归">递归</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhou.cn/post/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" title="动态规划">动态规划</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhou.cn/post/%E6%8E%A5%E9%9B%A8%E6%B0%B4/" title="接雨水">接雨水</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li><a href="https://aszhou.cn/categories/%E7%AE%97%E6%B3%95/">算法 (6)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://aszhou.cn/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
+    
+    <a href="https://aszhou.cn/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">双指针</a>
+    
+    <a href="https://aszhou.cn/tags/%E5%93%88%E5%B8%8C/">哈希</a>
+    
+    <a href="https://aszhou.cn/tags/%E6%95%B0%E7%BB%84/">数组</a>
+    
+    <a href="https://aszhou.cn/tags/%E6%A0%88/">栈</a>
+    
+    <a href="https://aszhou.cn/tags/%E9%80%92%E5%BD%92/">递归</a>
+    
+    <a href="https://aszhou.cn/tags/%E9%93%BE%E8%A1%A8/">链表</a>
+    
+    <a href="https://aszhou.cn/tags/%E9%98%9F%E5%88%97/">队列</a>
+    
+    <a href="https://aszhou.cn/tags/%E9%9B%86%E5%90%88/">集合</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Andrew_ZhouC" title="我的CSDN博客">我的CSDN博客</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://github.com/aszhc" title="我的github">我的github</a>
+        </li>
+        
+    </ul>
+</section>
+
+	
+	<section class="widget">
+        <h3 class="widget-title">公众号</h3>
+		<ul class="widget-list">
+        <li>
+            
+                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJ%0AChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/%0A2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgo%0AKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABkAGQDASIAAhEBAxEB/8QA%0AHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUF%0ABAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkK%0AFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1%0Adnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXG%0Ax8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEB%0AAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAEC%0AAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRom%0AJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOE%0AhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU%0A1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6jvLqCytJ%0Arq8mjgtoEaSWWVgqRqBksxPAAHJJrmf+FkeB/wDocfDn/gzh/wDiqX4tf8kr%0A8Y/9ga8/9EPXzJ4h1rwv4C8B+AZJfAOgaxdarpKXE89zGFcsAuSTtOSc0AfT%0A9r8QfBt1cxW9r4s8PzTyuI4449RhZnYnAUANkknjFaE/ibQrddRafWtNiXTS%0Aq3pe6RRaljhRJk/JntnGa+Wmm0DxB4O8A+J9J8K6VoF7J4ytbN/sUYBKLk4L%0AYBwTg49hR8Vvhb8T9V8deLpvDlhM2g6xcI8iJfwxpcqgG3chcHg5xkUAfWwu%0AoDaC6E0ZtinmiXcNmzGd2emMc5rP0LxLoXiAzDQdZ03UzBt837HdJN5ec43b%0A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%0AigAooooAKKKKACiiigD/2Q==">
+           
+        </li>
+    </ul>
+    </section>
+	
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://aszhou.cn/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+    <div class="container">
+        &copy; 2021 <a href="https://aszhou.cn">周闖的博客 By 周闖</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank"></a>         备案号 | 辽ICP备18005500号-2	</a>.
+        
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+</body>
+
+</html>
