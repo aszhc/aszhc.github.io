@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>双指针 on 周闖的博客</title>
-    <link>https://aszhou.cn/tags/%E5%8F%8C%E6%8C%87%E9%92%88/</link>
+    <link>https://aszhc.github.io/tags/%E5%8F%8C%E6%8C%87%E9%92%88/</link>
     <description>Recent content in 双指针 on 周闖的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Tue, 21 Jan 2020 12:50:59 +0800</lastBuildDate>
     
-	<atom:link href="https://aszhou.cn/tags/%E5%8F%8C%E6%8C%87%E9%92%88/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://aszhc.github.io/tags/%E5%8F%8C%E6%8C%87%E9%92%88/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>接雨水</title>
-      <link>https://aszhou.cn/post/%E6%8E%A5%E9%9B%A8%E6%B0%B4/</link>
+      <link>https://aszhc.github.io/post/%E6%8E%A5%E9%9B%A8%E6%B0%B4/</link>
       <pubDate>Tue, 21 Jan 2020 12:50:59 +0800</pubDate>
       
-      <guid>https://aszhou.cn/post/%E6%8E%A5%E9%9B%A8%E6%B0%B4/</guid>
+      <guid>https://aszhc.github.io/post/%E6%8E%A5%E9%9B%A8%E6%B0%B4/</guid>
       <description>42. 接雨水 题目描述 给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。 上面是由数组 [0,1,0,2,1,0,1,3,2,1,2,1] 表示的高度图，在这种</description>
     </item>
     
