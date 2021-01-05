@@ -19,7 +19,7 @@
     <meta name="description" content="动态规划">
         
     <meta name="author" content="周闖">
-    <meta property="og:url" content="https://aszhc.github.io/post/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+    <meta property="og:url" content="https://aszhou.cn/post/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
     <link rel="shortcut icon" href="logo.ico" type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -52,7 +52,7 @@
         <div class="col-group">
             <div class="site-name ">
                 
-                    <a id="logo" href="https://aszhc.github.io">
+                    <a id="logo" href="https://aszhou.cn">
                         周闖的博客
                     </a>
                 
@@ -60,13 +60,13 @@
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
-                    <a class="current" href="https://aszhc.github.io">首页</a>
+                    <a class="current" href="https://aszhou.cn">首页</a>
                     
-                    <a  href="https://aszhc.github.io/tools/" title="随笔">随笔</a>
+                    <a  href="https://aszhou.cn/tools/" title="随笔">随笔</a>
                     
-                    <a  href="https://aszhc.github.io/archives/" title="归档">归档</a>
+                    <a  href="https://aszhou.cn/archives/" title="归档">归档</a>
                     
-                    <a  href="https://aszhc.github.io/about/" title="关于">关于</a>
+                    <a  href="https://aszhou.cn/about/" title="关于">关于</a>
                     
                 </nav>
             </div>
@@ -211,7 +211,7 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='https://aszhc.github.io/categories/%E7%AE%97%E6%B3%95'>算法</a></span>
+            <span class="meta-category"><a href='https://aszhou.cn/categories/%E7%AE%97%E6%B3%95'>算法</a></span>
             
         </div>
         
@@ -271,28 +271,28 @@
 <h3 id="例１斐波那契数列">例１：斐波那契数列</h3>
 <h4 id="暴力的递归算法">暴力的递归算法</h4>
 <p>时间复杂度:O(2^n)</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>:
-    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">fib</span>(<span style="color:#999">self</span>, N: <span style="color:#0086b3">int</span>):
-        <span style="color:#000;font-weight:bold">if</span> N <span style="color:#000;font-weight:bold">&lt;=</span> <span style="color:#099">1</span>:
-            <span style="color:#000;font-weight:bold">return</span> N
-        <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>fib(N<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>) <span style="color:#000;font-weight:bold">+</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>fib(N<span style="color:#000;font-weight:bold">-</span><span style="color:#099">2</span>)
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fib</span>(self, N: int):
+        <span style="color:#66d9ef">if</span> N <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">1</span>:
+            <span style="color:#66d9ef">return</span> N
+        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>fib(N<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>fib(N<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>)
 </code></pre></td></tr></table>
 </div>
 </div><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMuZ2l0ZWUuY29tL3VwbG9hZHMvaW1hZ2VzLzIwMjAvMDEzMS8xMzM4NTNfYThhYjBlZDRfNDc5ODIyNS5wbmc?x-oss-process=image/format,png" alt="递归树"></p>
 <p>观察递归树，很明显发现算法低效的原因：存在大量重复计算，如Ｆ(18）被计算了两遍。</p>
 <h4 id="带备忘录的递归算法">带备忘录的递归算法</h4>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -306,25 +306,25 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>:
-    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">fib</span>(<span style="color:#999">self</span>, N: <span style="color:#0086b3">int</span>) <span style="color:#000;font-weight:bold">-&gt;</span> <span style="color:#0086b3">int</span>:
-        <span style="color:#000;font-weight:bold">if</span> N <span style="color:#000;font-weight:bold">&lt;=</span> <span style="color:#099">1</span>:
-            <span style="color:#000;font-weight:bold">return</span> N
-        <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>cache <span style="color:#000;font-weight:bold">=</span> {<span style="color:#099">0</span>: <span style="color:#099">0</span>, <span style="color:#099">1</span>: <span style="color:#099">1</span>}
-        <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>memoize(N)
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fib</span>(self, N: int) <span style="color:#f92672">-&gt;</span> int:
+        <span style="color:#66d9ef">if</span> N <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">1</span>:
+            <span style="color:#66d9ef">return</span> N
+        self<span style="color:#f92672">.</span>cache <span style="color:#f92672">=</span> {<span style="color:#ae81ff">0</span>: <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>: <span style="color:#ae81ff">1</span>}
+        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>memoize(N)
 
-    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">memoize</span>(<span style="color:#999">self</span>, N: <span style="color:#0086b3">int</span>) <span style="color:#000;font-weight:bold">-&gt;</span> {}:
-        <span style="color:#000;font-weight:bold">if</span> N <span style="color:#000;font-weight:bold">in</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>cache<span style="color:#000;font-weight:bold">.</span>keys():
-            <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>cache[N]
-        <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>cache[N] <span style="color:#000;font-weight:bold">=</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>memoize(N<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>) <span style="color:#000;font-weight:bold">+</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>memoize(N<span style="color:#000;font-weight:bold">-</span><span style="color:#099">2</span>)
-        <span style="color:#000;font-weight:bold">return</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>memoize(N)
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">memoize</span>(self, N: int) <span style="color:#f92672">-&gt;</span> {}:
+        <span style="color:#66d9ef">if</span> N <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>cache<span style="color:#f92672">.</span>keys():
+            <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>cache[N]
+        self<span style="color:#f92672">.</span>cache[N] <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>memoize(N<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>memoize(N<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>)
+        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>memoize(N)
 </code></pre></td></tr></table>
 </div>
 </div><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMuZ2l0ZWUuY29tL3VwbG9hZHMvaW1hZ2VzLzIwMjAvMDEzMS8xNDEzMDdfM2UzNjUwYWVfNDc5ODIyNS5wbmc?x-oss-process=image/format,png" alt="带备忘录"></p>
 <h4 id="动态规划的递归算法">动态规划的递归算法</h4>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -334,14 +334,14 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution2</span>:  <span style="color:#998;font-style:italic"># 动态规划</span>
-    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">fib</span>(<span style="color:#999">self</span>, N: <span style="color:#0086b3">int</span>) <span style="color:#000;font-weight:bold">-&gt;</span> <span style="color:#0086b3">int</span>:
-        <span style="color:#000;font-weight:bold">if</span> N <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>:
-            <span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>
-        a, b <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>, <span style="color:#099">1</span>
-        <span style="color:#000;font-weight:bold">for</span> _ <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">2</span>, N<span style="color:#000;font-weight:bold">+</span><span style="color:#099">1</span>):
-            a, b <span style="color:#000;font-weight:bold">=</span> b, a<span style="color:#000;font-weight:bold">+</span>b
-        <span style="color:#000;font-weight:bold">return</span> b
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution2</span>:  <span style="color:#75715e"># 动态规划</span>
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fib</span>(self, N: int) <span style="color:#f92672">-&gt;</span> int:
+        <span style="color:#66d9ef">if</span> N <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        a, b <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span>, N<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
+            a, b <span style="color:#f92672">=</span> b, a<span style="color:#f92672">+</span>b
+        <span style="color:#66d9ef">return</span> b
 </code></pre></td></tr></table>
 </div>
 </div><h4 id="动态转移方程">动态转移方程</h4>
@@ -366,9 +366,9 @@
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9waWMubGVldGNvZGUtY24uY29tLzk4YTY0MWNkMTQ2MWYwMjZiYTQ5ZDRjODU5YjIwOWEwOTYyY2ZhYTJhOTU4YWU3NmM4ZmM0N2NhMzI3YTQ4NGYtZmlsZV8xNTYwMjM5MzE2MDQ4?x-oss-process=image/format,png" alt="状态转移方程"></p>
 <h4 id="递归方法">递归方法</h4>
 <p>根据状态转移方程写代码：</p>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -390,32 +390,32 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>(<span style="color:#0086b3">object</span>):
-    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">coinChange</span>(<span style="color:#999">self</span>, coins, amount):
-        <span style="color:#d14">&#34;&#34;&#34;
-</span><span style="color:#d14">        :type coins: List[int]
-</span><span style="color:#d14">        :type amount: int
-</span><span style="color:#d14">        :rtype: int
-</span><span style="color:#d14">        &#34;&#34;&#34;</span>
-        <span style="color:#000;font-weight:bold">if</span> amount <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>:
-            <span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>
-        ans <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">float</span>(<span style="color:#d14">&#39;inf&#39;</span>)
-        <span style="color:#000;font-weight:bold">for</span> coin <span style="color:#000;font-weight:bold">in</span> coins:
-            <span style="color:#998;font-style:italic"># 金额不可达</span>
-            <span style="color:#000;font-weight:bold">if</span> amount <span style="color:#000;font-weight:bold">-</span> coin <span style="color:#000;font-weight:bold">&lt;</span> <span style="color:#099">0</span>:
-                <span style="color:#000;font-weight:bold">continue</span>
-            subProb <span style="color:#000;font-weight:bold">=</span> <span style="color:#999">self</span><span style="color:#000;font-weight:bold">.</span>coinChange(coins, amount <span style="color:#000;font-weight:bold">-</span> coin)
-            <span style="color:#998;font-style:italic"># 子问题无解</span>
-            <span style="color:#000;font-weight:bold">if</span> subProb <span style="color:#000;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>:
-                <span style="color:#000;font-weight:bold">continue</span>
-            ans <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">min</span>(ans, subProb <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">1</span>)
-        <span style="color:#000;font-weight:bold">return</span> ans <span style="color:#000;font-weight:bold">if</span> ans <span style="color:#000;font-weight:bold">!=</span> <span style="color:#0086b3">float</span>(<span style="color:#d14">&#39;inf&#39;</span>) <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>(object):
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">coinChange</span>(self, coins, amount):
+        <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">        :type coins: List[int]
+</span><span style="color:#e6db74">        :type amount: int
+</span><span style="color:#e6db74">        :rtype: int
+</span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
+        <span style="color:#66d9ef">if</span> amount <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        ans <span style="color:#f92672">=</span> float(<span style="color:#e6db74">&#39;inf&#39;</span>)
+        <span style="color:#66d9ef">for</span> coin <span style="color:#f92672">in</span> coins:
+            <span style="color:#75715e"># 金额不可达</span>
+            <span style="color:#66d9ef">if</span> amount <span style="color:#f92672">-</span> coin <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
+                <span style="color:#66d9ef">continue</span>
+            subProb <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>coinChange(coins, amount <span style="color:#f92672">-</span> coin)
+            <span style="color:#75715e"># 子问题无解</span>
+            <span style="color:#66d9ef">if</span> subProb <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:
+                <span style="color:#66d9ef">continue</span>
+            ans <span style="color:#f92672">=</span> min(ans, subProb <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> ans <span style="color:#66d9ef">if</span> ans <span style="color:#f92672">!=</span> float(<span style="color:#e6db74">&#39;inf&#39;</span>) <span style="color:#66d9ef">else</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
 </code></pre></td></tr></table>
 </div>
 </div><h4 id="带备忘录的递归算法-1">带备忘录的递归算法</h4>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -437,32 +437,32 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution3</span>(<span style="color:#0086b3">object</span>):
-    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">coinChange</span>(<span style="color:#999">self</span>, coins, amount):
-        <span style="color:#d14">&#34;&#34;&#34;
-</span><span style="color:#d14">        :type coins: List[int]
-</span><span style="color:#d14">        :type amount: int
-</span><span style="color:#d14">        :rtype: int
-</span><span style="color:#d14">        &#34;&#34;&#34;</span>
-        memo <span style="color:#000;font-weight:bold">=</span> {<span style="color:#099">0</span>: <span style="color:#099">0</span>}
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution3</span>(object):
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">coinChange</span>(self, coins, amount):
+        <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">        :type coins: List[int]
+</span><span style="color:#e6db74">        :type amount: int
+</span><span style="color:#e6db74">        :rtype: int
+</span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
+        memo <span style="color:#f92672">=</span> {<span style="color:#ae81ff">0</span>: <span style="color:#ae81ff">0</span>}
 
-        <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">helper</span>(n):
-            <span style="color:#000;font-weight:bold">if</span> n <span style="color:#000;font-weight:bold">in</span> memo:
-                <span style="color:#000;font-weight:bold">return</span> memo[n]
-            res <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">float</span>(<span style="color:#d14">&#34;inf&#34;</span>)
-            <span style="color:#000;font-weight:bold">for</span> coin <span style="color:#000;font-weight:bold">in</span> coins:
-                <span style="color:#000;font-weight:bold">if</span> n <span style="color:#000;font-weight:bold">&gt;=</span> coin:
-                    res <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">min</span>(res, helper(n <span style="color:#000;font-weight:bold">-</span> coin) <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">1</span>)
-            memo[n] <span style="color:#000;font-weight:bold">=</span> res
-            <span style="color:#000;font-weight:bold">return</span> res
+        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">helper</span>(n):
+            <span style="color:#66d9ef">if</span> n <span style="color:#f92672">in</span> memo:
+                <span style="color:#66d9ef">return</span> memo[n]
+            res <span style="color:#f92672">=</span> float(<span style="color:#e6db74">&#34;inf&#34;</span>)
+            <span style="color:#66d9ef">for</span> coin <span style="color:#f92672">in</span> coins:
+                <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&gt;=</span> coin:
+                    res <span style="color:#f92672">=</span> min(res, helper(n <span style="color:#f92672">-</span> coin) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
+            memo[n] <span style="color:#f92672">=</span> res
+            <span style="color:#66d9ef">return</span> res
 
-        <span style="color:#000;font-weight:bold">return</span> helper(amount) <span style="color:#000;font-weight:bold">if</span> (helper(amount) <span style="color:#000;font-weight:bold">!=</span> <span style="color:#0086b3">float</span>(<span style="color:#d14">&#34;inf&#34;</span>)) <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>
+        <span style="color:#66d9ef">return</span> helper(amount) <span style="color:#66d9ef">if</span> (helper(amount) <span style="color:#f92672">!=</span> float(<span style="color:#e6db74">&#34;inf&#34;</span>)) <span style="color:#66d9ef">else</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
 </code></pre></td></tr></table>
 </div>
 </div><h4 id="动态规划">动态规划</h4>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -474,16 +474,16 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>:
-    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">coinChange</span>(<span style="color:#999">self</span>, coins: List[<span style="color:#0086b3">int</span>], amount: <span style="color:#0086b3">int</span>) <span style="color:#000;font-weight:bold">-&gt;</span> <span style="color:#0086b3">int</span>:
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">coinChange</span>(self, coins: List[int], amount: int) <span style="color:#f92672">-&gt;</span> int:
         
-        dp<span style="color:#000;font-weight:bold">=</span>[<span style="color:#0086b3">float</span>(<span style="color:#d14">&#34;inf&#34;</span>)]<span style="color:#000;font-weight:bold">*</span>(amount<span style="color:#000;font-weight:bold">+</span><span style="color:#099">1</span>)
-        dp[<span style="color:#099">0</span>]<span style="color:#000;font-weight:bold">=</span><span style="color:#099">0</span>
-        <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">1</span>,amount<span style="color:#000;font-weight:bold">+</span><span style="color:#099">1</span>):
-            <span style="color:#000;font-weight:bold">for</span> coin <span style="color:#000;font-weight:bold">in</span> coins:
-                <span style="color:#000;font-weight:bold">if</span>(i<span style="color:#000;font-weight:bold">&gt;=</span>coin):
-                    dp[i]<span style="color:#000;font-weight:bold">=</span><span style="color:#0086b3">min</span>(dp[i],dp[i<span style="color:#000;font-weight:bold">-</span>coin]<span style="color:#000;font-weight:bold">+</span><span style="color:#099">1</span>)
-        <span style="color:#000;font-weight:bold">return</span> dp[<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>] <span style="color:#000;font-weight:bold">if</span>(dp[<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>]<span style="color:#000;font-weight:bold">!=</span><span style="color:#0086b3">float</span>(<span style="color:#d14">&#34;inf&#34;</span>)) <span style="color:#000;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>
+        dp<span style="color:#f92672">=</span>[float(<span style="color:#e6db74">&#34;inf&#34;</span>)]<span style="color:#f92672">*</span>(amount<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)
+        dp[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,amount<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
+            <span style="color:#66d9ef">for</span> coin <span style="color:#f92672">in</span> coins:
+                <span style="color:#66d9ef">if</span>(i<span style="color:#f92672">&gt;=</span>coin):
+                    dp[i]<span style="color:#f92672">=</span>min(dp[i],dp[i<span style="color:#f92672">-</span>coin]<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">return</span> dp[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#66d9ef">if</span>(dp[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">!=</span>float(<span style="color:#e6db74">&#34;inf&#34;</span>)) <span style="color:#66d9ef">else</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="5-leetcode">5. LeetCode</h2>
@@ -516,9 +516,9 @@
 <p>不需要建立DP矩阵，直接遍历<code>grid[i][j]</code>修改即可</p>
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9waWMubGVldGNvZGUtY24uY29tL2Y3ZGU4NjQ5Y2MyNDk1MTVmYTRhNDQyNTA4MzEyYjY1ZTc2Njg0YzUxMTNkMzExMmQ1NTI2MGRjYzNjYmUxMTItaW1hZ2UucG5n?x-oss-process=image/format,png" alt="最短路径和"></p>
 <h4 id="代码实现">代码实现</h4>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -537,23 +537,23 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>(<span style="color:#0086b3">object</span>):
-    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">minPathSum</span>(<span style="color:#999">self</span>, grid):
-        <span style="color:#d14">&#34;&#34;&#34;
-</span><span style="color:#d14">        :type grid: List[List[int]]
-</span><span style="color:#d14">        :rtype: int
-</span><span style="color:#d14">        &#34;&#34;&#34;</span>
-        <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#0086b3">len</span>(grid)):  <span style="color:#998;font-style:italic"># 共i行</span>
-            <span style="color:#000;font-weight:bold">for</span> j <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#0086b3">len</span>(grid[<span style="color:#099">0</span>])):  <span style="color:#998;font-style:italic"># 共j列</span>
-                <span style="color:#000;font-weight:bold">if</span> i <span style="color:#000;font-weight:bold">==</span> j <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>:
-                    <span style="color:#000;font-weight:bold">continue</span>
-                <span style="color:#000;font-weight:bold">elif</span> i <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>:
-                    grid[i][j] <span style="color:#000;font-weight:bold">=</span> grid[i][j<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>] <span style="color:#000;font-weight:bold">+</span> grid[i][j]
-                <span style="color:#000;font-weight:bold">elif</span> j <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>:
-                    grid[i][j] <span style="color:#000;font-weight:bold">=</span> grid[i<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>][j] <span style="color:#000;font-weight:bold">+</span> grid[i][j]
-                <span style="color:#000;font-weight:bold">else</span>:
-                    grid[i][j] <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">min</span>(grid[i<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>][j], grid[i][j<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>]) <span style="color:#000;font-weight:bold">+</span> grid[i][j]
-        <span style="color:#000;font-weight:bold">return</span> grid[<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>][<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>]
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>(object):
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">minPathSum</span>(self, grid):
+        <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">        :type grid: List[List[int]]
+</span><span style="color:#e6db74">        :rtype: int
+</span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
+        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(grid)):  <span style="color:#75715e"># 共i行</span>
+            <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(len(grid[<span style="color:#ae81ff">0</span>])):  <span style="color:#75715e"># 共j列</span>
+                <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> j <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+                    <span style="color:#66d9ef">continue</span>
+                <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+                    grid[i][j] <span style="color:#f92672">=</span> grid[i][j<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> grid[i][j]
+                <span style="color:#66d9ef">elif</span> j <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+                    grid[i][j] <span style="color:#f92672">=</span> grid[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][j] <span style="color:#f92672">+</span> grid[i][j]
+                <span style="color:#66d9ef">else</span>:
+                    grid[i][j] <span style="color:#f92672">=</span> min(grid[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][j], grid[i][j<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]) <span style="color:#f92672">+</span> grid[i][j]
+        <span style="color:#66d9ef">return</span> grid[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="70-爬楼梯httpsleetcode-cncomproblemsclimbing-stairs"><a href="https://leetcode-cn.com/problems/climbing-stairs/">70. 爬楼梯</a></h3>
@@ -587,9 +587,9 @@
 <p>DP数组也可以省略</p>
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMuZ2l0ZWUuY29tL3VwbG9hZHMvaW1hZ2VzLzIwMjAvMDEzMS8xNzU2MDJfYjVlMjZlYjhfNDc5ODIyNS5wbmc?x-oss-process=image/format,png" alt="爬楼梯"></p>
 <h4 id="代码实现-1">代码实现</h4>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -603,18 +603,18 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>(<span style="color:#0086b3">object</span>):
-    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">climbStairs</span>(<span style="color:#999">self</span>, n):
-        <span style="color:#d14">&#34;&#34;&#34;
-</span><span style="color:#d14">        :type n: int
-</span><span style="color:#d14">        :rtype: int
-</span><span style="color:#d14">        &#34;&#34;&#34;</span>
-        <span style="color:#000;font-weight:bold">if</span> n <span style="color:#000;font-weight:bold">&lt;=</span> <span style="color:#099">0</span>:
-            <span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>
-        res,last <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">1</span>,<span style="color:#099">1</span>
-        <span style="color:#000;font-weight:bold">for</span> _ <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#099">1</span>,n):
-            res,last <span style="color:#000;font-weight:bold">=</span> res<span style="color:#000;font-weight:bold">+</span>last,res
-        <span style="color:#000;font-weight:bold">return</span> res
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>(object):
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">climbStairs</span>(self, n):
+        <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">        :type n: int
+</span><span style="color:#e6db74">        :rtype: int
+</span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
+        <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span>:
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        res,last <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,n):
+            res,last <span style="color:#f92672">=</span> res<span style="color:#f92672">+</span>last,res
+        <span style="color:#66d9ef">return</span> res
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="121-买卖股票的最佳时机httpsleetcode-cncomproblemsbest-time-to-buy-and-sell-stock"><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/">121. 买卖股票的最佳时机</a></h3>
@@ -638,9 +638,9 @@
 <h4 id="解题思路-2">解题思路</h4>
 <p>变量buying_price记录买入价，一旦遇到更低的买入价则更新此变量，使用max_profit记录可获得的最大收益，当收益更高是更新max_profit</p>
 <h4 id="代码实现-2">代码实现</h4>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -656,20 +656,20 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>:
-    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">maxProfit</span>(<span style="color:#999">self</span>, prices: List[<span style="color:#0086b3">int</span>]) <span style="color:#000;font-weight:bold">-&gt;</span> <span style="color:#0086b3">int</span>:
-        <span style="color:#000;font-weight:bold">if</span> <span style="color:#0086b3">len</span>(prices) <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>:
-            <span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>
-        max_profits <span style="color:#000;font-weight:bold">=</span> <span style="color:#099">0</span>
-        buying_price <span style="color:#000;font-weight:bold">=</span> prices[<span style="color:#099">0</span>]
-        <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span> <span style="color:#0086b3">range</span>(<span style="color:#0086b3">len</span>(prices)):
-            <span style="color:#000;font-weight:bold">if</span> prices[i]<span style="color:#000;font-weight:bold">&lt;</span>buying_price:
-                buying_price <span style="color:#000;font-weight:bold">=</span> prices[i]
-            <span style="color:#000;font-weight:bold">else</span>:
-                profit <span style="color:#000;font-weight:bold">=</span> prices[i] <span style="color:#000;font-weight:bold">-</span> buying_price
-                <span style="color:#000;font-weight:bold">if</span> profit<span style="color:#000;font-weight:bold">&gt;</span>max_profits:
-                    max_profits <span style="color:#000;font-weight:bold">=</span> profit
-        <span style="color:#000;font-weight:bold">return</span> max_profits
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">maxProfit</span>(self, prices: List[int]) <span style="color:#f92672">-&gt;</span> int:
+        <span style="color:#66d9ef">if</span> len(prices) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        max_profits <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+        buying_price <span style="color:#f92672">=</span> prices[<span style="color:#ae81ff">0</span>]
+        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(prices)):
+            <span style="color:#66d9ef">if</span> prices[i]<span style="color:#f92672">&lt;</span>buying_price:
+                buying_price <span style="color:#f92672">=</span> prices[i]
+            <span style="color:#66d9ef">else</span>:
+                profit <span style="color:#f92672">=</span> prices[i] <span style="color:#f92672">-</span> buying_price
+                <span style="color:#66d9ef">if</span> profit<span style="color:#f92672">&gt;</span>max_profits:
+                    max_profits <span style="color:#f92672">=</span> profit
+        <span style="color:#66d9ef">return</span> max_profits
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="198-打家劫舍httpsleetcode-cncomproblemshouse-robber"><a href="https://leetcode-cn.com/problems/house-robber/">198. 打家劫舍</a></h3>
@@ -695,9 +695,9 @@
 <p><code>dp[n] = MAX( dp[n-1], dp[n-2] + num )</code></p>
 <p>由于不可以在相邻的房屋闯入，所以在当前位置 n 房屋可盗窃的最大值，要么就是 n-1 房屋可盗窃的最大值，要么就是 n-2 房屋可盗窃的最大值加上当前房屋的值，二者之间取最大值</p>
 <h4 id="代码实现-3">代码实现</h4>
-<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -708,15 +708,15 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">Solution</span>:
-    <span style="color:#000;font-weight:bold">def</span> <span style="color:#900;font-weight:bold">rob</span>(<span style="color:#999">self</span>, nums: List[<span style="color:#0086b3">int</span>]) <span style="color:#000;font-weight:bold">-&gt;</span> <span style="color:#0086b3">int</span>:
-        n <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">len</span>(nums)
-        <span style="color:#000;font-weight:bold">if</span> n <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>: <span style="color:#000;font-weight:bold">return</span> <span style="color:#099">0</span>
-        dp <span style="color:#000;font-weight:bold">=</span> [<span style="color:#099">0</span>] <span style="color:#000;font-weight:bold">*</span> (n <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">1</span>)
-        dp[<span style="color:#099">1</span>] <span style="color:#000;font-weight:bold">=</span> nums[<span style="color:#099">0</span>]
-        <span style="color:#000;font-weight:bold">for</span> i <span style="color:#000;font-weight:bold">in</span>  <span style="color:#0086b3">range</span>(<span style="color:#099">2</span>,n <span style="color:#000;font-weight:bold">+</span> <span style="color:#099">1</span>):
-            dp[i] <span style="color:#000;font-weight:bold">=</span> <span style="color:#0086b3">max</span>(dp[i <span style="color:#000;font-weight:bold">-</span> <span style="color:#099">1</span>], dp[i <span style="color:#000;font-weight:bold">-</span> <span style="color:#099">2</span>] <span style="color:#000;font-weight:bold">+</span> nums[i <span style="color:#000;font-weight:bold">-</span> <span style="color:#099">1</span>])
-        <span style="color:#000;font-weight:bold">return</span> dp[<span style="color:#000;font-weight:bold">-</span><span style="color:#099">1</span>]
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rob</span>(self, nums: List[int]) <span style="color:#f92672">-&gt;</span> int:
+        n <span style="color:#f92672">=</span> len(nums)
+        <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+        dp <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> (n <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
+        dp[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> nums[<span style="color:#ae81ff">0</span>]
+        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span>  range(<span style="color:#ae81ff">2</span>,n <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>):
+            dp[i] <span style="color:#f92672">=</span> max(dp[i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>], dp[i <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>] <span style="color:#f92672">+</span> nums[i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>])
+        <span style="color:#66d9ef">return</span> dp[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="6参考资料">6.参考资料</h2>
@@ -757,7 +757,7 @@
             
             <ul class="clearfix">
                 
-                <li><a href='https://aszhc.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92'>动态规划</a></li>
+                <li><a href='https://aszhou.cn/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92'>动态规划</a></li>
                 
             </ul>
             
@@ -770,7 +770,7 @@
     
     <div class="post bg-white">
       <script src="https://utteranc.es/client.js"
-            repo= "aszhc/my-hugo-blog"
+            repo= "aszhc/aszhc.github.io"
             issue-term="pathname"
             theme="github-light"
             crossorigin="anonymous"
@@ -784,10 +784,10 @@
 
                 <div id="secondary">
     <section class="widget">
-        <form id="search" action='https://aszhc.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+        <form id="search" action='https://aszhou.cn/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
       
       <input type="text" name="q" maxlength="20" placeholder="Search">
-      <input type="hidden" name="sitesearch" value="https://aszhc.github.io">
+      <input type="hidden" name="sitesearch" value="https://aszhou.cn">
       <button type="submit" class="submit icon-search"></button>
 </form>
     </section>
@@ -797,27 +797,27 @@
 <ul class="widget-list">
     
     <li>
-        <a href="https://aszhc.github.io/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/" title="哈希映射和集合练习">哈希映射和集合练习</a>
+        <a href="https://aszhou.cn/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/" title="哈希映射和集合练习">哈希映射和集合练习</a>
     </li>
     
     <li>
-        <a href="https://aszhc.github.io/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/" title="栈和队列练习题">栈和队列练习题</a>
+        <a href="https://aszhou.cn/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/" title="栈和队列练习题">栈和队列练习题</a>
     </li>
     
     <li>
-        <a href="https://aszhc.github.io/post/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/" title="数组、链表练习题">数组、链表练习题</a>
+        <a href="https://aszhou.cn/post/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/" title="数组、链表练习题">数组、链表练习题</a>
     </li>
     
     <li>
-        <a href="https://aszhc.github.io/post/%E9%80%92%E5%BD%92/" title="递归">递归</a>
+        <a href="https://aszhou.cn/post/%E9%80%92%E5%BD%92/" title="递归">递归</a>
     </li>
     
     <li>
-        <a href="https://aszhc.github.io/post/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" title="动态规划">动态规划</a>
+        <a href="https://aszhou.cn/post/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" title="动态规划">动态规划</a>
     </li>
     
     <li>
-        <a href="https://aszhc.github.io/post/%E6%8E%A5%E9%9B%A8%E6%B0%B4/" title="接雨水">接雨水</a>
+        <a href="https://aszhou.cn/post/%E6%8E%A5%E9%9B%A8%E6%B0%B4/" title="接雨水">接雨水</a>
     </li>
     
 </ul>
@@ -829,7 +829,7 @@
         <h3 class="widget-title">分类</h3>
 <ul class="widget-list">
     
-    <li><a href="https://aszhc.github.io/categories/%E7%AE%97%E6%B3%95/">算法 (6)</a></li>
+    <li><a href="https://aszhou.cn/categories/%E7%AE%97%E6%B3%95/">算法 (6)</a></li>
     
 </ul>
     </section>
@@ -838,23 +838,23 @@
         <h3 class="widget-title">标签</h3>
 <div class="tagcloud">
     
-    <a href="https://aszhc.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
+    <a href="https://aszhou.cn/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
     
-    <a href="https://aszhc.github.io/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">双指针</a>
+    <a href="https://aszhou.cn/tags/%E5%8F%8C%E6%8C%87%E9%92%88/">双指针</a>
     
-    <a href="https://aszhc.github.io/tags/%E5%93%88%E5%B8%8C/">哈希</a>
+    <a href="https://aszhou.cn/tags/%E5%93%88%E5%B8%8C/">哈希</a>
     
-    <a href="https://aszhc.github.io/tags/%E6%95%B0%E7%BB%84/">数组</a>
+    <a href="https://aszhou.cn/tags/%E6%95%B0%E7%BB%84/">数组</a>
     
-    <a href="https://aszhc.github.io/tags/%E6%A0%88/">栈</a>
+    <a href="https://aszhou.cn/tags/%E6%A0%88/">栈</a>
     
-    <a href="https://aszhc.github.io/tags/%E9%80%92%E5%BD%92/">递归</a>
+    <a href="https://aszhou.cn/tags/%E9%80%92%E5%BD%92/">递归</a>
     
-    <a href="https://aszhc.github.io/tags/%E9%93%BE%E8%A1%A8/">链表</a>
+    <a href="https://aszhou.cn/tags/%E9%93%BE%E8%A1%A8/">链表</a>
     
-    <a href="https://aszhc.github.io/tags/%E9%98%9F%E5%88%97/">队列</a>
+    <a href="https://aszhou.cn/tags/%E9%98%9F%E5%88%97/">队列</a>
     
-    <a href="https://aszhc.github.io/tags/%E9%9B%86%E5%90%88/">集合</a>
+    <a href="https://aszhou.cn/tags/%E9%9B%86%E5%90%88/">集合</a>
     
 </div>
     </section>
@@ -890,7 +890,7 @@
     <section class="widget">
         <h3 class="widget-title">其它</h3>
         <ul class="widget-list">
-            <li><a href="https://aszhc.github.io/index.xml">文章 RSS</a></li>
+            <li><a href="https://aszhou.cn/index.xml">文章 RSS</a></li>
         </ul>
     </section>
 </div>
@@ -899,7 +899,7 @@
     </div>
     <footer id="footer">
     <div class="container">
-        &copy; 2021 <a href="https://aszhc.github.io">周闖的博客 By 周闖</a>.
+        &copy; 2021 <a href="https://aszhou.cn">周闖的博客 By 周闖</a>.
         Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
         <a href="https://www.flysnow.org/" target="_blank"></a>         备案号 | 辽ICP备18005500号-2	</a>.
         

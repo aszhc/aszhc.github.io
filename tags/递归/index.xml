@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>递归 on 周闖的博客</title>
-    <link>https://aszhc.github.io/tags/%E9%80%92%E5%BD%92/</link>
+    <link>https://aszhou.cn/tags/%E9%80%92%E5%BD%92/</link>
     <description>Recent content in 递归 on 周闖的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Mon, 02 Mar 2020 13:02:35 +0800</lastBuildDate>
     
-	<atom:link href="https://aszhc.github.io/tags/%E9%80%92%E5%BD%92/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://aszhou.cn/tags/%E9%80%92%E5%BD%92/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>递归</title>
-      <link>https://aszhc.github.io/post/%E9%80%92%E5%BD%92/</link>
+      <link>https://aszhou.cn/post/%E9%80%92%E5%BD%92/</link>
       <pubDate>Mon, 02 Mar 2020 13:02:35 +0800</pubDate>
       
-      <guid>https://aszhc.github.io/post/%E9%80%92%E5%BD%92/</guid>
+      <guid>https://aszhou.cn/post/%E9%80%92%E5%BD%92/</guid>
       <description>To iterate is human, to recurse, divine. 人理解迭代，神理解递归。 什么是递归 递归算法（英语：recursion algorithm）在计算机科学中是指一种通过重复将问题分</description>
     </item>
     
