@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tools on 周闖的博客</title>
-    <link>https://aszhc.github.io/tools/</link>
-    <description>Recent content in Tools on 周闖的博客</description>
+    <title>笔记 on 周闖的博客</title>
+    <link>https://aszhc.github.io/tags/%E7%AC%94%E8%AE%B0/</link>
+    <description>Recent content in 笔记 on 周闖的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Fri, 29 Jan 2021 13:41:13 +0800</lastBuildDate>
     
-	<atom:link href="https://aszhc.github.io/tools/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://aszhc.github.io/tags/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,15 +18,6 @@
       
       <guid>https://aszhc.github.io/tools/mysql%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/</guid>
       <description>第一章：了解SQL 本章介绍数据库和SQL 数据库（database）：保存有组织的数据和容器（通常是一个文件或一组数据） 表（table）：某种</description>
-    </item>
-    
-    <item>
-      <title>New</title>
-      <link>https://aszhc.github.io/tools/new/</link>
-      <pubDate>Tue, 07 Apr 2020 16:59:21 +0800</pubDate>
-      
-      <guid>https://aszhc.github.io/tools/new/</guid>
-      <description></description>
     </item>
     
   </channel>
