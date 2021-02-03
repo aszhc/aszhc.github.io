@@ -6,21 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>队列 | 周闖的博客</title>
-    <meta property="og:title" content="队列 - 周闖的博客">
+    <title>古诗词 | 周闖的博客</title>
+    <meta property="og:title" content="古诗词 - 周闖的博客">
     <meta property="og:type" content="article">
         
+    <meta property="article:published_time" content='2020-02-03T15:26:07&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2020-02-03T15:26:07&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,博客,项目管理,python,公众号">
-    <meta name="description" content="队列">
+    <meta name="description" content="古诗词">
         
     <meta name="author" content="周闖">
-    <meta property="og:url" content="https://aszhc.github.io/tags/%E9%98%9F%E5%88%97/">
+    <meta property="og:url" content="https://aszhc.github.io/tools/%E5%8F%A4%E8%AF%97%E8%AF%8D/">
     <link rel="shortcut icon" href="logo.ico" type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <link rel="alternate" type="application/rss+xml+xml" href="https://aszhc.github.io/tags/%E9%98%9F%E5%88%97/index.xml" title="周闖的博客" />
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
@@ -78,45 +81,387 @@
                 <div class="col-8" id="main">
                     
 <div class="res-cons">
-    
-    <h3 class="archive-title">
-        包含标签
-        <span class="keyword">队列</span>
-        的文章
-    </h3>
-    
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
 
-    
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#001-老将行">001 老将行</a></li>
+    <li><a href="#002-梦游天姥吟留别">002 梦游天姥吟留别</a></li>
+    <li><a href="#003-侠客行">003 侠客行</a></li>
+    <li><a href="#004-新安吏">004 新安吏</a></li>
+    <li><a href="#005-石壕吏">005 石壕吏</a></li>
+    <li><a href="#006-潼关吏">006 潼关吏</a></li>
+    <li><a href="#007-新婚别">007 新婚别</a></li>
+    <li><a href="#008-无家别">008 无家别</a></li>
+    <li><a href="#009-垂老别">009 垂老别</a></li>
+    <li><a href="#010-长恨歌">010 长恨歌</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
     <article class="post">
         <header>
-            <h1 class="post-title">
-                <a href="https://aszhc.github.io/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/">栈和队列练习题</a>
-            </h1>
+            <h1 class="post-title">古诗词</h1>
         </header>
         <date class="post-meta meta-date">
-            2020年5月5日
+            2020年2月3日
         </date>
         
-        <div class="post-meta meta-category">
-            |
-            
-            <a href='https://aszhc.github.io/categories/%E7%AE%97%E6%B3%95'>算法</a>
-            
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
         </div>
         
+        
         <div class="post-content">
-            栈和队列的练习题 1. 有效的括号 给定一个只包括 &lsquo;('，')'，'{'，'}'，'['，']&rsquo; 的字符串，判断字符串是否有效……
-            <p class="readmore"><a href="https://aszhc.github.io/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/">阅读全文</a></p>
+            <h2 id="001-老将行">001 老将行</h2>
+<p>王维</p>
+<pre><code>少年十五二十时，步行夺得胡马骑。
+射杀中山白额虎，肯数邺下黄须儿！
+一身转战三千里，一剑曾当百万师。
+汉兵奋迅如霹雳，虏骑崩腾畏蒺藜。
+卫青不败由天幸，李广无功缘数奇。
+自从弃置便衰朽，世事蹉跎成白首。
+昔时飞箭无全目，今日垂杨生左肘。
+路旁时卖故侯瓜，门前学种先生柳。
+苍茫古木连穷巷，寥落寒山对虚牖。
+誓令疏勒出飞泉，不似颍川空使酒。
+贺兰山下阵如云，羽檄交驰日夕闻。
+节使三河募年少，诏书五道出将军。
+试拂铁衣如雪色，聊持宝剑动星文。
+愿得燕弓射大将，耻令越甲鸣吾军。
+莫嫌旧日云中守，犹堪一战取功勋。
+</code></pre><h2 id="002-梦游天姥吟留别">002 梦游天姥吟留别</h2>
+<p>李白</p>
+<pre><code>海客谈瀛洲，烟涛微茫信难求。
+越人语天姥，云霞明灭或可睹。
+天姥连天向天横，势拔五岳掩赤城。
+天台一万八千丈，对此欲倒东南倾。
+我欲因之梦吴越，一夜飞度镜湖月。
+湖月照我影，送我至剡溪。
+谢公宿处今尚在，渌水荡漾清猿啼。
+脚著谢公屐，身登青云梯。
+半壁见海日，空中闻天鸡。
+千岩万转路不定，迷花倚石忽已暝。
+熊咆龙吟殷岩泉，栗深林兮惊层巅。
+云青青兮欲雨，水澹澹兮生烟。
+列缺霹雳，丘峦崩摧。洞天石扉，訇然中开。
+青冥浩荡不见底，日月照耀金银台。
+霓为衣兮风为马，云之君兮纷纷而来下。
+虎鼓瑟兮鸾回车，仙之人兮列如麻。
+忽魂悸以魄动，恍惊起而长嗟。
+惟觉时之枕席，失向来之烟霞。
+世间行乐亦如此，古来万事东流水。
+别君去兮何时还，且放白鹿青崖间，
+须行即骑访名山。安能摧眉折腰事权贵，
+使我不得开心颜。
+</code></pre><h2 id="003-侠客行">003 侠客行</h2>
+<p>李白</p>
+<pre><code>赵客缦胡缨，吴钩霜雪明。
+银鞍照白马，飒沓如流星。
+十步杀一人，千里不留行。
+事了拂衣去，深藏身与名。
+闲过信陵饮，脱剑膝前横。
+将炙啖朱亥，持觞劝侯嬴。
+三杯吐然诺，五岳倒为轻。
+眼花耳热后，意气素霓生。
+救赵挥金槌，邯郸先震惊。
+千秋二壮士，烜赫大梁城。
+纵死侠骨香，不惭世上英。
+谁能书阁下，白首太玄经。
+</code></pre><h2 id="004-新安吏">004 新安吏</h2>
+<p>杜甫</p>
+<pre><code>客行新安道，喧呼闻点兵。
+借问新安吏，县小更无丁。
+府帖昨夜下，次选中男行。
+中男绝短小，何以守王城。
+肥男有母送，瘦男独伶俜。
+白水暮东流，青山犹哭声。
+莫自使眼枯，收汝泪纵横。
+眼枯即见骨，天地终无情。
+我军取相州，日夕望其平。
+岂意贼难料，归军星散营。
+就粮近故垒，练卒依旧京。
+掘壕不到水，牧马役亦轻。
+况乃王师顺，抚养甚分明。
+送行勿泣血，仆射如父兄。
+</code></pre><h2 id="005-石壕吏">005 石壕吏</h2>
+<p>杜甫</p>
+<pre><code>暮投石壕村，有吏夜捉人。
+老翁逾墙走，老妇出门看。
+吏呼一何怒，妇啼一何苦。
+听妇前致词，三男邺城戍。
+一男附书至，二男新战死。
+存者且偷生，死者长已矣。
+室中更无人，惟有乳下孙。
+有孙母未去，出入无完裙。
+老妪力虽衰，请从吏夜归。
+急应河阳役，犹得备晨炊。
+夜久语声绝，如闻泣幽咽。
+天明登前途，独与老翁别。
+</code></pre><h2 id="006-潼关吏">006 潼关吏</h2>
+<p>杜甫</p>
+<pre><code>士卒何草草，筑城潼关道。
+大城铁不如，小城万丈馀。
+借问潼关吏，修关还备胡。
+要我下马行，为我指山隅。
+连云列战格，飞鸟不能逾。
+胡来但自守，岂复忧西都。
+丈人视要处，窄狭容单车。
+艰难奋长戟，万古用一夫。
+哀哉桃林战，百万化为鱼。
+请嘱防关将，慎勿学哥舒。
+</code></pre><h2 id="007-新婚别">007 新婚别</h2>
+<p>杜甫</p>
+<pre><code>兔丝附蓬麻，引蔓故不长。
+嫁女与征夫，不如弃路旁。
+结发为妻子，席不暖君床。
+暮婚晨告别，无乃太匆忙。
+君行虽不远，守边赴河阳。
+妾身未分明，何以拜姑嫜。
+父母养我时，日夜令我藏。
+生女有所归，鸡狗亦得将。
+君今往死地，沈痛迫中肠。
+誓欲随君去，形势反苍黄。
+勿为新婚念，努力事戎行。
+妇人在军中，兵气恐不扬。
+自嗟贫家女，久致罗襦裳。
+罗襦不复施，对君洗红妆。
+仰视百鸟飞，大小必双翔。
+人事多错迕，与君永相望。
+</code></pre><h2 id="008-无家别">008 无家别</h2>
+<p>杜甫</p>
+<pre><code>寂寞天宝后，园庐但蒿藜。
+我里百馀家，世乱各东西。
+存者无消息，死者为尘泥。
+贱子因阵败，归来寻旧蹊。
+人行见空巷，日瘦气惨凄。
+但对狐与狸，竖毛怒我啼。
+四邻何所有，一二老寡妻。
+宿鸟恋本枝，安辞且穷栖。
+方春独荷锄，日暮还灌畦。
+县吏知我至，召令习鼓鞞。
+虽从本州役，内顾无所携。
+近行止一身，远去终转迷。
+家乡既荡尽，远近理亦齐。
+永痛长病母，五年委沟谿。
+生我不得力，终身两酸嘶。
+人生无家别，何以为烝黎。
+</code></pre><h2 id="009-垂老别">009 垂老别</h2>
+<p>杜甫</p>
+<pre><code>四郊未宁静，垂老不得安。
+子孙阵亡尽，焉用身独完。
+投杖出门去，同行为辛酸。
+幸有牙齿存，所悲骨髓干。
+男儿既介胄，长揖别上官。
+老妻卧路啼，岁暮衣裳单。
+孰知是死别，且复伤其寒。
+此去必不归，还闻劝加餐。
+土门壁甚坚，杏园度亦难。
+势异邺城下，纵死时犹宽。
+人生有离合，岂择衰老端。
+忆昔少壮日，迟回竟长叹。
+万国尽征戍，烽火被冈峦。
+积尸草木腥，流血川原丹。
+何乡为乐土，安敢尚盘桓。
+弃绝蓬室居，塌然摧肺肝。
+</code></pre><h2 id="010-长恨歌">010 长恨歌</h2>
+<p>白居易</p>
+<pre><code>汉皇重色思倾国，御宇多年求不得。
+杨家有女初长成，养在深闺人未识。
+天生丽质难自弃，一朝选在君王侧。
+回眸一笑百媚生，六宫粉黛无颜色。
+春寒赐浴华清池，温泉水滑洗凝脂。
+侍儿扶起娇无力，始是新承恩泽时。
+云鬓花颜金步摇，芙蓉帐暖度春宵。
+春宵苦短日高起，从此君王不早朝。
+承欢侍宴无闲暇，春从春游夜专夜。
+后宫佳丽三千人，三千宠爱在一身。
+金屋妆成娇侍夜，玉楼宴罢醉和春。
+姊妹弟兄皆列土，可怜光采生门户。
+遂令天下父母心，不重生男重生女。
+骊宫高处入青云，仙乐风飘处处闻。
+缓歌慢舞凝丝竹，尽日君王看不足。
+渔阳鼙鼓动地来，惊破霓裳羽衣曲。
+九重城阙烟尘生，千乘万骑西南行。
+翠华摇摇行复止，西出都门百余里。
+六军不发无奈何，宛转蛾眉马前死。
+花钿委地无人收，翠翅金雀玉搔头。
+君王掩面救不得，回看血泪相和流。
+黄埃散漫风萧索，云栈萦纡登剑阁。
+峨嵋山下少人行，旌旗无光日色薄。
+蜀江水碧蜀山青，圣主朝朝暮暮情。
+行宫见月伤心色，夜雨闻铃肠断声。
+天旋地转回龙驭，到此踌躇不能去。
+马嵬坡下泥土中，不见玉颜空死处。
+君臣相顾尽沾衣，东望都门信马归。
+归来池苑皆依旧，太液芙蓉未央柳。
+芙蓉如面柳如眉，对此如何不泪垂。
+春风桃李花开夜，秋雨梧桐叶落时。
+西宫南苑多秋草，落叶满阶红不扫。
+梨园弟子白发新，椒房阿监青娥老。
+夕殿萤飞思悄然，孤灯挑尽未成眠。
+迟迟钟鼓初长夜，耿耿星河欲曙天。
+鸳鸯瓦冷霜华重，翡翠衾寒谁与共。
+悠悠生死别经年，魂魄不曾来入梦。
+临邛道士鸿都客，能以精诚致魂魄。
+为感君王辗转思，遂教方士殷勤觅。
+排空驭气奔如电，升天入地求之遍。
+上穷碧落下黄泉，两处茫茫皆不见。
+忽闻海上有仙山，山在虚无缥缈间。
+楼阁玲珑五云起，其中绰约多仙子。
+中有一人字太真，雪肤花貌参差是。
+金阙西厢叩玉扃，转教小玉报双成。
+闻道汉家天子使，九华帐里梦魂惊。
+揽衣推枕起徘徊，珠箔银屏迤逦开。
+云髻半偏新睡觉，花冠不整下堂来。
+风吹仙袂飘飖举，犹似霓裳羽衣舞。
+玉容寂寞泪阑干，梨花一枝春带雨。
+含情凝睇谢君王，一别音容两渺茫。
+昭阳殿里恩爱绝，蓬莱宫中日月长。
+回头下望人寰处，不见长安见尘雾。
+惟将旧物表深情，钿合金钗寄将去。
+钗留一股合一扇，钗擘黄金合分钿。
+但教心似金钿坚，天上人间会相见。
+临别殷勤重寄词，词中有誓两心知。
+七月七日长生殿，夜半无人私语时。
+在天愿作比翼鸟，在地愿为连理枝。
+天长地久有时尽，此恨绵绵无绝期。
+</code></pre>
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li>
+        
+        <li><a href="/post/%E6%8E%A5%E9%9B%A8%E6%B0%B4/">接雨水</a></li>
+        
+        <li><a href="/archives/">归档</a></li>
+        
+        <li><a href="/search/">搜索</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            没有标签
+            
         </div>
     </article>
     
-
     
 
-
-
-
-
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "aszhc/aszhc.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
 </div>
 
                 </div>
@@ -253,6 +598,17 @@
     </div>
 </footer>
 
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 
 
 <a id="rocket" href="#top"></a>

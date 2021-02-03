@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>计算机网络相关博客连接</title>
+      <link>https://aszhc.github.io/tools/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3%E5%8D%9A%E5%AE%A2%E8%BF%9E%E6%8E%A5/</link>
+      <pubDate>Wed, 03 Feb 2021 15:05:24 +0800</pubDate>
+      
+      <guid>https://aszhc.github.io/tools/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3%E5%8D%9A%E5%AE%A2%E8%BF%9E%E6%8E%A5/</guid>
+      <description>小林coding 图解网络 30 张图解 HTTP 常见的面试题 探究！一个数据包在网络中的心路历程 图解一下 ping 的工作原理 TCP 三次握手和四次挥手面试题 TCP 重传、滑动窗</description>
+    </item>
+    
+    <item>
       <title>Mysql必知必会</title>
       <link>https://aszhc.github.io/tools/mysql%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/</link>
       <pubDate>Fri, 29 Jan 2021 13:41:13 +0800</pubDate>
@@ -26,7 +35,7 @@
       <pubDate>Sun, 03 Jan 2021 14:51:30 +0800</pubDate>
       
       <guid>https://aszhc.github.io/about/</guid>
-      <description>你好 老将行 少年十五二十时，步行夺得胡马骑。 射杀中山白额虎，肯数邺下黄须儿！ 一身转战三千里，一剑曾当百万师。 汉兵奋迅如霹雳，虏骑崩腾畏蒺藜。 卫</description>
+      <description>Hello World ！ 尘劳迥脱事非常，紧把绳头做一场。 不经一番寒彻骨，怎得梅花扑鼻香。</description>
     </item>
     
     <item>
@@ -57,21 +66,21 @@
     </item>
     
     <item>
-      <title>New</title>
-      <link>https://aszhc.github.io/tools/new/</link>
-      <pubDate>Tue, 07 Apr 2020 16:59:21 +0800</pubDate>
-      
-      <guid>https://aszhc.github.io/tools/new/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>递归</title>
       <link>https://aszhc.github.io/post/%E9%80%92%E5%BD%92/</link>
       <pubDate>Mon, 02 Mar 2020 13:02:35 +0800</pubDate>
       
       <guid>https://aszhc.github.io/post/%E9%80%92%E5%BD%92/</guid>
       <description>To iterate is human, to recurse, divine. 人理解迭代，神理解递归。 什么是递归 递归算法（英语：recursion algorithm）在计算机科学中是指一种通过重复将问题分</description>
+    </item>
+    
+    <item>
+      <title>古诗词</title>
+      <link>https://aszhc.github.io/tools/%E5%8F%A4%E8%AF%97%E8%AF%8D/</link>
+      <pubDate>Mon, 03 Feb 2020 15:26:07 +0800</pubDate>
+      
+      <guid>https://aszhc.github.io/tools/%E5%8F%A4%E8%AF%97%E8%AF%8D/</guid>
+      <description>001 老将行 王维 少年十五二十时，步行夺得胡马骑。 射杀中山白额虎，肯数邺下黄须儿！ 一身转战三千里，一剑曾当百万师。 汉兵奋迅如霹雳，虏骑崩腾畏蒺藜。</description>
     </item>
     
     <item>
