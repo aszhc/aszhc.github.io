@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>哈希映射和集合练习 | 周闖的博客</title>
-    <meta property="og:title" content="哈希映射和集合练习 - 周闖的博客">
+    <title>Golang中make与new有何区别？ | 周闖的博客</title>
+    <meta property="og:title" content="Golang中make与new有何区别？ - 周闖的博客">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2020-05-09T18:19:00&#43;08:00'>
+    <meta property="article:published_time" content='2021-03-04T21:00:03&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2020-05-09T18:19:00&#43;08:00'>
+    <meta property="article:modified_time" content='2021-03-04T21:00:03&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,博客,项目管理,python,公众号">
-    <meta name="description" content="哈希映射和集合练习">
+    <meta name="description" content="Golang中make与new有何区别？">
         
     <meta name="author" content="周闖">
-    <meta property="og:url" content="https://aszhc.github.io/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/">
+    <meta property="og:url" content="https://aszhc.github.io/post/Golang%E4%B8%ADmake%E4%B8%8Enew%E6%9C%89%E4%BD%95%E5%8C%BA%E5%88%AB/">
     <link rel="shortcut icon" href="logo.ico" type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -147,9 +147,11 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#1-有效的字母异位词httpsleetcode-cncomproblemsvalid-anagram">1. <a href="https://leetcode-cn.com/problems/valid-anagram/">有效的字母异位词</a></a></li>
-    <li><a href="#2-两数之和httpsleetcode-cncomproblemstwo-sum">2. <a href="https://leetcode-cn.com/problems/two-sum/">两数之和</a></a></li>
-    <li><a href="#3-字母异位词分组httpsleetcode-cncomproblemsgroup-anagrams">3. <a href="https://leetcode-cn.com/problems/group-anagrams/">字母异位词分组</a></a></li>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#变量的声明">变量的声明</a></li>
+    <li><a href="#new">new</a></li>
+    <li><a href="#make">make</a></li>
+    <li><a href="#make与new的异同">make与new的异同</a></li>
   </ul>
 </nav>
     </div>
@@ -183,16 +185,16 @@
 </script>
     <article class="post">
         <header>
-            <h1 class="post-title">哈希映射和集合练习</h1>
+            <h1 class="post-title">Golang中make与new有何区别？</h1>
         </header>
         <date class="post-meta meta-date">
-            2020年5月9日
+            2021年3月4日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='https://aszhc.github.io/categories/%E7%AE%97%E6%B3%95'>算法</a></span>
+            <span class="meta-category"><a href='https://aszhc.github.io/categories/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80'>语言基础</a></span>
             
         </div>
         
@@ -204,16 +206,134 @@
         
         
         <div class="post-content">
-            <h1 id="哈希映射和集合练习">哈希映射和集合练习</h1>
-<h2 id="1-有效的字母异位词httpsleetcode-cncomproblemsvalid-anagram">1. <a href="https://leetcode-cn.com/problems/valid-anagram/">有效的字母异位词</a></h2>
-<p>给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。</p>
-<p>示例 1:</p>
-<pre><code>输入: s = &quot;anagram&quot;, t = &quot;nagaram&quot;
-输出: true
-</code></pre><p>示例 2:</p>
-<pre><code>输入: s = &quot;rat&quot;, t = &quot;car&quot;
-输出: false
-</code></pre><div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+            <h1 id="golang中make与new的区别">Golang中make与new的区别</h1>
+<h2 id="前言">前言</h2>
+<p>new和make是内建的两个函数，主要用来分配类型内存</p>
+<h2 id="变量的声明">变量的声明</h2>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#66d9ef">int</span>
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>变量的声明我们可以通过var关键字，然后就可以在程序中使用。当我们不指定变量的默认值时，这些变量的默认值是他们的零值，比如int类型的零值是0,string类型的零值是<code>&quot;&quot;</code>，引用类型的零值是<code>nil</code>。</p>
+<p>对于例子中的两种类型的声明，我们可以直接使用，对其进行赋值输出。但是如果我们换成指针类型呢？</p>
+<blockquote>
+<p>test1.go</p>
+</blockquote>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+ <span style="color:#e6db74">&#34;fmt&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+   <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">int</span>
+   <span style="color:#f92672">*</span><span style="color:#a6e22e">i</span>=<span style="color:#ae81ff">10</span>
+   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">i</span>)
+}
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">run</span> <span style="color:#a6e22e">test1</span>.<span style="color:#66d9ef">go</span> 
+<span style="color:#a6e22e">panic</span>: <span style="color:#a6e22e">runtime</span> <span style="color:#66d9ef">error</span>: <span style="color:#a6e22e">invalid</span> <span style="color:#a6e22e">memory</span> <span style="color:#a6e22e">address</span> <span style="color:#a6e22e">or</span> <span style="color:#66d9ef">nil</span> <span style="color:#a6e22e">pointer</span> <span style="color:#a6e22e">dereference</span>
+[<span style="color:#a6e22e">signal</span> <span style="color:#a6e22e">SIGSEGV</span>: <span style="color:#a6e22e">segmentation</span> <span style="color:#a6e22e">violation</span> <span style="color:#a6e22e">code</span>=<span style="color:#ae81ff">0x1</span> <span style="color:#a6e22e">addr</span>=<span style="color:#ae81ff">0x0</span> <span style="color:#a6e22e">pc</span>=<span style="color:#ae81ff">0x4849df</span>]
+
+<span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">1</span> [<span style="color:#a6e22e">running</span>]:
+<span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">main</span>()
+	<span style="color:#f92672">/</span><span style="color:#a6e22e">home</span><span style="color:#f92672">/</span><span style="color:#a6e22e">itheima</span><span style="color:#f92672">/</span><span style="color:#66d9ef">go</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">golang_deeper</span><span style="color:#f92672">/</span><span style="color:#a6e22e">make_new</span><span style="color:#f92672">/</span><span style="color:#a6e22e">t</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>从这个提示中可以看出，对于引用类型的变量，我们不光要声明它，还要为它分配内容空间，否则我们的值放在哪里去呢？这就是上面错误提示的原因。</p>
+<p>对于值类型的声明不需要，是因为已经默认帮我们分配好了。</p>
+<p>要分配内存，就引出来今天的<code>new</code>和<code>make</code>。</p>
+<blockquote>
+<p>Golang中分为<strong>值类型</strong>和<strong>引用类型</strong></p>
+<ul>
+<li>
+<p>值类型分别有：int系列、float系列、bool、string、数组和结构体</p>
+</li>
+<li>
+<p>引用类型有：指针、slice切片、管道channel、接口interface、map、函数等</p>
+</li>
+<li>
+<p>值类型的特点是：变量直接存储值，内存通常在栈中分配</p>
+</li>
+<li>
+<p>引用类型的特点是：变量存储的是一个地址，这个地址对应的空间里才是真正存储的值，内存通常在堆中分配</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="new">new</h2>
+<p>对于上面的问题我们如何解决呢？既然我们知道了没有为其分配内存，那么我们使用new分配一个吧。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+   <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">int</span>
+   <span style="color:#a6e22e">i</span>=new(<span style="color:#66d9ef">int</span>)
+   <span style="color:#f92672">*</span><span style="color:#a6e22e">i</span>=<span style="color:#ae81ff">10</span>
+   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">i</span>)
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>现在再运行程序，完美PASS，打印10。现在让我们看下new这个内置的函数。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// The new built-in function allocates memory. The first argument is a type,
+</span><span style="color:#75715e">// not a value, and the value returned is a pointer to a newly
+</span><span style="color:#75715e">// allocated zero value of that type.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> new(<span style="color:#a6e22e">Type</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Type</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>它只接受一个参数，这个参数是一个类型，分配好内存后，返回一个指向该类型内存地址的指针。同时请注意它同时把分配的内存置为零，也就是类型的零值。</p>
+<p>我们的例子中，如果没有<code>*i=10</code>，那么打印的就是0。这里体现不出来new函数这种内存置为零的好处，我们再看一个例子。</p>
+<blockquote>
+<p>test2.go</p>
+</blockquote>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
@@ -238,131 +358,84 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">isAnagram</span>(self, s: str, t: str) <span style="color:#f92672">-&gt;</span> bool:
-        <span style="color:#75715e"># 1. 哈希 set</span>
-        <span style="color:#66d9ef">if</span> len(s) <span style="color:#f92672">!=</span> len(t):
-            <span style="color:#66d9ef">return</span> False
-        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> set(s):
-            <span style="color:#66d9ef">if</span> s<span style="color:#f92672">.</span>count(i) <span style="color:#f92672">!=</span> t<span style="color:#f92672">.</span>count(i):
-                <span style="color:#66d9ef">return</span> False
-        <span style="color:#66d9ef">return</span> True
-        <span style="color:#75715e"># 2. 哈希 dict</span>
-        <span style="color:#66d9ef">if</span> len(s) <span style="color:#f92672">!=</span> len(t):
-            <span style="color:#66d9ef">return</span> False
-        dit <span style="color:#f92672">=</span> {}
-        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> s:
-            <span style="color:#66d9ef">if</span> i <span style="color:#f92672">in</span> dit:
-                dit[i] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-            <span style="color:#66d9ef">else</span>:
-                dit[i] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> t:
-            <span style="color:#66d9ef">if</span> i <span style="color:#f92672">in</span> dit:
-                dit[i] <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
-            <span style="color:#66d9ef">else</span>:
-                <span style="color:#66d9ef">return</span> False
-        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> dit:
-            <span style="color:#66d9ef">if</span> dit[i] <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
-                <span style="color:#66d9ef">return</span> False
-        <span style="color:#66d9ef">return</span> True
-        <span style="color:#75715e"># 3. python 特性</span>
-        <span style="color:#66d9ef">return</span> sorted(s) <span style="color:#f92672">==</span> sorted(t)
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="2-两数之和httpsleetcode-cncomproblemstwo-sum">2. <a href="https://leetcode-cn.com/problems/two-sum/">两数之和</a></h2>
-<p>给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。</p>
-<p>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。</p>
-<p>示例:</p>
-<pre><code>给定 nums = [2, 7, 11, 15], target = 9
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
-因为 nums[0] + nums[1] = 2 + 7 = 9
-所以返回 [0, 1]
-</code></pre><div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">twoSum</span>(self, nums: List[int], target: int) <span style="color:#f92672">-&gt;</span> List[int]:
-        <span style="color:#75715e"># 1. 遍历就完事了</span>
-        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(nums)):
-            <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, len(nums)):
-                <span style="color:#66d9ef">if</span> nums[i] <span style="color:#f92672">+</span> nums[j] <span style="color:#f92672">==</span> target:
-                    <span style="color:#66d9ef">return</span> [i,j]
-        <span style="color:#75715e"># 2. 哈希</span>
-        ans_map <span style="color:#f92672">=</span> dict()
-        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(nums)):
-            want <span style="color:#f92672">=</span> target <span style="color:#f92672">-</span> nums[i]
-            <span style="color:#66d9ef">if</span> want <span style="color:#f92672">in</span> ans_map:
-                <span style="color:#66d9ef">return</span> [ans_map[want], i]
-            ans_map[nums[i]] <span style="color:#f92672">=</span> i
+<span style="color:#f92672">import</span> (
+    <span style="color:#e6db74">&#34;fmt&#34;</span>
+    <span style="color:#e6db74">&#34;sync&#34;</span>
+)
+
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">user</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">lock</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>
+    <span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>
+    <span style="color:#a6e22e">age</span> <span style="color:#66d9ef">int</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+
+    <span style="color:#a6e22e">u</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">user</span>) <span style="color:#75715e">//默认给u分配到内存全部为0
+</span><span style="color:#75715e"></span>
+    <span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Lock</span>()  <span style="color:#75715e">//可以直接使用，因为lock为0,是开锁状态
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;张三&#34;</span>
+    <span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Unlock</span>()
+
+    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
+}
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="3-字母异位词分组httpsleetcode-cncomproblemsgroup-anagrams">3. <a href="https://leetcode-cn.com/problems/group-anagrams/">字母异位词分组</a></h2>
-<p>给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。</p>
-<p>示例:</p>
-<pre><code>输入: [&quot;eat&quot;, &quot;tea&quot;, &quot;tan&quot;, &quot;ate&quot;, &quot;nat&quot;, &quot;bat&quot;]
-输出:
-[
-  [&quot;ate&quot;,&quot;eat&quot;,&quot;tea&quot;],
-  [&quot;nat&quot;,&quot;tan&quot;],
-  [&quot;bat&quot;]
-]
-</code></pre><p><strong>说明：</strong></p>
-<ul>
-<li>所有输入均为小写字母。</li>
-<li>不考虑答案输出的顺序。</li>
-</ul>
+</div><p>运行</p>
 <div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">groupAnagrams</span>(self, strs: List[str]) <span style="color:#f92672">-&gt;</span> List[List[str]]:
-        res <span style="color:#f92672">=</span> []
-        dic <span style="color:#f92672">=</span> {}
-        <span style="color:#66d9ef">for</span> s <span style="color:#f92672">in</span> strs:
-            keys <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(sorted(s))
-            <span style="color:#66d9ef">if</span> keys <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> dic:
-                dic[keys] <span style="color:#f92672">=</span> [s]
-            <span style="color:#66d9ef">else</span>:
-                dic[keys]<span style="color:#f92672">.</span>append(s)
-        <span style="color:#66d9ef">return</span> list(dic<span style="color:#f92672">.</span>values())
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">run</span> <span style="color:#a6e22e">test2</span>.<span style="color:#66d9ef">go</span> 
+<span style="color:#f92672">&amp;</span>{{<span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span>} <span style="color:#a6e22e">张三</span> <span style="color:#ae81ff">0</span>}
 </code></pre></td></tr></table>
 </div>
+</div><p>示例中的user类型中的lock字段我不用初始化，直接可以拿来用，不会有无效内存引用异常，因为它已经被零值了。</p>
+<p>这就是new，它返回的永远是类型的指针，指向分配类型的内存地址。</p>
+<h2 id="make">make</h2>
+<p>make也是用于内存分配的，但是和new不同。</p>
+<p>它只用于</p>
+<ul>
+<li>chan</li>
+<li>map</li>
+<li>slice</li>
+</ul>
+<p>的内存创建，而且它返回的类型就是这三个类型本身，而不是他们的指针类型，因为这三种类型就是引用类型，所以就没有必要返回他们的指针了。</p>
+<p>注意，因为这三种类型是引用类型，所以必须得初始化，但是不是置为零值，这个和new是不一样的。</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> make(<span style="color:#a6e22e">t</span> <span style="color:#a6e22e">Type</span>, <span style="color:#a6e22e">size</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">IntegerType</span>) <span style="color:#a6e22e">Type</span>
+</code></pre></td></tr></table>
 </div>
+</div><p>从函数声明中可以看到，返回的还是该类型。</p>
+<h2 id="make与new的异同">make与new的异同</h2>
+<p>相同</p>
+<ul>
+<li>堆空间分配</li>
+</ul>
+<p>不同</p>
+<p>make: 只用于slice、map以及channel的初始化， 无可替代</p>
+<p>new: 用于类型内存分配(初始化值为0)， 不常用</p>
+<blockquote>
+<p>new不常用</p>
+<p>所以有new这个内置函数，可以给我们分配一块内存让我们使用，但是现实的编码中，它是不常用的。我们通常都是采用短语句声明以及结构体的字面量达到我们的目的，比如：</p>
+<pre><code>i : =0
+u := user{}
+</code></pre></blockquote>
+<blockquote>
+<p>make 无可替代</p>
+<p>我们在使用slice、map以及channel的时候，还是要使用make进行初始化，然后才才可以对他们进行操作。</p>
+</blockquote>
+
         </div>
 
         
@@ -374,15 +447,15 @@
     <h2>See Also</h2>
     <ul class="listing">
         
+        <li><a href="/tools/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3%E5%8D%9A%E5%AE%A2%E8%BF%9E%E6%8E%A5/">计算机网络相关博客连接</a></li>
+        
+        <li><a href="/tools/mysql%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">Mysql必知必会</a></li>
+        
+        <li><a href="/about/">About</a></li>
+        
+        <li><a href="/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/">哈希映射和集合练习</a></li>
+        
         <li><a href="/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/">栈和队列练习题</a></li>
-        
-        <li><a href="/post/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/">数组、链表练习题</a></li>
-        
-        <li><a href="/post/%E9%80%92%E5%BD%92/">递归</a></li>
-        
-        <li><a href="/tools/%E5%8F%A4%E8%AF%97%E8%AF%8D/">古诗词</a></li>
-        
-        <li><a href="/post/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li>
         
     </ul>
 </div>
@@ -392,9 +465,7 @@
             
             <ul class="clearfix">
                 
-                <li><a href='https://aszhc.github.io/tags/%E5%93%88%E5%B8%8C'>哈希</a></li>
-                
-                <li><a href='https://aszhc.github.io/tags/%E9%9B%86%E5%90%88'>集合</a></li>
+                <li><a href='https://aszhc.github.io/tags/Golang'>Golang</a></li>
                 
             </ul>
             

@@ -6,10 +6,19 @@
     <description>Recent content in Posts on 周闖的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 09 May 2020 18:19:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 04 Mar 2021 21:00:03 +0800</lastBuildDate>
     
 	<atom:link href="https://aszhc.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Golang中make与new有何区别？</title>
+      <link>https://aszhc.github.io/post/Golang%E4%B8%ADmake%E4%B8%8Enew%E6%9C%89%E4%BD%95%E5%8C%BA%E5%88%AB/</link>
+      <pubDate>Thu, 04 Mar 2021 21:00:03 +0800</pubDate>
+      
+      <guid>https://aszhc.github.io/post/Golang%E4%B8%ADmake%E4%B8%8Enew%E6%9C%89%E4%BD%95%E5%8C%BA%E5%88%AB/</guid>
+      <description>Golang中make与new的区别 前言 new和make是内建的两个函数，主要用来分配类型内存 变量的声明 1 2 var i int var s string 变量的声明我们可以通</description>
+    </item>
     
     <item>
       <title>哈希映射和集合练习</title>
