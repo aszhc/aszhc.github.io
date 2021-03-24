@@ -146,13 +146,13 @@
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
         <nav id="TableOfContents">
-  <ul>
+  <ol>
     <li><a href="#前言">前言</a></li>
     <li><a href="#变量的声明">变量的声明</a></li>
     <li><a href="#new">new</a></li>
     <li><a href="#make">make</a></li>
     <li><a href="#make与new的异同">make与new的异同</a></li>
-  </ul>
+  </ol>
 </nav>
     </div>
 </div>
@@ -210,14 +210,14 @@
 <h2 id="前言">前言</h2>
 <p>new和make是内建的两个函数，主要用来分配类型内存</p>
 <h2 id="变量的声明">变量的声明</h2>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#66d9ef">int</span>
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">var</span> i <span style="color:#cdcaa9;font-weight:bold">int</span>
+<span style="color:#fb660a;font-weight:bold">var</span> s <span style="color:#cdcaa9;font-weight:bold">string</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>变量的声明我们可以通过var关键字，然后就可以在程序中使用。当我们不指定变量的默认值时，这些变量的默认值是他们的零值，比如int类型的零值是0,string类型的零值是<code>&quot;&quot;</code>，引用类型的零值是<code>nil</code>。</p>
@@ -225,9 +225,9 @@
 <blockquote>
 <p>test1.go</p>
 </blockquote>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -240,22 +240,22 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">package</span> main
 
-<span style="color:#f92672">import</span> (
- <span style="color:#e6db74">&#34;fmt&#34;</span>
+<span style="color:#fb660a;font-weight:bold">import</span> (
+ <span style="color:#0086d2">&#34;fmt&#34;</span>
 )
 
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-   <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">int</span>
-   <span style="color:#f92672">*</span><span style="color:#a6e22e">i</span>=<span style="color:#ae81ff">10</span>
-   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">i</span>)
+<span style="color:#fb660a;font-weight:bold">func</span> <span style="color:#ff0086;font-weight:bold">main</span>() {
+   <span style="color:#fb660a;font-weight:bold">var</span> i *<span style="color:#cdcaa9;font-weight:bold">int</span>
+   *i=<span style="color:#0086f7;font-weight:bold">10</span>
+   fmt.<span style="color:#ff0086;font-weight:bold">Println</span>(*i)
 }
 </code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+</div><div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -264,13 +264,13 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">run</span> <span style="color:#a6e22e">test1</span>.<span style="color:#66d9ef">go</span> 
-<span style="color:#a6e22e">panic</span>: <span style="color:#a6e22e">runtime</span> <span style="color:#66d9ef">error</span>: <span style="color:#a6e22e">invalid</span> <span style="color:#a6e22e">memory</span> <span style="color:#a6e22e">address</span> <span style="color:#a6e22e">or</span> <span style="color:#66d9ef">nil</span> <span style="color:#a6e22e">pointer</span> <span style="color:#a6e22e">dereference</span>
-[<span style="color:#a6e22e">signal</span> <span style="color:#a6e22e">SIGSEGV</span>: <span style="color:#a6e22e">segmentation</span> <span style="color:#a6e22e">violation</span> <span style="color:#a6e22e">code</span>=<span style="color:#ae81ff">0x1</span> <span style="color:#a6e22e">addr</span>=<span style="color:#ae81ff">0x0</span> <span style="color:#a6e22e">pc</span>=<span style="color:#ae81ff">0x4849df</span>]
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">$ <span style="color:#fb660a;font-weight:bold">go</span> run test1.<span style="color:#fb660a;font-weight:bold">go</span> 
+panic: runtime <span style="color:#cdcaa9;font-weight:bold">error</span>: invalid memory address or <span style="color:#fb660a;font-weight:bold">nil</span> pointer dereference
+[signal SIGSEGV: segmentation violation code=<span style="color:#0086f7;font-weight:bold">0x1</span> addr=<span style="color:#0086f7;font-weight:bold">0x0</span> pc=<span style="color:#0086f7;font-weight:bold">0x4849df</span>]
 
-<span style="color:#a6e22e">goroutine</span> <span style="color:#ae81ff">1</span> [<span style="color:#a6e22e">running</span>]:
-<span style="color:#a6e22e">main</span>.<span style="color:#a6e22e">main</span>()
-	<span style="color:#f92672">/</span><span style="color:#a6e22e">home</span><span style="color:#f92672">/</span><span style="color:#a6e22e">itheima</span><span style="color:#f92672">/</span><span style="color:#66d9ef">go</span><span style="color:#f92672">/</span><span style="color:#a6e22e">src</span><span style="color:#f92672">/</span><span style="color:#a6e22e">golang_deeper</span><span style="color:#f92672">/</span><span style="color:#a6e22e">make_new</span><span style="color:#f92672">/</span><span style="color:#a6e22e">t</span>
+goroutine <span style="color:#0086f7;font-weight:bold">1</span> [running]:
+main.<span style="color:#ff0086;font-weight:bold">main</span>()
+	/home/itheima/<span style="color:#fb660a;font-weight:bold">go</span>/src/golang_deeper/make_new/t
 </code></pre></td></tr></table>
 </div>
 </div><p>从这个提示中可以看出，对于引用类型的变量，我们不光要声明它，还要为它分配内容空间，否则我们的值放在哪里去呢？这就是上面错误提示的原因。</p>
@@ -295,9 +295,9 @@
 </blockquote>
 <h2 id="new">new</h2>
 <p>对于上面的问题我们如何解决呢？既然我们知道了没有为其分配内存，那么我们使用new分配一个吧。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -305,27 +305,27 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-   <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">int</span>
-   <span style="color:#a6e22e">i</span>=new(<span style="color:#66d9ef">int</span>)
-   <span style="color:#f92672">*</span><span style="color:#a6e22e">i</span>=<span style="color:#ae81ff">10</span>
-   <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">i</span>)
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">func</span> <span style="color:#ff0086;font-weight:bold">main</span>() {
+   <span style="color:#fb660a;font-weight:bold">var</span> i *<span style="color:#cdcaa9;font-weight:bold">int</span>
+   i=new(<span style="color:#cdcaa9;font-weight:bold">int</span>)
+   *i=<span style="color:#0086f7;font-weight:bold">10</span>
+   fmt.<span style="color:#ff0086;font-weight:bold">Println</span>(*i)
 }
 </code></pre></td></tr></table>
 </div>
 </div><p>现在再运行程序，完美PASS，打印10。现在让我们看下new这个内置的函数。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// The new built-in function allocates memory. The first argument is a type,
-</span><span style="color:#75715e">// not a value, and the value returned is a pointer to a newly
-</span><span style="color:#75715e">// allocated zero value of that type.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> new(<span style="color:#a6e22e">Type</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Type</span>
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#080;background-color:#0f140f;font-style:italic">// The new built-in function allocates memory. The first argument is a type,
+</span><span style="color:#080;background-color:#0f140f;font-style:italic">// not a value, and the value returned is a pointer to a newly
+</span><span style="color:#080;background-color:#0f140f;font-style:italic">// allocated zero value of that type.
+</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span><span style="color:#fb660a;font-weight:bold">func</span> new(Type) *Type
 </code></pre></td></tr></table>
 </div>
 </div><p>它只接受一个参数，这个参数是一个类型，分配好内存后，返回一个指向该类型内存地址的指针。同时请注意它同时把分配的内存置为零，也就是类型的零值。</p>
@@ -333,9 +333,9 @@
 <blockquote>
 <p>test2.go</p>
 </blockquote>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -360,40 +360,40 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">package</span> main
 
-<span style="color:#f92672">import</span> (
-    <span style="color:#e6db74">&#34;fmt&#34;</span>
-    <span style="color:#e6db74">&#34;sync&#34;</span>
+<span style="color:#fb660a;font-weight:bold">import</span> (
+    <span style="color:#0086d2">&#34;fmt&#34;</span>
+    <span style="color:#0086d2">&#34;sync&#34;</span>
 )
 
-<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">user</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#a6e22e">lock</span> <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">Mutex</span>
-    <span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>
-    <span style="color:#a6e22e">age</span> <span style="color:#66d9ef">int</span>
+<span style="color:#fb660a;font-weight:bold">type</span> user <span style="color:#fb660a;font-weight:bold">struct</span> {
+    lock sync.Mutex
+    name <span style="color:#cdcaa9;font-weight:bold">string</span>
+    age <span style="color:#cdcaa9;font-weight:bold">int</span>
 }
 
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+<span style="color:#fb660a;font-weight:bold">func</span> <span style="color:#ff0086;font-weight:bold">main</span>() {
 
-    <span style="color:#a6e22e">u</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">user</span>) <span style="color:#75715e">//默认给u分配到内存全部为0
-</span><span style="color:#75715e"></span>
-    <span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Lock</span>()  <span style="color:#75715e">//可以直接使用，因为lock为0,是开锁状态
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">name</span> = <span style="color:#e6db74">&#34;张三&#34;</span>
-    <span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">lock</span>.<span style="color:#a6e22e">Unlock</span>()
+    u := new(user) <span style="color:#080;background-color:#0f140f;font-style:italic">//默认给u分配到内存全部为0
+</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>
+    u.lock.<span style="color:#ff0086;font-weight:bold">Lock</span>()  <span style="color:#080;background-color:#0f140f;font-style:italic">//可以直接使用，因为lock为0,是开锁状态
+</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>    u.name = <span style="color:#0086d2">&#34;张三&#34;</span>
+    u.lock.<span style="color:#ff0086;font-weight:bold">Unlock</span>()
 
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
+    fmt.<span style="color:#ff0086;font-weight:bold">Println</span>(u)
 }
 </code></pre></td></tr></table>
 </div>
 </div><p>运行</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">run</span> <span style="color:#a6e22e">test2</span>.<span style="color:#66d9ef">go</span> 
-<span style="color:#f92672">&amp;</span>{{<span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span>} <span style="color:#a6e22e">张三</span> <span style="color:#ae81ff">0</span>}
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">$ <span style="color:#fb660a;font-weight:bold">go</span> run test2.<span style="color:#fb660a;font-weight:bold">go</span> 
+&amp;{{<span style="color:#0086f7;font-weight:bold">0</span> <span style="color:#0086f7;font-weight:bold">0</span>} 张三 <span style="color:#0086f7;font-weight:bold">0</span>}
 </code></pre></td></tr></table>
 </div>
 </div><p>示例中的user类型中的lock字段我不用初始化，直接可以拿来用，不会有无效内存引用异常，因为它已经被零值了。</p>
@@ -408,12 +408,12 @@
 </ul>
 <p>的内存创建，而且它返回的类型就是这三个类型本身，而不是他们的指针类型，因为这三种类型就是引用类型，所以就没有必要返回他们的指针了。</p>
 <p>注意，因为这三种类型是引用类型，所以必须得初始化，但是不是置为零值，这个和new是不一样的。</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> make(<span style="color:#a6e22e">t</span> <span style="color:#a6e22e">Type</span>, <span style="color:#a6e22e">size</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">IntegerType</span>) <span style="color:#a6e22e">Type</span>
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">func</span> make(t Type, size ...IntegerType) Type
 </code></pre></td></tr></table>
 </div>
 </div><p>从函数声明中可以看到，返回的还是该类型。</p>
@@ -505,6 +505,18 @@ u := user{}
 <ul class="widget-list">
     
     <li>
+        <a href="https://aszhc.github.io/post/Golang-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/" title="Golang Struct 内存对齐">Golang Struct 内存对齐</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Golang-Slice%E5%8E%9F%E7%90%86/" title="Golang Slice原理">Golang Slice原理</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Golang-Map%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" title="Golang Map的实现原理">Golang Map的实现原理</a>
+    </li>
+    
+    <li>
         <a href="https://aszhc.github.io/post/Golang%E4%B8%ADmake%E4%B8%8Enew%E6%9C%89%E4%BD%95%E5%8C%BA%E5%88%AB/" title="Golang中make与new有何区别？">Golang中make与new有何区别？</a>
     </li>
     
@@ -543,7 +555,7 @@ u := user{}
     
     <li><a href="https://aszhc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络 (1)</a></li>
     
-    <li><a href="https://aszhc.github.io/categories/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/">语言基础 (1)</a></li>
+    <li><a href="https://aszhc.github.io/categories/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/">语言基础 (4)</a></li>
     
 </ul>
     </section>

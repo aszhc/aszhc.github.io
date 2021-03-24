@@ -146,22 +146,22 @@
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
         <nav id="TableOfContents">
-  <ul>
+  <ol>
     <li><a href="#递归的两个条件">递归的两个条件：</a></li>
     <li><a href="#递归算法的一般形式">递归算法的一般形式：</a></li>
     <li><a href="#阶乘">阶乘</a>
-      <ul>
+      <ol>
         <li><a href="#递归过程">递归过程</a></li>
-      </ul>
+      </ol>
     </li>
-  </ul>
+  </ol>
 
-  <ul>
+  <ol>
     <li><a href="#1-斐波那契数列">1. 斐波那契数列</a></li>
     <li><a href="#2猴子吃桃子">2.猴子吃桃子</a></li>
     <li><a href="#3汉诺塔问题">3.汉诺塔问题</a></li>
     <li><a href="#4-反转单链表">4. 反转单链表</a></li>
-  </ul>
+  </ol>
 </nav>
     </div>
 </div>
@@ -229,27 +229,27 @@
 <li>存在一种简单情境，可以使递归在简单情境下退出。（递归出口）</li>
 </ul>
 <h2 id="递归算法的一般形式">递归算法的一般形式：</h2>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>(mode):
-    <span style="color:#66d9ef">if</span> end_condition:  <span style="color:#75715e"># 递归出口</span>
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">f</span>(mode):
+    <span style="color:#fb660a;font-weight:bold">if</span> end_condition:  <span style="color:#080;background-color:#0f140f;font-style:italic"># 递归出口</span>
         end
-    <span style="color:#66d9ef">else</span>:
-        f(mode_small)  <span style="color:#75715e"># 递归本身，递归</span>
+    <span style="color:#fb660a;font-weight:bold">else</span>:
+        f(mode_small)  <span style="color:#080;background-color:#0f140f;font-style:italic"># 递归本身，递归</span>
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="阶乘">阶乘</h2>
 <p>一个数的阶乘是递归简单而典型的例子，阶乘的递推公式为：factorial(n)=n*factorial(n-1)，其中n为非负整数,且0!=1,1!=1</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -259,14 +259,14 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">factorial</span>(i):
-    <span style="color:#e6db74">&#34;&#34;&#34;阶乘&#34;&#34;&#34;</span>
-    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>:
-        <span style="color:#66d9ef">return</span>
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">2</span>:
-        <span style="color:#66d9ef">return</span> i
-    <span style="color:#66d9ef">else</span>:
-        <span style="color:#66d9ef">return</span> i <span style="color:#f92672">*</span> factorial(i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">factorial</span>(i):
+    <span style="color:#0086d2">&#34;&#34;&#34;阶乘&#34;&#34;&#34;</span>
+    <span style="color:#fb660a;font-weight:bold">if</span> i &lt; <span style="color:#0086f7;font-weight:bold">0</span>:
+        <span style="color:#fb660a;font-weight:bold">return</span>
+    <span style="color:#fb660a;font-weight:bold">elif</span> i &lt;= <span style="color:#0086f7;font-weight:bold">2</span>:
+        <span style="color:#fb660a;font-weight:bold">return</span> i
+    <span style="color:#fb660a;font-weight:bold">else</span>:
+        <span style="color:#fb660a;font-weight:bold">return</span> i * factorial(i-<span style="color:#0086f7;font-weight:bold">1</span>)
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="递归过程">递归过程</h3>
@@ -274,9 +274,9 @@
 <p>这个调用的过程和栈的工作原理一样，递归调用就是通过栈这种数据结构完成的。整个过程实际上就是一个栈的入栈和出栈的问题。</p>
 <p><strong>递归中的&quot;递&quot;就是入栈，&ldquo;归&quot;就是出栈。</strong></p>
 <p>入栈和出栈 的过程：</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -284,18 +284,18 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#960050;background-color:#1e0010">递归</span>(n):
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;递进：&#34;</span> <span style="color:#f92672">+</span> str(n))
-    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
-        <span style="color:#960050;background-color:#1e0010">递归</span>(n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;回归：&#34;</span> <span style="color:#f92672">+</span> str(n))
-<span style="color:#960050;background-color:#1e0010">递归</span>(<span style="color:#ae81ff">3</span>)
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">def</span> 递归(n):
+    <span style="color:#fb660a;font-weight:bold">print</span>(<span style="color:#0086d2">&#34;递进：&#34;</span> + str(n))
+    <span style="color:#fb660a;font-weight:bold">if</span> n &gt; <span style="color:#0086f7;font-weight:bold">0</span>:
+        递归(n-<span style="color:#0086f7;font-weight:bold">1</span>)
+    <span style="color:#fb660a;font-weight:bold">print</span>(<span style="color:#0086d2">&#34;回归：&#34;</span> + str(n))
+递归(<span style="color:#0086f7;font-weight:bold">3</span>)
 </code></pre></td></tr></table>
 </div>
 </div><p>output:</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -305,14 +305,14 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#960050;background-color:#1e0010">递进：</span><span style="color:#ae81ff">3</span>
-<span style="color:#960050;background-color:#1e0010">递进：</span><span style="color:#ae81ff">2</span>
-<span style="color:#960050;background-color:#1e0010">递进：</span><span style="color:#ae81ff">1</span>
-<span style="color:#960050;background-color:#1e0010">递进：</span><span style="color:#ae81ff">0</span>
-<span style="color:#960050;background-color:#1e0010">回归：</span><span style="color:#ae81ff">0</span>
-<span style="color:#960050;background-color:#1e0010">回归：</span><span style="color:#ae81ff">1</span>
-<span style="color:#960050;background-color:#1e0010">回归：</span><span style="color:#ae81ff">2</span>
-<span style="color:#960050;background-color:#1e0010">回归：</span><span style="color:#ae81ff">3</span>
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">递进：<span style="color:#0086f7;font-weight:bold">3</span>
+递进：<span style="color:#0086f7;font-weight:bold">2</span>
+递进：<span style="color:#0086f7;font-weight:bold">1</span>
+递进：<span style="color:#0086f7;font-weight:bold">0</span>
+回归：<span style="color:#0086f7;font-weight:bold">0</span>
+回归：<span style="color:#0086f7;font-weight:bold">1</span>
+回归：<span style="color:#0086f7;font-weight:bold">2</span>
+回归：<span style="color:#0086f7;font-weight:bold">3</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>递归过程：</p>
@@ -331,9 +331,9 @@
 <li>由这个数列我们可以容易发现其递推公式：f(n)=f(n-1)+f(n-2)</li>
 <li>递归结束条件：当n=1或者n=2时，f(1)=f(2)=1</li>
 </ol>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -341,12 +341,12 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fibonacci</span>(i):
-    <span style="color:#e6db74">&#34;&#34;&#34;斐波那契数列&#34;&#34;&#34;</span>
-    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">2</span>:
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
-    <span style="color:#66d9ef">else</span>:
-        <span style="color:#66d9ef">return</span> fibonacci(i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> fibonacci(i<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>)
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">fibonacci</span>(i):
+    <span style="color:#0086d2">&#34;&#34;&#34;斐波那契数列&#34;&#34;&#34;</span>
+    <span style="color:#fb660a;font-weight:bold">if</span> i &lt;= <span style="color:#0086f7;font-weight:bold">2</span>:
+        <span style="color:#fb660a;font-weight:bold">return</span> <span style="color:#0086f7;font-weight:bold">1</span>
+    <span style="color:#fb660a;font-weight:bold">else</span>:
+        <span style="color:#fb660a;font-weight:bold">return</span> fibonacci(i-<span style="color:#0086f7;font-weight:bold">1</span>) + fibonacci(i-<span style="color:#0086f7;font-weight:bold">2</span>)
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="2猴子吃桃子">2.猴子吃桃子</h2>
@@ -355,9 +355,9 @@
 <li>最后一天时，只剩下一个桃子 (结束条件)</li>
 <li>当天的桃子等于上一天加一的和乘二   <code>(monkey(n-1)+1)*2</code></li>
 </ol>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -365,12 +365,12 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">monkey</span>(n):
-    <span style="color:#e6db74">&#34;&#34;&#34;猴子分桃&#34;&#34;&#34;</span>
-    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
-        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
-    <span style="color:#66d9ef">else</span>:
-        <span style="color:#66d9ef">return</span> (monkey(n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">monkey</span>(n):
+    <span style="color:#0086d2">&#34;&#34;&#34;猴子分桃&#34;&#34;&#34;</span>
+    <span style="color:#fb660a;font-weight:bold">if</span> n == <span style="color:#0086f7;font-weight:bold">1</span>:
+        <span style="color:#fb660a;font-weight:bold">return</span> <span style="color:#0086f7;font-weight:bold">1</span>
+    <span style="color:#fb660a;font-weight:bold">else</span>:
+        <span style="color:#fb660a;font-weight:bold">return</span> (monkey(n-<span style="color:#0086f7;font-weight:bold">1</span>)+<span style="color:#0086f7;font-weight:bold">1</span>)*<span style="color:#0086f7;font-weight:bold">2</span>
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="3汉诺塔问题">3.汉诺塔问题</h2>
@@ -392,9 +392,9 @@
 <li>当只剩下一个盘子时，直接移动到C （结束条件）</li>
 <li>将n-1只盘子看成整体，通过c移动到b,然后a移动到c，最后b处的n-1只盘子经过a移动到c</li>
 </ul>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -404,14 +404,14 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hanoi</span>(n, a, b, c):  <span style="color:#75715e"># a为初始位，b为过渡位，c为目标位</span>
-    <span style="color:#e6db74">&#34;&#34;&#34;汉诺塔&#34;&#34;&#34;</span>
-    <span style="color:#66d9ef">if</span> n <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>:
-        <span style="color:#66d9ef">print</span>(a, <span style="color:#e6db74">&#39;--&gt;&#39;</span>, c)
-    <span style="color:#66d9ef">else</span>:
-        hanoi(n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, a, c, b)  <span style="color:#75715e"># 初始位为a,通过c移动到b</span>
-        <span style="color:#66d9ef">print</span>(a, <span style="color:#e6db74">&#39;--&gt;&#39;</span>, c)
-        hanoi(n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, b, a, c)  <span style="color:#75715e"># 初始位为b,通过a移动到c</span>
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">hanoi</span>(n, a, b, c):  <span style="color:#080;background-color:#0f140f;font-style:italic"># a为初始位，b为过渡位，c为目标位</span>
+    <span style="color:#0086d2">&#34;&#34;&#34;汉诺塔&#34;&#34;&#34;</span>
+    <span style="color:#fb660a;font-weight:bold">if</span> n == <span style="color:#0086f7;font-weight:bold">1</span>:
+        <span style="color:#fb660a;font-weight:bold">print</span>(a, <span style="color:#0086d2">&#39;--&gt;&#39;</span>, c)
+    <span style="color:#fb660a;font-weight:bold">else</span>:
+        hanoi(n-<span style="color:#0086f7;font-weight:bold">1</span>, a, c, b)  <span style="color:#080;background-color:#0f140f;font-style:italic"># 初始位为a,通过c移动到b</span>
+        <span style="color:#fb660a;font-weight:bold">print</span>(a, <span style="color:#0086d2">&#39;--&gt;&#39;</span>, c)
+        hanoi(n-<span style="color:#0086f7;font-weight:bold">1</span>, b, a, c)  <span style="color:#080;background-color:#0f140f;font-style:italic"># 初始位为b,通过a移动到c</span>
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="4-反转单链表">4. 反转单链表</h2>
@@ -426,9 +426,9 @@
 2.翻转当前节点：<code>head.next.next = head</code>
 3.拆掉当前节点的next：<code>head.next = None</code></li>
 </ol>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -446,22 +446,22 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Definition for singly-linked list.</span>
-<span style="color:#75715e"># class ListNode:</span>
-<span style="color:#75715e">#     def __init__(self, x):</span>
-<span style="color:#75715e">#         self.val = x</span>
-<span style="color:#75715e">#         self.next = None</span>
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;background-color:#0f140f;font-style:italic"># Definition for singly-linked list.</span>
+<span style="color:#080;background-color:#0f140f;font-style:italic"># class ListNode:</span>
+<span style="color:#080;background-color:#0f140f;font-style:italic">#     def __init__(self, x):</span>
+<span style="color:#080;background-color:#0f140f;font-style:italic">#         self.val = x</span>
+<span style="color:#080;background-color:#0f140f;font-style:italic">#         self.next = None</span>
 
 
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">reverseList</span>(self, head: ListNode) <span style="color:#f92672">-&gt;</span> ListNode:
-        <span style="color:#e6db74">&#34;&#34;&#34;反转单链表&#34;&#34;&#34;</span>
-        <span style="color:#66d9ef">if</span> head <span style="color:#f92672">is</span> None <span style="color:#f92672">or</span> head<span style="color:#f92672">.</span>next <span style="color:#f92672">is</span> None:
-            <span style="color:#66d9ef">return</span> head
-        new_head <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>reverseList(head<span style="color:#f92672">.</span>next)
-        head<span style="color:#f92672">.</span>next<span style="color:#f92672">.</span>next <span style="color:#f92672">=</span> head
-        head<span style="color:#f92672">.</span>next <span style="color:#f92672">=</span> None
-        <span style="color:#66d9ef">return</span> new_head
+<span style="color:#fb660a;font-weight:bold">class</span> Solution:
+    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">reverseList</span>(self, head: ListNode) -&gt; ListNode:
+        <span style="color:#0086d2">&#34;&#34;&#34;反转单链表&#34;&#34;&#34;</span>
+        <span style="color:#fb660a;font-weight:bold">if</span> head is None or head.next is None:
+            <span style="color:#fb660a;font-weight:bold">return</span> head
+        new_head = self.reverseList(head.next)
+        head.next.next = head
+        head.next = None
+        <span style="color:#fb660a;font-weight:bold">return</span> new_head
 </code></pre></td></tr></table>
 </div>
 </div><h1 id="适用递归的问题">适用递归的问题</h1>
@@ -477,26 +477,26 @@
 <h1 id="尾递归">尾递归</h1>
 <p>尾递归相对传统递归，其是一种特例。在尾递归中，先执行某部分的计算，然后开始调用递归，所以你可以得到当前的计算结果，而这个结果也将作为参数传入下一次递归。这也就是说函数调用出现在调用者函数的尾部，因为是尾部，所以其有一个优越于传统递归之处在于无需去保存任何局部变量，从内存消耗上，实现节约特性。</p>
 <p>普通递归调用：</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">recursion</span>(n):
-    <span style="color:#66d9ef">if</span> n<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>:
-        <span style="color:#66d9ef">return</span> n
-    <span style="color:#66d9ef">else</span>:
-        <span style="color:#66d9ef">return</span> n<span style="color:#f92672">+</span>recursion(n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)  
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">recursion</span>(n):
+    <span style="color:#fb660a;font-weight:bold">if</span> n==<span style="color:#0086f7;font-weight:bold">1</span>:
+        <span style="color:#fb660a;font-weight:bold">return</span> n
+    <span style="color:#fb660a;font-weight:bold">else</span>:
+        <span style="color:#fb660a;font-weight:bold">return</span> n+recursion(n-<span style="color:#0086f7;font-weight:bold">1</span>)  
 </code></pre></td></tr></table>
 </div>
 </div><p>调用这个函数recursion（5），编译器会执行：</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -505,36 +505,36 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">recursion(<span style="color:#ae81ff">5</span>)
-<span style="color:#ae81ff">5</span><span style="color:#f92672">+</span>recursion(<span style="color:#ae81ff">4</span>)
-<span style="color:#ae81ff">5</span><span style="color:#f92672">+</span>(<span style="color:#ae81ff">4</span><span style="color:#f92672">+</span>recursion(<span style="color:#ae81ff">3</span>))
-<span style="color:#ae81ff">5</span><span style="color:#f92672">+</span>(<span style="color:#ae81ff">4</span><span style="color:#f92672">+</span>(<span style="color:#ae81ff">3</span><span style="color:#f92672">+</span>recursion(<span style="color:#ae81ff">2</span>)))
-<span style="color:#ae81ff">5</span><span style="color:#f92672">+</span>(<span style="color:#ae81ff">4</span><span style="color:#f92672">+</span>(<span style="color:#ae81ff">3</span><span style="color:#f92672">+</span>(<span style="color:#ae81ff">2</span><span style="color:#f92672">+</span>recursion(<span style="color:#ae81ff">1</span>))))
-<span style="color:#ae81ff">5</span><span style="color:#f92672">+</span>(<span style="color:#ae81ff">4</span><span style="color:#f92672">+</span>(<span style="color:#ae81ff">3</span><span style="color:#f92672">+</span>(<span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)))
-<span style="color:#ae81ff">15</span>
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">recursion(<span style="color:#0086f7;font-weight:bold">5</span>)
+<span style="color:#0086f7;font-weight:bold">5</span>+recursion(<span style="color:#0086f7;font-weight:bold">4</span>)
+<span style="color:#0086f7;font-weight:bold">5</span>+(<span style="color:#0086f7;font-weight:bold">4</span>+recursion(<span style="color:#0086f7;font-weight:bold">3</span>))
+<span style="color:#0086f7;font-weight:bold">5</span>+(<span style="color:#0086f7;font-weight:bold">4</span>+(<span style="color:#0086f7;font-weight:bold">3</span>+recursion(<span style="color:#0086f7;font-weight:bold">2</span>)))
+<span style="color:#0086f7;font-weight:bold">5</span>+(<span style="color:#0086f7;font-weight:bold">4</span>+(<span style="color:#0086f7;font-weight:bold">3</span>+(<span style="color:#0086f7;font-weight:bold">2</span>+recursion(<span style="color:#0086f7;font-weight:bold">1</span>))))
+<span style="color:#0086f7;font-weight:bold">5</span>+(<span style="color:#0086f7;font-weight:bold">4</span>+(<span style="color:#0086f7;font-weight:bold">3</span>+(<span style="color:#0086f7;font-weight:bold">2</span>+<span style="color:#0086f7;font-weight:bold">1</span>)))
+<span style="color:#0086f7;font-weight:bold">15</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>此处编译器会分配递归栈来保存中间结果下来看尾递归实现：</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">tail_recursion</span>(n,total<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>):
-        <span style="color:#66d9ef">if</span> n<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>:
-            <span style="color:#66d9ef">return</span> total
-        <span style="color:#66d9ef">else</span>:
-            <span style="color:#66d9ef">return</span> tail_recursion(n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,  total<span style="color:#f92672">+</span>n)  
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">tail_recursion</span>(n,total=<span style="color:#0086f7;font-weight:bold">0</span>):
+        <span style="color:#fb660a;font-weight:bold">if</span> n==<span style="color:#0086f7;font-weight:bold">0</span>:
+            <span style="color:#fb660a;font-weight:bold">return</span> total
+        <span style="color:#fb660a;font-weight:bold">else</span>:
+            <span style="color:#fb660a;font-weight:bold">return</span> tail_recursion(n-<span style="color:#0086f7;font-weight:bold">1</span>,  total+n)  
 </code></pre></td></tr></table>
 </div>
 </div><p>此时，编译器做的工作：</p>
-<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -543,13 +543,13 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tail_recursion(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">0</span>)
-tail_recursion(<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>)
-tail_recursion(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">9</span>)
-tail_recursion(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">12</span>)
-tail_recursion(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">14</span>)
-tail_recursion(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">15</span>)
-<span style="color:#ae81ff">15</span>
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tail_recursion(<span style="color:#0086f7;font-weight:bold">5</span>,<span style="color:#0086f7;font-weight:bold">0</span>)
+tail_recursion(<span style="color:#0086f7;font-weight:bold">4</span>,<span style="color:#0086f7;font-weight:bold">5</span>)
+tail_recursion(<span style="color:#0086f7;font-weight:bold">3</span>,<span style="color:#0086f7;font-weight:bold">9</span>)
+tail_recursion(<span style="color:#0086f7;font-weight:bold">2</span>,<span style="color:#0086f7;font-weight:bold">12</span>)
+tail_recursion(<span style="color:#0086f7;font-weight:bold">1</span>,<span style="color:#0086f7;font-weight:bold">14</span>)
+tail_recursion(<span style="color:#0086f7;font-weight:bold">0</span>,<span style="color:#0086f7;font-weight:bold">15</span>)
+<span style="color:#0086f7;font-weight:bold">15</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>你可以看到当前时刻的计算值作为第二个参数传入下一个递归，使得系统不再需要保留之前计算结果。</p>
@@ -636,6 +636,18 @@ tail_recursion(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">
 <ul class="widget-list">
     
     <li>
+        <a href="https://aszhc.github.io/post/Golang-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/" title="Golang Struct 内存对齐">Golang Struct 内存对齐</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Golang-Slice%E5%8E%9F%E7%90%86/" title="Golang Slice原理">Golang Slice原理</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Golang-Map%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" title="Golang Map的实现原理">Golang Map的实现原理</a>
+    </li>
+    
+    <li>
         <a href="https://aszhc.github.io/post/Golang%E4%B8%ADmake%E4%B8%8Enew%E6%9C%89%E4%BD%95%E5%8C%BA%E5%88%AB/" title="Golang中make与new有何区别？">Golang中make与new有何区别？</a>
     </li>
     
@@ -674,7 +686,7 @@ tail_recursion(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">
     
     <li><a href="https://aszhc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络 (1)</a></li>
     
-    <li><a href="https://aszhc.github.io/categories/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/">语言基础 (1)</a></li>
+    <li><a href="https://aszhc.github.io/categories/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/">语言基础 (4)</a></li>
     
 </ul>
     </section>

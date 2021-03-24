@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>哈希映射和集合练习 | 周闖的博客</title>
-    <meta property="og:title" content="哈希映射和集合练习 - 周闖的博客">
+    <title>Golang Struct 内存对齐 | 周闖的博客</title>
+    <meta property="og:title" content="Golang Struct 内存对齐 - 周闖的博客">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2020-05-09T18:19:00&#43;08:00'>
+    <meta property="article:published_time" content='2021-03-24T16:29:20&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2020-05-09T18:19:00&#43;08:00'>
+    <meta property="article:modified_time" content='2021-03-24T16:29:20&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,博客,项目管理,python,公众号">
-    <meta name="description" content="哈希映射和集合练习">
+    <meta name="description" content="Golang Struct 内存对齐">
         
     <meta name="author" content="周闖">
-    <meta property="og:url" content="https://aszhc.github.io/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/">
+    <meta property="og:url" content="https://aszhc.github.io/post/Golang-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/">
     <link rel="shortcut icon" href="logo.ico" type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -147,9 +147,21 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ol>
-    <li><a href="#1-有效的字母异位词httpsleetcode-cncomproblemsvalid-anagram">1. <a href="https://leetcode-cn.com/problems/valid-anagram/">有效的字母异位词</a></a></li>
-    <li><a href="#2-两数之和httpsleetcode-cncomproblemstwo-sum">2. <a href="https://leetcode-cn.com/problems/two-sum/">两数之和</a></a></li>
-    <li><a href="#3-字母异位词分组httpsleetcode-cncomproblemsgroup-anagrams">3. <a href="https://leetcode-cn.com/problems/group-anagrams/">字母异位词分组</a></a></li>
+    <li><a href="#如何计算结构体占用的空间">如何计算结构体占用的空间</a></li>
+    <li><a href="#术语">术语</a></li>
+    <li><a href="#为什么要对齐">为什么要对齐</a>
+      <ol>
+        <li><a href="#大小保证">大小保证</a></li>
+        <li><a href="#unsafealignof">unsafe.Alignof</a></li>
+        <li><a href="#对齐保证align-guarantee">对齐保证（align guarantee）</a></li>
+      </ol>
+    </li>
+    <li><a href="#struct内存对齐技巧">struct内存对齐技巧</a>
+      <ol>
+        <li><a href="#合理布局减少内存占用">合理布局减少内存占用</a></li>
+        <li><a href="#空struct">空struct</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
     </div>
@@ -183,16 +195,16 @@
 </script>
     <article class="post">
         <header>
-            <h1 class="post-title">哈希映射和集合练习</h1>
+            <h1 class="post-title">Golang Struct 内存对齐</h1>
         </header>
         <date class="post-meta meta-date">
-            2020年5月9日
+            2021年3月24日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='https://aszhc.github.io/categories/%E7%AE%97%E6%B3%95'>算法</a></span>
+            <span class="meta-category"><a href='https://aszhc.github.io/categories/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80'>语言基础</a></span>
             
         </div>
         
@@ -203,17 +215,17 @@
         </div>
         
         
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
         <div class="post-content">
-            <h1 id="哈希映射和集合练习">哈希映射和集合练习</h1>
-<h2 id="1-有效的字母异位词httpsleetcode-cncomproblemsvalid-anagram">1. <a href="https://leetcode-cn.com/problems/valid-anagram/">有效的字母异位词</a></h2>
-<p>给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。</p>
-<p>示例 1:</p>
-<pre><code>输入: s = &quot;anagram&quot;, t = &quot;nagaram&quot;
-输出: true
-</code></pre><p>示例 2:</p>
-<pre><code>输入: s = &quot;rat&quot;, t = &quot;car&quot;
-输出: false
-</code></pre><div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+            <h1 id="struct-内存对齐">struct 内存对齐</h1>
+<h2 id="如何计算结构体占用的空间">如何计算结构体占用的空间</h2>
+<p>在 Go 语言中，我们可以使用 <code>unsafe.Sizeof</code> 计算出一个数据类型实例需要占用的字节数。</p>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
@@ -236,56 +248,266 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">isAnagram</span>(self, s: str, t: str) -&gt; bool:
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 1. 哈希 set</span>
-        <span style="color:#fb660a;font-weight:bold">if</span> len(s) != len(t):
-            <span style="color:#fb660a;font-weight:bold">return</span> False
-        <span style="color:#fb660a;font-weight:bold">for</span> i in set(s):
-            <span style="color:#fb660a;font-weight:bold">if</span> s.count(i) != t.count(i):
-                <span style="color:#fb660a;font-weight:bold">return</span> False
-        <span style="color:#fb660a;font-weight:bold">return</span> True
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 2. 哈希 dict</span>
-        <span style="color:#fb660a;font-weight:bold">if</span> len(s) != len(t):
-            <span style="color:#fb660a;font-weight:bold">return</span> False
-        dit = {}
-        <span style="color:#fb660a;font-weight:bold">for</span> i in s:
-            <span style="color:#fb660a;font-weight:bold">if</span> i in dit:
-                dit[i] += <span style="color:#0086f7;font-weight:bold">1</span>
-            <span style="color:#fb660a;font-weight:bold">else</span>:
-                dit[i] = <span style="color:#0086f7;font-weight:bold">1</span>
-        <span style="color:#fb660a;font-weight:bold">for</span> i in t:
-            <span style="color:#fb660a;font-weight:bold">if</span> i in dit:
-                dit[i] -= <span style="color:#0086f7;font-weight:bold">1</span>
-            <span style="color:#fb660a;font-weight:bold">else</span>:
-                <span style="color:#fb660a;font-weight:bold">return</span> False
-        <span style="color:#fb660a;font-weight:bold">for</span> i in dit:
-            <span style="color:#fb660a;font-weight:bold">if</span> dit[i] != <span style="color:#0086f7;font-weight:bold">0</span>:
-                <span style="color:#fb660a;font-weight:bold">return</span> False
-        <span style="color:#fb660a;font-weight:bold">return</span> True
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 3. python 特性</span>
-        <span style="color:#fb660a;font-weight:bold">return</span> sorted(s) == sorted(t)
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">package</span> main
+
+<span style="color:#fb660a;font-weight:bold">import</span> (
+	<span style="color:#0086d2">&#34;fmt&#34;</span>
+	<span style="color:#0086d2">&#34;unsafe&#34;</span>
+)
+
+<span style="color:#fb660a;font-weight:bold">type</span> Args <span style="color:#fb660a;font-weight:bold">struct</span> {
+    num1 <span style="color:#cdcaa9;font-weight:bold">int</span>
+    num2 <span style="color:#cdcaa9;font-weight:bold">int</span>
+}
+
+<span style="color:#fb660a;font-weight:bold">type</span> Flag <span style="color:#fb660a;font-weight:bold">struct</span> {
+    num1 <span style="color:#cdcaa9;font-weight:bold">int16</span>
+    num2 <span style="color:#cdcaa9;font-weight:bold">int32</span>
+}
+
+<span style="color:#fb660a;font-weight:bold">func</span> <span style="color:#ff0086;font-weight:bold">main</span>() {
+    fmt.<span style="color:#ff0086;font-weight:bold">Println</span>(unsafe.<span style="color:#ff0086;font-weight:bold">Sizeof</span>(Args{}))
+    fmt.<span style="color:#ff0086;font-weight:bold">Println</span>(unsafe.<span style="color:#ff0086;font-weight:bold">Sizeof</span>(Flag{}))
+}
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="2-两数之和httpsleetcode-cncomproblemstwo-sum">2. <a href="https://leetcode-cn.com/problems/two-sum/">两数之和</a></h2>
-<p>给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。</p>
-<p>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。</p>
-<p>示例:</p>
-<pre><code>给定 nums = [2, 7, 11, 15], target = 9
+</div><p>运行上面的例子将会输出：</p>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">$ <span style="color:#fb660a;font-weight:bold">go</span> run main.<span style="color:#fb660a;font-weight:bold">go</span>
+<span style="color:#0086f7;font-weight:bold">16</span>
+<span style="color:#0086f7;font-weight:bold">8</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><code>Args</code> 由 2 个 int 类型的字段构成，在 64位机器上，一个 int 占 8 字节，因此存储一个 <code>Args</code> 实例需要 16 字节。</li>
+<li><code>Flag</code> 由一个 int32 和 一个 int16 的字段构成，成员变量占据的字节数为 4+2 = 6，但是 <code>unsafe.Sizeof</code> 返回的结果为 8 字节，多出来的 2 字节是内存对齐的结果。</li>
+</ul>
+<p>因此，一个结构体实例所占据的空间等于各字段占据空间之和，再加上内存对齐的空间大小。</p>
+<h2 id="术语">术语</h2>
+<ul>
+<li>
+<p>字</p>
+<p>是用于表示其自然的数据单位，也叫<code>machine word</code>。字是电脑用来一次性处理事务的一个固定长度。</p>
+</li>
+<li>
+<p>字长</p>
+<p>一个字的位数即字长。</p>
+<p>现代电脑的字长通常为16、32、64位。（一般N位系统的字长是 <code>N/8</code> 字节。）</p>
+</li>
+</ul>
+<h2 id="为什么要对齐">为什么要对齐</h2>
+<p>CPU 访问内存时，并不是逐个字节访问，而是以字长（word size）为单位访问。比如 32 位的 CPU ，字长为 4 字节，那么 CPU 访问内存的单位也是 4 字节。</p>
+<p>这么设计的目的，是减少 CPU 访问内存的次数，加大 CPU 访问内存的吞吐量。比如同样读取 8 个字节的数据，一次读取 4 个字节那么只需要读取 2 次。</p>
+<p>CPU 始终以字长访问内存，如果不进行内存对齐，很可能增加 CPU 访问内存的次数，例如：</p>
+<p><img src="https://geektutu.com/post/hpg-struct-alignment/memory_alignment.png" alt=""></p>
+<p>变量 a、b 各占据 3 字节的空间，内存对齐后，a、b 各占据 4 字节空间，CPU 读取 b 变量的值只需要进行一次内存访问。如果不进行内存对齐，CPU 读取 b 变量的值需要进行 2 次内存访问。第一次访问得到 b 变量的第 1 个字节，第二次访问得到 b 变量的后两个字节。</p>
+<p>从这个例子中也可以看到，内存对齐对实现变量的原子性操作也是有好处的，每次内存访问是原子的，如果变量的大小不超过字长，那么内存对齐后，对该变量的访问就是原子的，这个特性在并发场景下至关重要。</p>
+<p>简言之：合理的内存对齐可以提高内存读写的性能，并且便于实现变量操作的原子性。</p>
+<h3 id="大小保证">大小保证</h3>
+<p>在Go中，如果两个值的类型为同一种类的类型，并且它们的类型的种类不为接口、数组和结构体，则这两个值的尺寸总是相等的。</p>
+<p>Go 1.14，至少对于官方标准编译器来说，任何一个特定类型的所有值的尺寸都是相同的。所以我们也常说一个值的尺寸为此值的类型的尺寸。</p>
+<p>下表列出了各种种类的类型的尺寸（对标准编译器1.14来说）:</p>
+<table>
+<thead>
+<tr>
+<th>type</th>
+<th>size in bytes</th>
+<th>go官方文档的要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bool</td>
+<td>1</td>
+<td>未做特别要求</td>
+</tr>
+<tr>
+<td>byte, uint8, int8</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>uint16, int16</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>uint32, int32, float32</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>uint64, int64, float64, complex64</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>complex128</td>
+<td>16</td>
+<td>16</td>
+</tr>
+<tr>
+<td>int, uint</td>
+<td>1 word</td>
+<td>架构有关，在32位系统中为4字节，在64位系统中为8个字节</td>
+</tr>
+<tr>
+<td>uintptr</td>
+<td>1 word</td>
+<td>必须足够存下任一个内存地址</td>
+</tr>
+<tr>
+<td>字符串</td>
+<td>2 word</td>
+<td>未做特别要求</td>
+</tr>
+<tr>
+<td>指针</td>
+<td>1 word</td>
+<td>未做特别要求</td>
+</tr>
+<tr>
+<td>切片</td>
+<td>3 word</td>
+<td>未做特别要求</td>
+</tr>
+<tr>
+<td>映射</td>
+<td>1 word</td>
+<td>未做特别要求</td>
+</tr>
+<tr>
+<td>通道</td>
+<td>1 word</td>
+<td>未做特别要求</td>
+</tr>
+<tr>
+<td>函数</td>
+<td>1 word</td>
+<td>未做特别要求</td>
+</tr>
+<tr>
+<td>接口</td>
+<td>2 word</td>
+<td>未做特别要求</td>
+</tr>
+<tr>
+<td>结构体</td>
+<td>所有字段尺寸之和+所有填充的字节数</td>
+<td>一个不含任何尺寸大于零的字段结构体类型的尺寸为零</td>
+</tr>
+<tr>
+<td>数组</td>
+<td>元素类型的尺寸*长度</td>
+<td>一个元素类型的尺寸为零的数组类型的尺寸为零</td>
+</tr>
+<tr>
+<td>struct{ } 和 [0]T{}</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>一个结构体类型的尺寸取决于它的各个字段的类型尺寸和这些字段的排列顺序。为了程序执行性能，编译器需要保证某些类型的值在内存中存放时必须满足特定的内存地址对齐要求。 地址对齐可能会造成相邻的两个字段之间在内存中被插入填充一些多余的字节。 所以，一个结构体类型的尺寸必定不小于（常常会大于）此结构体类型的各个字段的类型尺寸之和。</p>
+<p>一个数组类型的尺寸取决于它的元素类型的尺寸和它的长度。它的尺寸为它的元素类型的尺寸和它的长度的乘积。</p>
+<p><code>struct{}</code> 和<code>[0]T{}</code> 的大小为 0; 不同的大小为 0 的变量可能指向同一块地址。</p>
+<h3 id="unsafealignof">unsafe.Alignof</h3>
+<p>在上面的例子中，<code>Flag{}</code> 两个字段占据了 6 个字节，但是最终对齐后的结果是 8 字节。Go 语言中内存对齐需要遵循什么规律呢？</p>
+<p><code>unsafe</code> 标准库提供了 <code>Alignof</code> 方法，可以返回一个类型的对齐值，也可以叫做对齐系数或者对齐倍数。例如：</p>
+<pre><code>unsafe.Alignof(Args{}) // 8
+unsafe.Alignof(Flag{}) // 4
+</code></pre><ul>
+<li><code>Args{}</code> 的对齐倍数是 8，<code>Args{}</code> 两个字段占据 16 字节，是 8 的倍数，无需占据额外的空间对齐。</li>
+<li><code>Flag{}</code> 的对齐倍数是 4，因此 <code>Flag{}</code> 占据的空间必须是 4 的倍数，因此，6 内存对齐后是 8 字节。</li>
+</ul>
+<h3 id="对齐保证align-guarantee">对齐保证（align guarantee）</h3>
+<p>Go 官方文档 <a href="https://golang.org/ref/spec#Size_and_alignment_guarantees">Size and alignment guarantees - golang spec</a> 描述了 <code>unsafe.Alignof</code> 的规则。</p>
+<blockquote>
+<ol>
+<li>For a variable x of any type: unsafe.Alignof(x) is at least 1.</li>
+<li>For a variable x of struct type: unsafe.Alignof(x) is the largest of all the values unsafe.Alignof(x.f) for each field f of x, but at least 1.</li>
+<li>For a variable x of array type: unsafe.Alignof(x) is the same as the alignment of a variable of the array’s element type.</li>
+</ol>
+</blockquote>
+<ul>
+<li>对于任意类型的变量 x ，<code>unsafe.Alignof(x)</code> 至少为 1。</li>
+<li>对于 struct 结构体类型的变量 x，计算 x 每一个字段 f 的 <code>unsafe.Alignof(x.f)</code>，<code>unsafe.Alignof(x)</code> 等于其中的最大值。</li>
+<li>对于 array 数组类型的变量 x，<code>unsafe.Alignof(x)</code> 等于构成数组的元素类型的对齐倍数。</li>
+</ul>
+<blockquote>
+<p>A struct or array type has size zero if it contains no fields (or elements, respectively) that have a size greater than zero. Two distinct zero-size variables may have the same address in memory.</p>
+</blockquote>
+<p>没有任何字段的空 struct{} 和没有任何元素的 array 占据的内存空间大小为 0，不同的大小为 0 的变量可能指向同一块地址。</p>
+<h2 id="struct内存对齐技巧">struct内存对齐技巧</h2>
+<h3 id="合理布局减少内存占用">合理布局减少内存占用</h3>
+<p>假设一个 struct 包含三个字段，<code>a int8</code>、<code>b int16</code>、<code>c int64</code>，顺序会对 struct 的大小产生影响吗？我们来做一个实验：</p>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">type</span> demo1 <span style="color:#fb660a;font-weight:bold">struct</span> {
+	a <span style="color:#cdcaa9;font-weight:bold">int8</span>
+	b <span style="color:#cdcaa9;font-weight:bold">int16</span>
+	c <span style="color:#cdcaa9;font-weight:bold">int32</span>
+}
 
-因为 nums[0] + nums[1] = 2 + 7 = 9
-所以返回 [0, 1]
-</code></pre><div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<span style="color:#fb660a;font-weight:bold">type</span> demo2 <span style="color:#fb660a;font-weight:bold">struct</span> {
+	a <span style="color:#cdcaa9;font-weight:bold">int8</span>
+	c <span style="color:#cdcaa9;font-weight:bold">int32</span>
+	b <span style="color:#cdcaa9;font-weight:bold">int16</span>
+}
+
+<span style="color:#fb660a;font-weight:bold">func</span> <span style="color:#ff0086;font-weight:bold">main</span>() {
+	fmt.<span style="color:#ff0086;font-weight:bold">Println</span>(unsafe.<span style="color:#ff0086;font-weight:bold">Sizeof</span>(demo1{})) <span style="color:#080;background-color:#0f140f;font-style:italic">// 8
+</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>	fmt.<span style="color:#ff0086;font-weight:bold">Println</span>(unsafe.<span style="color:#ff0086;font-weight:bold">Sizeof</span>(demo2{})) <span style="color:#080;background-color:#0f140f;font-style:italic">// 12
+</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>}
+</code></pre></td></tr></table>
+</div>
+</div><p>答案是会产生影响。每个字段按照自身的对齐倍数来确定在内存中的偏移量，字段排列顺序不同，上一个字段因偏移而浪费的大小也不同。</p>
+<p>接下来逐个分析，首先是 demo1：</p>
+<ul>
+<li>a 是第一个字段，默认是已经对齐的，从第 0 个位置开始占据 1 字节。</li>
+<li>b 是第二个字段，对齐倍数为 2，因此，必须空出 1 个字节，偏移量才是 2 的倍数，从第 2 个位置开始占据 2 字节。</li>
+<li>c 是第三个字段，对齐倍数为 4，此时，内存已经是对齐的，从第 4 个位置开始占据 4 字节即可。</li>
+</ul>
+<p>因此 demo1 的内存占用为 8 字节。</p>
+<p>其实是 demo2：</p>
+<ul>
+<li>a 是第一个字段，默认是已经对齐的，从第 0 个位置开始占据 1 字节。</li>
+<li>c 是第二个字段，对齐倍数为 4，因此，必须空出 3 个字节，偏移量才是 4 的倍数，从第 4 个位置开始占据 4 字节。</li>
+<li>b 是第三个字段，对齐倍数为 2，从第 8 个位置开始占据 2 字节。</li>
+</ul>
+<p>demo2 的对齐倍数由 c 的对齐倍数决定，也是 4，因此，demo2 的内存占用为 12 字节。</p>
+<p><img src="https://geektutu.com/post/hpg-struct-alignment/memory_alignment_order.png" alt=""></p>
+<p>因此，在对内存特别敏感的结构体的设计上，我们可以通过调整字段的顺序，减少内存的占用。</p>
+<h3 id="空struct">空struct</h3>
+<p>空 <code>struct{}</code> 大小为 0，作为其他 struct 的字段时，一般不需要内存对齐。但是有一种情况除外：即当 <code>struct{}</code> 作为结构体最后一个字段时，需要内存对齐。因为如果有指针指向该字段, 返回的地址将在结构体之外，如果此指针一直存活不释放对应的内存，就会有内存泄露的问题（该内存不因结构体释放而释放）。</p>
+<p>因此，当 <code>struct{}</code> 作为其他 struct 最后一个字段时，需要填充额外的内存保证安全。我们做个试验，验证下这种情况。</p>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
@@ -303,66 +525,24 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">twoSum</span>(self, nums: List[int], target: int) -&gt; List[int]:
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 1. 遍历就完事了</span>
-        <span style="color:#fb660a;font-weight:bold">for</span> i in range(len(nums)):
-            <span style="color:#fb660a;font-weight:bold">for</span> j in range(i+<span style="color:#0086f7;font-weight:bold">1</span>, len(nums)):
-                <span style="color:#fb660a;font-weight:bold">if</span> nums[i] + nums[j] == target:
-                    <span style="color:#fb660a;font-weight:bold">return</span> [i,j]
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 2. 哈希</span>
-        ans_map = dict()
-        <span style="color:#fb660a;font-weight:bold">for</span> i in range(len(nums)):
-            want = target - nums[i]
-            <span style="color:#fb660a;font-weight:bold">if</span> want in ans_map:
-                <span style="color:#fb660a;font-weight:bold">return</span> [ans_map[want], i]
-            ans_map[nums[i]] = i
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">type</span> demo3 <span style="color:#fb660a;font-weight:bold">struct</span> {
+	c <span style="color:#cdcaa9;font-weight:bold">int32</span>
+	a <span style="color:#fb660a;font-weight:bold">struct</span>{}
+}
+
+<span style="color:#fb660a;font-weight:bold">type</span> demo4 <span style="color:#fb660a;font-weight:bold">struct</span> {
+	a <span style="color:#fb660a;font-weight:bold">struct</span>{}
+	c <span style="color:#cdcaa9;font-weight:bold">int32</span>
+}
+
+<span style="color:#fb660a;font-weight:bold">func</span> <span style="color:#ff0086;font-weight:bold">main</span>() {
+	fmt.<span style="color:#ff0086;font-weight:bold">Println</span>(unsafe.<span style="color:#ff0086;font-weight:bold">Sizeof</span>(demo3{})) <span style="color:#080;background-color:#0f140f;font-style:italic">// 8
+</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>	fmt.<span style="color:#ff0086;font-weight:bold">Println</span>(unsafe.<span style="color:#ff0086;font-weight:bold">Sizeof</span>(demo4{})) <span style="color:#080;background-color:#0f140f;font-style:italic">// 4
+</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>}
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="3-字母异位词分组httpsleetcode-cncomproblemsgroup-anagrams">3. <a href="https://leetcode-cn.com/problems/group-anagrams/">字母异位词分组</a></h2>
-<p>给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。</p>
-<p>示例:</p>
-<pre><code>输入: [&quot;eat&quot;, &quot;tea&quot;, &quot;tan&quot;, &quot;ate&quot;, &quot;nat&quot;, &quot;bat&quot;]
-输出:
-[
-  [&quot;ate&quot;,&quot;eat&quot;,&quot;tea&quot;],
-  [&quot;nat&quot;,&quot;tan&quot;],
-  [&quot;bat&quot;]
-]
-</code></pre><p><strong>说明：</strong></p>
-<ul>
-<li>所有输入均为小写字母。</li>
-<li>不考虑答案输出的顺序。</li>
-</ul>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">groupAnagrams</span>(self, strs: List[str]) -&gt; List[List[str]]:
-        res = []
-        dic = {}
-        <span style="color:#fb660a;font-weight:bold">for</span> s in strs:
-            keys = <span style="color:#0086d2">&#34;&#34;</span>.join(sorted(s))
-            <span style="color:#fb660a;font-weight:bold">if</span> keys not in dic:
-                dic[keys] = [s]
-            <span style="color:#fb660a;font-weight:bold">else</span>:
-                dic[keys].append(s)
-        <span style="color:#fb660a;font-weight:bold">return</span> list(dic.values())
-</code></pre></td></tr></table>
-</div>
-</div>
+</div><p>可以看到，<code>demo4{}</code> 的大小为 4 字节，与字段 c 占据空间一致，而 <code>demo3{}</code> 的大小为 8 字节，即额外填充了 4 字节的空间。</p>
+
         </div>
 
         
@@ -374,15 +554,15 @@
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/">栈和队列练习题</a></li>
+        <li><a href="/post/Golang-Slice%E5%8E%9F%E7%90%86/">Golang Slice原理</a></li>
         
-        <li><a href="/post/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/">数组、链表练习题</a></li>
+        <li><a href="/post/Golang-Map%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">Golang Map的实现原理</a></li>
         
-        <li><a href="/post/%E9%80%92%E5%BD%92/">递归</a></li>
+        <li><a href="/post/Golang%E4%B8%ADmake%E4%B8%8Enew%E6%9C%89%E4%BD%95%E5%8C%BA%E5%88%AB/">Golang中make与new有何区别？</a></li>
         
-        <li><a href="/tools/%E5%8F%A4%E8%AF%97%E8%AF%8D/">古诗词</a></li>
+        <li><a href="/tools/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3%E5%8D%9A%E5%AE%A2%E8%BF%9E%E6%8E%A5/">计算机网络相关博客连接</a></li>
         
-        <li><a href="/post/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li>
+        <li><a href="/tools/mysql%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">Mysql必知必会</a></li>
         
     </ul>
 </div>
@@ -392,9 +572,7 @@
             
             <ul class="clearfix">
                 
-                <li><a href='https://aszhc.github.io/tags/%E5%93%88%E5%B8%8C'>哈希</a></li>
-                
-                <li><a href='https://aszhc.github.io/tags/%E9%9B%86%E5%90%88'>集合</a></li>
+                <li><a href='https://aszhc.github.io/tags/Golang'>Golang</a></li>
                 
             </ul>
             

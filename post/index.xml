@@ -6,10 +6,37 @@
     <description>Recent content in Posts on 周闖的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 04 Mar 2021 21:00:03 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 24 Mar 2021 16:29:20 +0800</lastBuildDate>
     
 	<atom:link href="https://aszhc.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Golang Struct 内存对齐</title>
+      <link>https://aszhc.github.io/post/Golang-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/</link>
+      <pubDate>Wed, 24 Mar 2021 16:29:20 +0800</pubDate>
+      
+      <guid>https://aszhc.github.io/post/Golang-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/</guid>
+      <description>struct 内存对齐 如何计算结构体占用的空间 在 Go 语言中，我们可以使用 unsafe.Sizeof 计算出一个数据类型实例需要占用的字节数。 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20</description>
+    </item>
+    
+    <item>
+      <title>Golang Slice原理</title>
+      <link>https://aszhc.github.io/post/Golang-Slice%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Wed, 24 Mar 2021 16:27:08 +0800</pubDate>
+      
+      <guid>https://aszhc.github.io/post/Golang-Slice%E5%8E%9F%E7%90%86/</guid>
+      <description>Slice 又称动态数组，依托数组实现，可以方便的进行扩容、传递等，实际使用中比数组更灵活。 特性速览 Slice依托数组实现，底层数组对用户屏蔽，在底层</description>
+    </item>
+    
+    <item>
+      <title>Golang Map的实现原理</title>
+      <link>https://aszhc.github.io/post/Golang-Map%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Wed, 24 Mar 2021 15:50:35 +0800</pubDate>
+      
+      <guid>https://aszhc.github.io/post/Golang-Map%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/</guid>
+      <description>[toc] Go语言的map底层使用Hash表实现 特性速览 操作方式 1）初始化 map支持字面量初始化和map( )初始化 字面量初始化 1 2 3 4 5 6 7 8 9 func MapInitByLiteral()</description>
+    </item>
     
     <item>
       <title>Golang中make与new有何区别？</title>

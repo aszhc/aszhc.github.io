@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>哈希映射和集合练习 | 周闖的博客</title>
-    <meta property="og:title" content="哈希映射和集合练习 - 周闖的博客">
+    <title>Golang Slice原理 | 周闖的博客</title>
+    <meta property="og:title" content="Golang Slice原理 - 周闖的博客">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2020-05-09T18:19:00&#43;08:00'>
+    <meta property="article:published_time" content='2021-03-24T16:27:08&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2020-05-09T18:19:00&#43;08:00'>
+    <meta property="article:modified_time" content='2021-03-24T16:27:08&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,博客,项目管理,python,公众号">
-    <meta name="description" content="哈希映射和集合练习">
+    <meta name="description" content="Golang Slice原理">
         
     <meta name="author" content="周闖">
-    <meta property="og:url" content="https://aszhc.github.io/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/">
+    <meta property="og:url" content="https://aszhc.github.io/post/Golang-Slice%E5%8E%9F%E7%90%86/">
     <link rel="shortcut icon" href="logo.ico" type="image/x-icon">
 
     <link rel="stylesheet" href='/css/normalize.css'>
@@ -147,9 +147,20 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ol>
-    <li><a href="#1-有效的字母异位词httpsleetcode-cncomproblemsvalid-anagram">1. <a href="https://leetcode-cn.com/problems/valid-anagram/">有效的字母异位词</a></a></li>
-    <li><a href="#2-两数之和httpsleetcode-cncomproblemstwo-sum">2. <a href="https://leetcode-cn.com/problems/two-sum/">两数之和</a></a></li>
-    <li><a href="#3-字母异位词分组httpsleetcode-cncomproblemsgroup-anagrams">3. <a href="https://leetcode-cn.com/problems/group-anagrams/">字母异位词分组</a></a></li>
+    <li><a href="#特性速览">特性速览</a>
+      <ol>
+        <li><a href="#初始化">初始化</a></li>
+        <li><a href="#切片操作">切片操作</a></li>
+      </ol>
+    </li>
+    <li><a href="#实现原理">实现原理</a>
+      <ol>
+        <li><a href="#数据结构">数据结构</a></li>
+        <li><a href="#切片操作-1">切片操作</a></li>
+        <li><a href="#编程tips">编程Tips</a></li>
+      </ol>
+    </li>
+    <li><a href="#总结">总结</a></li>
   </ol>
 </nav>
     </div>
@@ -183,16 +194,16 @@
 </script>
     <article class="post">
         <header>
-            <h1 class="post-title">哈希映射和集合练习</h1>
+            <h1 class="post-title">Golang Slice原理</h1>
         </header>
         <date class="post-meta meta-date">
-            2020年5月9日
+            2021年3月24日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='https://aszhc.github.io/categories/%E7%AE%97%E6%B3%95'>算法</a></span>
+            <span class="meta-category"><a href='https://aszhc.github.io/categories/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80'>语言基础</a></span>
             
         </div>
         
@@ -203,166 +214,183 @@
         </div>
         
         
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
         <div class="post-content">
-            <h1 id="哈希映射和集合练习">哈希映射和集合练习</h1>
-<h2 id="1-有效的字母异位词httpsleetcode-cncomproblemsvalid-anagram">1. <a href="https://leetcode-cn.com/problems/valid-anagram/">有效的字母异位词</a></h2>
-<p>给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。</p>
-<p>示例 1:</p>
-<pre><code>输入: s = &quot;anagram&quot;, t = &quot;nagaram&quot;
-输出: true
-</code></pre><p>示例 2:</p>
-<pre><code>输入: s = &quot;rat&quot;, t = &quot;car&quot;
-输出: false
-</code></pre><div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">isAnagram</span>(self, s: str, t: str) -&gt; bool:
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 1. 哈希 set</span>
-        <span style="color:#fb660a;font-weight:bold">if</span> len(s) != len(t):
-            <span style="color:#fb660a;font-weight:bold">return</span> False
-        <span style="color:#fb660a;font-weight:bold">for</span> i in set(s):
-            <span style="color:#fb660a;font-weight:bold">if</span> s.count(i) != t.count(i):
-                <span style="color:#fb660a;font-weight:bold">return</span> False
-        <span style="color:#fb660a;font-weight:bold">return</span> True
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 2. 哈希 dict</span>
-        <span style="color:#fb660a;font-weight:bold">if</span> len(s) != len(t):
-            <span style="color:#fb660a;font-weight:bold">return</span> False
-        dit = {}
-        <span style="color:#fb660a;font-weight:bold">for</span> i in s:
-            <span style="color:#fb660a;font-weight:bold">if</span> i in dit:
-                dit[i] += <span style="color:#0086f7;font-weight:bold">1</span>
-            <span style="color:#fb660a;font-weight:bold">else</span>:
-                dit[i] = <span style="color:#0086f7;font-weight:bold">1</span>
-        <span style="color:#fb660a;font-weight:bold">for</span> i in t:
-            <span style="color:#fb660a;font-weight:bold">if</span> i in dit:
-                dit[i] -= <span style="color:#0086f7;font-weight:bold">1</span>
-            <span style="color:#fb660a;font-weight:bold">else</span>:
-                <span style="color:#fb660a;font-weight:bold">return</span> False
-        <span style="color:#fb660a;font-weight:bold">for</span> i in dit:
-            <span style="color:#fb660a;font-weight:bold">if</span> dit[i] != <span style="color:#0086f7;font-weight:bold">0</span>:
-                <span style="color:#fb660a;font-weight:bold">return</span> False
-        <span style="color:#fb660a;font-weight:bold">return</span> True
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 3. python 特性</span>
-        <span style="color:#fb660a;font-weight:bold">return</span> sorted(s) == sorted(t)
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="2-两数之和httpsleetcode-cncomproblemstwo-sum">2. <a href="https://leetcode-cn.com/problems/two-sum/">两数之和</a></h2>
-<p>给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。</p>
-<p>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。</p>
-<p>示例:</p>
-<pre><code>给定 nums = [2, 7, 11, 15], target = 9
-
-因为 nums[0] + nums[1] = 2 + 7 = 9
-所以返回 [0, 1]
-</code></pre><div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">twoSum</span>(self, nums: List[int], target: int) -&gt; List[int]:
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 1. 遍历就完事了</span>
-        <span style="color:#fb660a;font-weight:bold">for</span> i in range(len(nums)):
-            <span style="color:#fb660a;font-weight:bold">for</span> j in range(i+<span style="color:#0086f7;font-weight:bold">1</span>, len(nums)):
-                <span style="color:#fb660a;font-weight:bold">if</span> nums[i] + nums[j] == target:
-                    <span style="color:#fb660a;font-weight:bold">return</span> [i,j]
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 2. 哈希</span>
-        ans_map = dict()
-        <span style="color:#fb660a;font-weight:bold">for</span> i in range(len(nums)):
-            want = target - nums[i]
-            <span style="color:#fb660a;font-weight:bold">if</span> want in ans_map:
-                <span style="color:#fb660a;font-weight:bold">return</span> [ans_map[want], i]
-            ans_map[nums[i]] = i
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="3-字母异位词分组httpsleetcode-cncomproblemsgroup-anagrams">3. <a href="https://leetcode-cn.com/problems/group-anagrams/">字母异位词分组</a></h2>
-<p>给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。</p>
-<p>示例:</p>
-<pre><code>输入: [&quot;eat&quot;, &quot;tea&quot;, &quot;tan&quot;, &quot;ate&quot;, &quot;nat&quot;, &quot;bat&quot;]
-输出:
-[
-  [&quot;ate&quot;,&quot;eat&quot;,&quot;tea&quot;],
-  [&quot;nat&quot;,&quot;tan&quot;],
-  [&quot;bat&quot;]
-]
-</code></pre><p><strong>说明：</strong></p>
+            <blockquote>
+<p>Slice 又称动态数组，依托数组实现，可以方便的进行扩容、传递等，实际使用中比数组更灵活。</p>
+</blockquote>
+<h2 id="特性速览">特性速览</h2>
+<p>Slice依托数组实现，底层数组对用户屏蔽，在底层数组容量不足时可以实现自动重分配并生成新的Slice。 接下来按照实际使用场景分别介绍其实现机制。</p>
+<h3 id="初始化">初始化</h3>
+<p>声明和初始化变量切片主要有以下几种：</p>
 <ul>
-<li>所有输入均为小写字母。</li>
-<li>不考虑答案输出的顺序。</li>
-</ul>
+<li>
+<p>变量声明</p>
 <div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">groupAnagrams</span>(self, strs: List[str]) -&gt; List[List[str]]:
-        res = []
-        dic = {}
-        <span style="color:#fb660a;font-weight:bold">for</span> s in strs:
-            keys = <span style="color:#0086d2">&#34;&#34;</span>.join(sorted(s))
-            <span style="color:#fb660a;font-weight:bold">if</span> keys not in dic:
-                dic[keys] = [s]
-            <span style="color:#fb660a;font-weight:bold">else</span>:
-                dic[keys].append(s)
-        <span style="color:#fb660a;font-weight:bold">return</span> list(dic.values())
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">var</span> s []<span style="color:#cdcaa9;font-weight:bold">int</span>
 </code></pre></td></tr></table>
 </div>
+</div><p>这种方式声明的切片变量和声明其他类型的变量一样，变量值都为零值，对于切片来讲零值为nil。</p>
+</li>
+<li>
+<p>字面量</p>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">s1 := []<span style="color:#cdcaa9;font-weight:bold">int</span>{}			<span style="color:#080;background-color:#0f140f;font-style:italic">// 空切片
+</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>s2 := []<span style="color:#cdcaa9;font-weight:bold">int</span>{<span style="color:#0086f7;font-weight:bold">1</span>, <span style="color:#0086f7;font-weight:bold">2</span>, <span style="color:#0086f7;font-weight:bold">3</span>}	<span style="color:#080;background-color:#0f140f;font-style:italic">//长度为3的切片
+</span></code></pre></td></tr></table>
 </div>
+</div><p>空切片是指长度为空，其值并不是nil。</p>
+</li>
+<li>
+<p>使用内置函数make( )</p>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">s1 := make([]<span style="color:#cdcaa9;font-weight:bold">int</span>, <span style="color:#0086f7;font-weight:bold">12</span>)		<span style="color:#080;background-color:#0f140f;font-style:italic">// 指定长度
+</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>s2 := make([]<span style="color:#cdcaa9;font-weight:bold">int</span>, <span style="color:#0086f7;font-weight:bold">10</span>, <span style="color:#0086f7;font-weight:bold">100</span>)	<span style="color:#080;background-color:#0f140f;font-style:italic">// 指定长度和空间
+</span></code></pre></td></tr></table>
+</div>
+</div><p>指定长度的同时指定预估空间，可以有效的减少切片扩容时内存分配以及拷贝次数。</p>
+</li>
+<li>
+<p>从切片和数组中切取</p>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">array := []<span style="color:#cdcaa9;font-weight:bold">int</span>{<span style="color:#0086f7;font-weight:bold">1</span>, <span style="color:#0086f7;font-weight:bold">2</span>, <span style="color:#0086f7;font-weight:bold">3</span>, <span style="color:#0086f7;font-weight:bold">4</span>, <span style="color:#0086f7;font-weight:bold">5</span>}
+s1 := array[<span style="color:#0086f7;font-weight:bold">0</span>:<span style="color:#0086f7;font-weight:bold">2</span>]	
+s2 := s1[<span style="color:#0086f7;font-weight:bold">0</span>:<span style="color:#0086f7;font-weight:bold">1</span>]
+</code></pre></td></tr></table>
+</div>
+</div><p>切片表达式[low:high]表示的是左闭右开的区间，切取的长度为high-low</p>
+</li>
+</ul>
+<h3 id="切片操作">切片操作</h3>
+<p>内置函数append( )用于向切片中追加元素；</p>
+<p>当切片空间不足时，append( )会先创建新的大容量切片，添加元素后再返回新切片。</p>
+<p>内置函数len( )和cap( )分别用于查询切片的长度和容量，这两个操作的时间复杂度均为O(1)。</p>
+<h2 id="实现原理">实现原理</h2>
+<h3 id="数据结构">数据结构</h3>
+<p>源码包中src/runtime/slice.go:slice定义了Slice的数据结构：</p>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">type</span> slice <span style="color:#fb660a;font-weight:bold">struct</span> {
+	array unsafe.Pointer	<span style="color:#080;background-color:#0f140f;font-style:italic">// 用来存储实际数据的数组指针，指向一块连续的内存
+</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>	len   <span style="color:#cdcaa9;font-weight:bold">int</span>	<span style="color:#080;background-color:#0f140f;font-style:italic">// 切片中元素的数量
+</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>	cap   <span style="color:#cdcaa9;font-weight:bold">int</span>	<span style="color:#080;background-color:#0f140f;font-style:italic">// array数组的长度
+</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>}
+</code></pre></td></tr></table>
+</div>
+</div><p>从数据结构看Slice很清晰, array指针指向底层数组，len表示切片长度，cap表示底层数组容量。</p>
+<h3 id="切片操作-1">切片操作</h3>
+<h4 id="1使用make-创建slice">1）使用make( )创建slice</h4>
+<p>使用make来创建Slice时，可以同时指定长度和容量，创建时底层会分配一个数组，数组的长度即容量。</p>
+<p>例如，语句slice := make([]int, 5, 10)所创建的Slice，结构如下图所示：</p>
+<p><img src="https://oscimg.oschina.net/oscnet/29fefe530d3e5641f593807aada5cb98726.jpg" alt=""></p>
+<p>该Slice长度为5，即可以使用下标slice[0] ~ slice[4]来操作里面的元素，capacity为10，表示后续向slice添加新的元素时可以不必重新分配内存，直接使用预留内存即可。</p>
+<h4 id="2使用数组创建slice">2）使用数组创建slice</h4>
+<p>使用数组来创建Slice时，Slice将与原数组共用一部分内存。</p>
+<p>例如，语句slice := array[5:7]所创建的Slice，结构如下图所示：</p>
+<p><img src="https://oscimg.oschina.net/oscnet/211d97821c34c4e4e8929d049b496124f62.jpg" alt="">切片从数组array[5]开始，到数组array[7]结束（不含array[7]），即切片长度为2，数组后面的内容都作为切片的预留内存，即capacity为5。</p>
+<p>数组和切片操作可能作用于同一块内存，这也是使用过程中需要注意的地方。</p>
+<h4 id="3slice扩容">3）slice扩容</h4>
+<p>使用append向Slice追加元素时，如果Slice空间不足，将会触发Slice扩容，扩容实际上重新一配一块更大的内存，将原Slice数据拷贝进新Slice，然后返回新Slice，扩容后再将数据追加进去。</p>
+<p>例如，当向一个capacity为5，且length也为5的Slice再次追加1个元素时，就会发生扩容，如下图所示:</p>
+<p><img src="https://oscimg.oschina.net/oscnet/14680555d232465d13e95345d630744c92a.jpg" alt=""></p>
+<p>扩容操作只关心容量，会把原Slice数据拷贝到新Slice，追加数据由append在扩容结束后完成。上图可见，扩容后新的Slice长度仍然是5，但容量由5提升到了10，原Slice的数据也都拷贝到了新Slice指向的数组中。</p>
+<p>扩容容量的选择遵循以下规则：</p>
+<ul>
+<li>如果原Slice容量小于1024，则新Slice容量将扩大为原来的2倍；</li>
+<li>如果原Slice容量大于等于1024，则新Slice容量将扩大为原来的1.25倍；</li>
+</ul>
+<p>使用append()向Slice添加一个元素的实现步骤如下：</p>
+<ol>
+<li>
+<p>假如Slice容量够用，则将新元素追加进去，Slice.len++，返回原Slice</p>
+</li>
+<li>
+<p>原Slice容量不够，则将Slice先扩容，扩容后得到新Slice</p>
+</li>
+<li>
+<p>将新元素追加进新Slice，Slice.len++，返回新的Slice。</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/slice%E6%89%A9%E5%AE%B9%E7%AD%96%E7%95%A5.png" alt=""></p>
+</li>
+</ol>
+<h4 id="4slice-copy">4）slice copy</h4>
+<p>使用copy()内置函数拷贝两个切片时，会将源切片的数据逐个拷贝到目的切片指向的数组中，拷贝数量取两个切片长度的最小值。</p>
+<p>例如长度为10的切片拷贝到长度为5的切片时，将会拷贝5个元素。</p>
+<p>也就是说，copy过程中不会发生扩容。</p>
+<h4 id="5特殊切片">5）特殊切片</h4>
+<p>跟据数组或切片生成新的切片一般使用<code>slice := array[start:end]</code>方式，这种新生成的切片并没有指定切片的容量，实际上新切片的容量是从start开始直至array的结束。</p>
+<p>比如下面两个切片，长度和容量都是一致的，使用共同的内存地址：</p>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">sliceA := make([]<span style="color:#cdcaa9;font-weight:bold">int</span>, <span style="color:#0086f7;font-weight:bold">5</span>, <span style="color:#0086f7;font-weight:bold">10</span>)
+sliceB := sliceA[<span style="color:#0086f7;font-weight:bold">0</span>:<span style="color:#0086f7;font-weight:bold">5</span>]
+</code></pre></td></tr></table>
+</div>
+</div><p>根据数组或切片生成切片还有另一种写法，即切片同时也指定容量，即slice[start​：end:cap], 其中cap即为新切片的容量，当然容量不能超过原切片实际值，如下所示：</p>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    sliceA := make([]<span style="color:#cdcaa9;font-weight:bold">int</span>, <span style="color:#0086f7;font-weight:bold">5</span>, <span style="color:#0086f7;font-weight:bold">10</span>)  <span style="color:#080;background-color:#0f140f;font-style:italic">//length = 5; capacity = 10
+</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>    sliceB := sliceA[<span style="color:#0086f7;font-weight:bold">0</span>:<span style="color:#0086f7;font-weight:bold">5</span>]         <span style="color:#080;background-color:#0f140f;font-style:italic">//length = 5; capacity = 10
+</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>    sliceC := sliceA[<span style="color:#0086f7;font-weight:bold">0</span>:<span style="color:#0086f7;font-weight:bold">5</span>:<span style="color:#0086f7;font-weight:bold">5</span>]       <span style="color:#080;background-color:#0f140f;font-style:italic">//length = 5; capacity = 5
+</span></code></pre></td></tr></table>
+</div>
+</div><p>这切片方法不常见，在Golang源码里能够见到，不过非常利于切片的理解。</p>
+<h3 id="编程tips">编程Tips</h3>
+<ul>
+<li>创建切片时可跟据实际需要预分配容量，尽量避免追加过程中扩容操作，有利于提升性能；</li>
+<li>切片拷贝时需要判断实际拷贝的元素个数</li>
+<li>谨慎使用多个切片操作同一个数组，以防读写冲突</li>
+</ul>
+<h2 id="总结">总结</h2>
+<ul>
+<li>每个切片都指向一个底层数组</li>
+<li>每个切片都保存了当前切片的长度、底层数组可用容量</li>
+<li>使用len()计算切片长度时间复杂度为O(1)，不需要遍历切片</li>
+<li>使用cap()计算切片容量时间复杂度为O(1)，不需要遍历切片</li>
+<li>通过函数传递切片时，不会拷贝整个切片，因为切片本身只是个结构体而矣</li>
+<li>使用append()向切片追加元素时有可能触发扩容，扩容后将会生成新的切片</li>
+</ul>
+
         </div>
 
         
@@ -374,15 +402,15 @@
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/">栈和队列练习题</a></li>
+        <li><a href="/post/Golang-Map%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">Golang Map的实现原理</a></li>
         
-        <li><a href="/post/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/">数组、链表练习题</a></li>
+        <li><a href="/post/Golang%E4%B8%ADmake%E4%B8%8Enew%E6%9C%89%E4%BD%95%E5%8C%BA%E5%88%AB/">Golang中make与new有何区别？</a></li>
         
-        <li><a href="/post/%E9%80%92%E5%BD%92/">递归</a></li>
+        <li><a href="/tools/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3%E5%8D%9A%E5%AE%A2%E8%BF%9E%E6%8E%A5/">计算机网络相关博客连接</a></li>
         
-        <li><a href="/tools/%E5%8F%A4%E8%AF%97%E8%AF%8D/">古诗词</a></li>
+        <li><a href="/tools/mysql%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/">Mysql必知必会</a></li>
         
-        <li><a href="/post/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li>
+        <li><a href="/about/">About</a></li>
         
     </ul>
 </div>
@@ -392,9 +420,7 @@
             
             <ul class="clearfix">
                 
-                <li><a href='https://aszhc.github.io/tags/%E5%93%88%E5%B8%8C'>哈希</a></li>
-                
-                <li><a href='https://aszhc.github.io/tags/%E9%9B%86%E5%90%88'>集合</a></li>
+                <li><a href='https://aszhc.github.io/tags/Golang'>Golang</a></li>
                 
             </ul>
             
