@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker on 周闖的博客</title>
+    <link>https://aszhc.github.io/categories/Docker/</link>
+    <description>Recent content in Docker on 周闖的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 03 Jun 2019 10:32:03 +0800</lastBuildDate>
+    
+	<atom:link href="https://aszhc.github.io/categories/Docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Docker基础知识</title>
+      <link>https://aszhc.github.io/post/Docker%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link>
+      <pubDate>Mon, 03 Jun 2019 10:32:03 +0800</pubDate>
+      
+      <guid>https://aszhc.github.io/post/Docker%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</guid>
+      <description>Docker 安装 Ubuntu 19安装 安装命令 sudo apt update sudo apt install docker.io CentOS 7安装 这里只介绍用仓库下载安装的方式。 为了方便添加软件源，支持 devicemapper 存储类型，安装如下软件包： $ sudo yum update $</description>
+    </item>
+    
+  </channel>
+</rss>

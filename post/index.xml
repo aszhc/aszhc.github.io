@@ -101,5 +101,14 @@
       <description>动态规划入门 动态规划(Dynamic programming, 简称DP), 通过把原问题分解为相对简单的子问题的方式求解复杂问题的方法。 DP常常适用于有重叠子问题和最</description>
     </item>
     
+    <item>
+      <title>Docker基础知识</title>
+      <link>https://aszhc.github.io/post/Docker%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link>
+      <pubDate>Mon, 03 Jun 2019 10:32:03 +0800</pubDate>
+      
+      <guid>https://aszhc.github.io/post/Docker%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</guid>
+      <description>Docker 安装 Ubuntu 19安装 安装命令 sudo apt update sudo apt install docker.io CentOS 7安装 这里只介绍用仓库下载安装的方式。 为了方便添加软件源，支持 devicemapper 存储类型，安装如下软件包： $ sudo yum update $</description>
+    </item>
+    
   </channel>
 </rss>
