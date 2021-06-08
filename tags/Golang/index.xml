@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Golang on 周闖的博客</title>
+    <title>Golang on 學而</title>
     <link>https://aszhc.github.io/tags/Golang/</link>
-    <description>Recent content in Golang on 周闖的博客</description>
+    <description>Recent content in Golang on 學而</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Wed, 24 Mar 2021 16:29:20 +0800</lastBuildDate>

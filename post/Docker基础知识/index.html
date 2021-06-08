@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Docker基础知识 | 周闖的博客</title>
-    <meta property="og:title" content="Docker基础知识 - 周闖的博客">
+    <title>Docker基础知识 | 學而</title>
+    <meta property="og:title" content="Docker基础知识 - 學而">
     <meta property="og:type" content="article">
         
     <meta property="article:published_time" content='2019-06-03T10:32:03&#43;08:00'>
@@ -54,7 +54,7 @@
             <div class="site-name ">
                 
                     <a id="logo" href="https://aszhc.github.io">
-                        周闖的博客
+                        學而
                     </a>
                 
                 <p class="description">Computers do not solve problems, they execute solutions.</p>
@@ -264,37 +264,101 @@
 <h2 id="docker-安装">Docker 安装</h2>
 <h3 id="ubuntu-19安装">Ubuntu 19安装</h3>
 <p>安装命令</p>
-<pre><code>sudo apt update 
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo apt update 
 sudo apt install docker.io
-</code></pre><h3 id="centos-7安装">CentOS 7安装</h3>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="centos-7安装">CentOS 7安装</h3>
 <p>这里只介绍用仓库下载安装的方式。
 为了方便添加软件源，支持 devicemapper 存储类型，安装如下软件包：</p>
-<pre><code>$ sudo yum update
-$ sudo yum install -y yum-utils \
-  device-mapper-persistent-data \
-  lvm2
-</code></pre><p>复制代码添加 Docker 稳定版本的 yum 软件源</p>
-<pre><code>$ sudo yum-config-manager \
-    --add-repo \
-    https://download.docker.com/linux/centos/docker-ce.repo
-</code></pre><p>复制代码安装最新版本的Docker-CE</p>
-<pre><code>$ sudo yum install docker-ce docker-ce-cli containerd.io
-</code></pre><h3 id="docker免sudo">Docker免sudo</h3>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo yum update
+$ sudo yum install -y yum-utils <span style="color:#0086d2">\
+</span><span style="color:#0086d2"></span>  device-mapper-persistent-data <span style="color:#0086d2">\
+</span><span style="color:#0086d2"></span>  lvm2
+</code></pre></td></tr></table>
+</div>
+</div><p>复制代码添加 Docker 稳定版本的 yum 软件源</p>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo yum-config-manager <span style="color:#0086d2">\
+</span><span style="color:#0086d2"></span>    --add-repo <span style="color:#0086d2">\
+</span><span style="color:#0086d2"></span>    https://download.docker.com/linux/centos/docker-ce.repo
+</code></pre></td></tr></table>
+</div>
+</div><p>复制代码安装最新版本的Docker-CE</p>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo yum install docker-ce docker-ce-cli containerd.io
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="docker免sudo">Docker免sudo</h3>
 <ul>
 <li>添加docker group</li>
 </ul>
-<pre><code>sudo groupadd docker
-</code></pre><ul>
-<li>将用户加入该 group 内。然后退出并重新登录就生效啦
-sudo gpasswd -a ${USER} docker</li>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo groupadd docker
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>将用户加入该 group 内。然后退出并重新登录就生效啦</li>
+</ul>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo gpasswd -a <span style="color:#0086d2">${</span><span style="color:#fb660a">USER</span><span style="color:#0086d2">}</span> docker
+</code></pre></td></tr></table>
+</div>
+</div><ul>
 <li>重启 docker 服务</li>
 </ul>
-<pre><code>sudo service docker restart
-</code></pre><ul>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo service docker restart
+</code></pre></td></tr></table>
+</div>
+</div><ul>
 <li>切换当前会话到新 group 或者重启 X 会话</li>
 </ul>
-<pre><code>newgrp - docker
-</code></pre><h3 id="配置阿里云镜像加速">配置阿里云镜像加速</h3>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">newgrp - docker
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="配置阿里云镜像加速">配置阿里云镜像加速</h3>
 <ul>
 <li>登录阿里云控制台搜索容器镜像服务，查找加速器地址</li>
 </ul>
@@ -307,16 +371,53 @@ sudo gpasswd -a ${USER} docker</li>
 </ol>
 <p>针对Docker客户端版本大于 1.10.0 的用户</p>
 <p>您可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器</p>
-<pre><code>sudo mkdir -p /etc/docker
-</code></pre><pre><code>sudo vim /etc/docker/daemon.json
-</code></pre><p>在文件中添加</p>
-<pre><code>{
-  &quot;registry-mirrors&quot;: [&quot;https://*****.mirror.aliyuncs.com&quot;]
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo mkdir -p /etc/docker
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo vim /etc/docker/daemon.json
+</code></pre></td></tr></table>
+</div>
+</div><p>在文件中添加</p>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">{
+  <span style="color:#0086d2">&#34;registry-mirrors&#34;</span>: [<span style="color:#0086d2">&#34;https://*****.mirror.aliyuncs.com&#34;</span>]
 }
-</code></pre><p>(星号内容各有不同)</p>
-<pre><code>sudo systemctl daemon-reload
-</code></pre><pre><code>sudo systemctl restart docker
-</code></pre><h2 id="docker简介">Docker简介</h2>
+</code></pre></td></tr></table>
+</div>
+</div><p>(星号内容各有不同)</p>
+<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo systemctl daemon-reload
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo systemctl restart docker
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="docker简介">Docker简介</h2>
 <p>Docker是基于Go语言实现的云开源项目。
 Docker的主要目标是“Build，Ship and Run Any App,Anywhere”，也就是通过对应用组件的封装、分发、部署、运行等生命周期的管理，使用户的APP（可以是一个WEB应用或数据库应用等等）及其运行环境能够做到“<strong>一次封装，到处运行</strong>”。</p>
 <p>Linux 容器技术的出现就解决了这样一个问题，而 Docker 就是在它的基础上发展过来的。将应用运行在 Docker 容器上面，而 Docker 容器在任何操作系统上都是一致的，这就实现了跨平台、跨服务器。<strong>只需要一次配置好环境，换到别的机子上就可以一键部署好，大大简化了操作</strong>。</p>
@@ -922,6 +1023,22 @@ wait      Block until a container stops, then print its exit code   # 截取容�
 <ul class="widget-list">
     
     <li>
+        <a href="https://aszhc.github.io/post/Docker/Docker-01/" title="Docker 01">Docker 01</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Docker/Docker-02/" title="Docker 01">Docker 01</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Docker/Docker-03/" title="Docker 01">Docker 01</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Docker%E7%9F%A5%E8%AF%86/" title="Docker知识">Docker知识</a>
+    </li>
+    
+    <li>
         <a href="https://aszhc.github.io/post/markdown%E4%B8%AD%E7%9A%84emoji%E5%9B%BE%E6%A0%87%E6%A0%87%E7%AD%BE%E8%A1%A8/" title="Markdown中的emoji图标标签表">Markdown中的emoji图标标签表</a>
     </li>
     
@@ -943,22 +1060,6 @@ wait      Block until a container stops, then print its exit code   # 截取容�
     
     <li>
         <a href="https://aszhc.github.io/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/" title="哈希映射和集合练习">哈希映射和集合练习</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/" title="栈和队列练习题">栈和队列练习题</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/" title="数组、链表练习题">数组、链表练习题</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/%E9%80%92%E5%BD%92/" title="递归">递归</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" title="动态规划">动态规划</a>
     </li>
     
 </ul>
@@ -1058,7 +1159,7 @@ wait      Block until a container stops, then print its exit code   # 截取容�
     </div>
     <footer id="footer">
     <div class="container">
-        &copy; 2021 <a href="https://aszhc.github.io">周闖的博客 By 周闖</a>.
+        &copy; 2021 <a href="https://aszhc.github.io">學而 By 周闖</a>.
         Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
         <a href="https://www.flysnow.org/" target="_blank"></a>         备案号 | 辽ICP备18005500号-2	</a>.
         
