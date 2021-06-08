@@ -272,28 +272,28 @@
 <h3 id="例１斐波那契数列">例１：斐波那契数列</h3>
 <h4 id="暴力的递归算法">暴力的递归算法</h4>
 <p>时间复杂度:O(2^n)</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">fib</span>(self, N: int):
-        <span style="color:#fb660a;font-weight:bold">if</span> N &lt;= <span style="color:#0086f7;font-weight:bold">1</span>:
-            <span style="color:#fb660a;font-weight:bold">return</span> N
-        <span style="color:#fb660a;font-weight:bold">return</span> self.fib(N-<span style="color:#0086f7;font-weight:bold">1</span>) + self.fib(N-<span style="color:#0086f7;font-weight:bold">2</span>)
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution</span>:
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">fib</span>(self, N: <span style="color:#a2f">int</span>):
+        <span style="color:#a2f;font-weight:bold">if</span> N <span style="color:#666">&lt;=</span> <span style="color:#666">1</span>:
+            <span style="color:#a2f;font-weight:bold">return</span> N
+        <span style="color:#a2f;font-weight:bold">return</span> self<span style="color:#666">.</span>fib(N<span style="color:#666">-</span><span style="color:#666">1</span>) <span style="color:#666">+</span> self<span style="color:#666">.</span>fib(N<span style="color:#666">-</span><span style="color:#666">2</span>)
 </code></pre></td></tr></table>
 </div>
 </div><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMuZ2l0ZWUuY29tL3VwbG9hZHMvaW1hZ2VzLzIwMjAvMDEzMS8xMzM4NTNfYThhYjBlZDRfNDc5ODIyNS5wbmc?x-oss-process=image/format,png" alt="递归树"></p>
 <p>观察递归树，很明显发现算法低效的原因：存在大量重复计算，如Ｆ(18）被计算了两遍。</p>
 <h4 id="带备忘录的递归算法">带备忘录的递归算法</h4>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -307,25 +307,25 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">fib</span>(self, N: int) -&gt; int:
-        <span style="color:#fb660a;font-weight:bold">if</span> N &lt;= <span style="color:#0086f7;font-weight:bold">1</span>:
-            <span style="color:#fb660a;font-weight:bold">return</span> N
-        self.cache = {<span style="color:#0086f7;font-weight:bold">0</span>: <span style="color:#0086f7;font-weight:bold">0</span>, <span style="color:#0086f7;font-weight:bold">1</span>: <span style="color:#0086f7;font-weight:bold">1</span>}
-        <span style="color:#fb660a;font-weight:bold">return</span> self.memoize(N)
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution</span>:
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">fib</span>(self, N: <span style="color:#a2f">int</span>) <span style="color:#666">-&gt;</span> <span style="color:#a2f">int</span>:
+        <span style="color:#a2f;font-weight:bold">if</span> N <span style="color:#666">&lt;=</span> <span style="color:#666">1</span>:
+            <span style="color:#a2f;font-weight:bold">return</span> N
+        self<span style="color:#666">.</span>cache <span style="color:#666">=</span> {<span style="color:#666">0</span>: <span style="color:#666">0</span>, <span style="color:#666">1</span>: <span style="color:#666">1</span>}
+        <span style="color:#a2f;font-weight:bold">return</span> self<span style="color:#666">.</span>memoize(N)
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">memoize</span>(self, N: int) -&gt; {}:
-        <span style="color:#fb660a;font-weight:bold">if</span> N in self.cache.keys():
-            <span style="color:#fb660a;font-weight:bold">return</span> self.cache[N]
-        self.cache[N] = self.memoize(N-<span style="color:#0086f7;font-weight:bold">1</span>) + self.memoize(N-<span style="color:#0086f7;font-weight:bold">2</span>)
-        <span style="color:#fb660a;font-weight:bold">return</span> self.memoize(N)
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">memoize</span>(self, N: <span style="color:#a2f">int</span>) <span style="color:#666">-&gt;</span> {}:
+        <span style="color:#a2f;font-weight:bold">if</span> N <span style="color:#a2f;font-weight:bold">in</span> self<span style="color:#666">.</span>cache<span style="color:#666">.</span>keys():
+            <span style="color:#a2f;font-weight:bold">return</span> self<span style="color:#666">.</span>cache[N]
+        self<span style="color:#666">.</span>cache[N] <span style="color:#666">=</span> self<span style="color:#666">.</span>memoize(N<span style="color:#666">-</span><span style="color:#666">1</span>) <span style="color:#666">+</span> self<span style="color:#666">.</span>memoize(N<span style="color:#666">-</span><span style="color:#666">2</span>)
+        <span style="color:#a2f;font-weight:bold">return</span> self<span style="color:#666">.</span>memoize(N)
 </code></pre></td></tr></table>
 </div>
 </div><p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMuZ2l0ZWUuY29tL3VwbG9hZHMvaW1hZ2VzLzIwMjAvMDEzMS8xNDEzMDdfM2UzNjUwYWVfNDc5ODIyNS5wbmc?x-oss-process=image/format,png" alt="带备忘录"></p>
 <h4 id="动态规划的递归算法">动态规划的递归算法</h4>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -335,14 +335,14 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution2:  <span style="color:#080;background-color:#0f140f;font-style:italic"># 动态规划</span>
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">fib</span>(self, N: int) -&gt; int:
-        <span style="color:#fb660a;font-weight:bold">if</span> N == <span style="color:#0086f7;font-weight:bold">0</span>:
-            <span style="color:#fb660a;font-weight:bold">return</span> <span style="color:#0086f7;font-weight:bold">0</span>
-        a, b = <span style="color:#0086f7;font-weight:bold">0</span>, <span style="color:#0086f7;font-weight:bold">1</span>
-        <span style="color:#fb660a;font-weight:bold">for</span> _ in range(<span style="color:#0086f7;font-weight:bold">2</span>, N+<span style="color:#0086f7;font-weight:bold">1</span>):
-            a, b = b, a+b
-        <span style="color:#fb660a;font-weight:bold">return</span> b
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution2</span>:  <span style="color:#080;font-style:italic"># 动态规划</span>
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">fib</span>(self, N: <span style="color:#a2f">int</span>) <span style="color:#666">-&gt;</span> <span style="color:#a2f">int</span>:
+        <span style="color:#a2f;font-weight:bold">if</span> N <span style="color:#666">==</span> <span style="color:#666">0</span>:
+            <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">0</span>
+        a, b <span style="color:#666">=</span> <span style="color:#666">0</span>, <span style="color:#666">1</span>
+        <span style="color:#a2f;font-weight:bold">for</span> _ <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#a2f">range</span>(<span style="color:#666">2</span>, N<span style="color:#666">+</span><span style="color:#666">1</span>):
+            a, b <span style="color:#666">=</span> b, a<span style="color:#666">+</span>b
+        <span style="color:#a2f;font-weight:bold">return</span> b
 </code></pre></td></tr></table>
 </div>
 </div><h4 id="动态转移方程">动态转移方程</h4>
@@ -367,9 +367,9 @@
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9waWMubGVldGNvZGUtY24uY29tLzk4YTY0MWNkMTQ2MWYwMjZiYTQ5ZDRjODU5YjIwOWEwOTYyY2ZhYTJhOTU4YWU3NmM4ZmM0N2NhMzI3YTQ4NGYtZmlsZV8xNTYwMjM5MzE2MDQ4?x-oss-process=image/format,png" alt="状态转移方程"></p>
 <h4 id="递归方法">递归方法</h4>
 <p>根据状态转移方程写代码：</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -391,32 +391,32 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution(object):
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">coinChange</span>(self, coins, amount):
-        <span style="color:#0086d2">&#34;&#34;&#34;
-</span><span style="color:#0086d2">        :type coins: List[int]
-</span><span style="color:#0086d2">        :type amount: int
-</span><span style="color:#0086d2">        :rtype: int
-</span><span style="color:#0086d2">        &#34;&#34;&#34;</span>
-        <span style="color:#fb660a;font-weight:bold">if</span> amount == <span style="color:#0086f7;font-weight:bold">0</span>:
-            <span style="color:#fb660a;font-weight:bold">return</span> <span style="color:#0086f7;font-weight:bold">0</span>
-        ans = float(<span style="color:#0086d2">&#39;inf&#39;</span>)
-        <span style="color:#fb660a;font-weight:bold">for</span> coin in coins:
-            <span style="color:#080;background-color:#0f140f;font-style:italic"># 金额不可达</span>
-            <span style="color:#fb660a;font-weight:bold">if</span> amount - coin &lt; <span style="color:#0086f7;font-weight:bold">0</span>:
-                <span style="color:#fb660a;font-weight:bold">continue</span>
-            subProb = self.coinChange(coins, amount - coin)
-            <span style="color:#080;background-color:#0f140f;font-style:italic"># 子问题无解</span>
-            <span style="color:#fb660a;font-weight:bold">if</span> subProb == -<span style="color:#0086f7;font-weight:bold">1</span>:
-                <span style="color:#fb660a;font-weight:bold">continue</span>
-            ans = min(ans, subProb + <span style="color:#0086f7;font-weight:bold">1</span>)
-        <span style="color:#fb660a;font-weight:bold">return</span> ans <span style="color:#fb660a;font-weight:bold">if</span> ans != float(<span style="color:#0086d2">&#39;inf&#39;</span>) <span style="color:#fb660a;font-weight:bold">else</span> -<span style="color:#0086f7;font-weight:bold">1</span>
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution</span>(<span style="color:#a2f">object</span>):
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">coinChange</span>(self, coins, amount):
+        <span style="color:#b44">&#34;&#34;&#34;
+</span><span style="color:#b44">        :type coins: List[int]
+</span><span style="color:#b44">        :type amount: int
+</span><span style="color:#b44">        :rtype: int
+</span><span style="color:#b44">        &#34;&#34;&#34;</span>
+        <span style="color:#a2f;font-weight:bold">if</span> amount <span style="color:#666">==</span> <span style="color:#666">0</span>:
+            <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">0</span>
+        ans <span style="color:#666">=</span> <span style="color:#a2f">float</span>(<span style="color:#b44">&#39;inf&#39;</span>)
+        <span style="color:#a2f;font-weight:bold">for</span> coin <span style="color:#a2f;font-weight:bold">in</span> coins:
+            <span style="color:#080;font-style:italic"># 金额不可达</span>
+            <span style="color:#a2f;font-weight:bold">if</span> amount <span style="color:#666">-</span> coin <span style="color:#666">&lt;</span> <span style="color:#666">0</span>:
+                <span style="color:#a2f;font-weight:bold">continue</span>
+            subProb <span style="color:#666">=</span> self<span style="color:#666">.</span>coinChange(coins, amount <span style="color:#666">-</span> coin)
+            <span style="color:#080;font-style:italic"># 子问题无解</span>
+            <span style="color:#a2f;font-weight:bold">if</span> subProb <span style="color:#666">==</span> <span style="color:#666">-</span><span style="color:#666">1</span>:
+                <span style="color:#a2f;font-weight:bold">continue</span>
+            ans <span style="color:#666">=</span> <span style="color:#a2f">min</span>(ans, subProb <span style="color:#666">+</span> <span style="color:#666">1</span>)
+        <span style="color:#a2f;font-weight:bold">return</span> ans <span style="color:#a2f;font-weight:bold">if</span> ans <span style="color:#666">!=</span> <span style="color:#a2f">float</span>(<span style="color:#b44">&#39;inf&#39;</span>) <span style="color:#a2f;font-weight:bold">else</span> <span style="color:#666">-</span><span style="color:#666">1</span>
 </code></pre></td></tr></table>
 </div>
 </div><h4 id="带备忘录的递归算法-1">带备忘录的递归算法</h4>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -438,32 +438,32 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution3(object):
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">coinChange</span>(self, coins, amount):
-        <span style="color:#0086d2">&#34;&#34;&#34;
-</span><span style="color:#0086d2">        :type coins: List[int]
-</span><span style="color:#0086d2">        :type amount: int
-</span><span style="color:#0086d2">        :rtype: int
-</span><span style="color:#0086d2">        &#34;&#34;&#34;</span>
-        memo = {<span style="color:#0086f7;font-weight:bold">0</span>: <span style="color:#0086f7;font-weight:bold">0</span>}
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution3</span>(<span style="color:#a2f">object</span>):
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">coinChange</span>(self, coins, amount):
+        <span style="color:#b44">&#34;&#34;&#34;
+</span><span style="color:#b44">        :type coins: List[int]
+</span><span style="color:#b44">        :type amount: int
+</span><span style="color:#b44">        :rtype: int
+</span><span style="color:#b44">        &#34;&#34;&#34;</span>
+        memo <span style="color:#666">=</span> {<span style="color:#666">0</span>: <span style="color:#666">0</span>}
 
-        <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">helper</span>(n):
-            <span style="color:#fb660a;font-weight:bold">if</span> n in memo:
-                <span style="color:#fb660a;font-weight:bold">return</span> memo[n]
-            res = float(<span style="color:#0086d2">&#34;inf&#34;</span>)
-            <span style="color:#fb660a;font-weight:bold">for</span> coin in coins:
-                <span style="color:#fb660a;font-weight:bold">if</span> n &gt;= coin:
-                    res = min(res, helper(n - coin) + <span style="color:#0086f7;font-weight:bold">1</span>)
-            memo[n] = res
-            <span style="color:#fb660a;font-weight:bold">return</span> res
+        <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">helper</span>(n):
+            <span style="color:#a2f;font-weight:bold">if</span> n <span style="color:#a2f;font-weight:bold">in</span> memo:
+                <span style="color:#a2f;font-weight:bold">return</span> memo[n]
+            res <span style="color:#666">=</span> <span style="color:#a2f">float</span>(<span style="color:#b44">&#34;inf&#34;</span>)
+            <span style="color:#a2f;font-weight:bold">for</span> coin <span style="color:#a2f;font-weight:bold">in</span> coins:
+                <span style="color:#a2f;font-weight:bold">if</span> n <span style="color:#666">&gt;=</span> coin:
+                    res <span style="color:#666">=</span> <span style="color:#a2f">min</span>(res, helper(n <span style="color:#666">-</span> coin) <span style="color:#666">+</span> <span style="color:#666">1</span>)
+            memo[n] <span style="color:#666">=</span> res
+            <span style="color:#a2f;font-weight:bold">return</span> res
 
-        <span style="color:#fb660a;font-weight:bold">return</span> helper(amount) <span style="color:#fb660a;font-weight:bold">if</span> (helper(amount) != float(<span style="color:#0086d2">&#34;inf&#34;</span>)) <span style="color:#fb660a;font-weight:bold">else</span> -<span style="color:#0086f7;font-weight:bold">1</span>
+        <span style="color:#a2f;font-weight:bold">return</span> helper(amount) <span style="color:#a2f;font-weight:bold">if</span> (helper(amount) <span style="color:#666">!=</span> <span style="color:#a2f">float</span>(<span style="color:#b44">&#34;inf&#34;</span>)) <span style="color:#a2f;font-weight:bold">else</span> <span style="color:#666">-</span><span style="color:#666">1</span>
 </code></pre></td></tr></table>
 </div>
 </div><h4 id="动态规划">动态规划</h4>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -475,16 +475,16 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">coinChange</span>(self, coins: List[int], amount: int) -&gt; int:
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution</span>:
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">coinChange</span>(self, coins: List[<span style="color:#a2f">int</span>], amount: <span style="color:#a2f">int</span>) <span style="color:#666">-&gt;</span> <span style="color:#a2f">int</span>:
         
-        dp=[float(<span style="color:#0086d2">&#34;inf&#34;</span>)]*(amount+<span style="color:#0086f7;font-weight:bold">1</span>)
-        dp[<span style="color:#0086f7;font-weight:bold">0</span>]=<span style="color:#0086f7;font-weight:bold">0</span>
-        <span style="color:#fb660a;font-weight:bold">for</span> i in range(<span style="color:#0086f7;font-weight:bold">1</span>,amount+<span style="color:#0086f7;font-weight:bold">1</span>):
-            <span style="color:#fb660a;font-weight:bold">for</span> coin in coins:
-                <span style="color:#fb660a;font-weight:bold">if</span>(i&gt;=coin):
-                    dp[i]=min(dp[i],dp[i-coin]+<span style="color:#0086f7;font-weight:bold">1</span>)
-        <span style="color:#fb660a;font-weight:bold">return</span> dp[-<span style="color:#0086f7;font-weight:bold">1</span>] <span style="color:#fb660a;font-weight:bold">if</span>(dp[-<span style="color:#0086f7;font-weight:bold">1</span>]!=float(<span style="color:#0086d2">&#34;inf&#34;</span>)) <span style="color:#fb660a;font-weight:bold">else</span> -<span style="color:#0086f7;font-weight:bold">1</span>
+        dp<span style="color:#666">=</span>[<span style="color:#a2f">float</span>(<span style="color:#b44">&#34;inf&#34;</span>)]<span style="color:#666">*</span>(amount<span style="color:#666">+</span><span style="color:#666">1</span>)
+        dp[<span style="color:#666">0</span>]<span style="color:#666">=</span><span style="color:#666">0</span>
+        <span style="color:#a2f;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#a2f">range</span>(<span style="color:#666">1</span>,amount<span style="color:#666">+</span><span style="color:#666">1</span>):
+            <span style="color:#a2f;font-weight:bold">for</span> coin <span style="color:#a2f;font-weight:bold">in</span> coins:
+                <span style="color:#a2f;font-weight:bold">if</span>(i<span style="color:#666">&gt;=</span>coin):
+                    dp[i]<span style="color:#666">=</span><span style="color:#a2f">min</span>(dp[i],dp[i<span style="color:#666">-</span>coin]<span style="color:#666">+</span><span style="color:#666">1</span>)
+        <span style="color:#a2f;font-weight:bold">return</span> dp[<span style="color:#666">-</span><span style="color:#666">1</span>] <span style="color:#a2f;font-weight:bold">if</span>(dp[<span style="color:#666">-</span><span style="color:#666">1</span>]<span style="color:#666">!=</span><span style="color:#a2f">float</span>(<span style="color:#b44">&#34;inf&#34;</span>)) <span style="color:#a2f;font-weight:bold">else</span> <span style="color:#666">-</span><span style="color:#666">1</span>
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="5-leetcode">5. LeetCode</h2>
@@ -517,9 +517,9 @@
 <p>不需要建立DP矩阵，直接遍历<code>grid[i][j]</code>修改即可</p>
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9waWMubGVldGNvZGUtY24uY29tL2Y3ZGU4NjQ5Y2MyNDk1MTVmYTRhNDQyNTA4MzEyYjY1ZTc2Njg0YzUxMTNkMzExMmQ1NTI2MGRjYzNjYmUxMTItaW1hZ2UucG5n?x-oss-process=image/format,png" alt="最短路径和"></p>
 <h4 id="代码实现">代码实现</h4>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -538,23 +538,23 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution(object):
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">minPathSum</span>(self, grid):
-        <span style="color:#0086d2">&#34;&#34;&#34;
-</span><span style="color:#0086d2">        :type grid: List[List[int]]
-</span><span style="color:#0086d2">        :rtype: int
-</span><span style="color:#0086d2">        &#34;&#34;&#34;</span>
-        <span style="color:#fb660a;font-weight:bold">for</span> i in range(len(grid)):  <span style="color:#080;background-color:#0f140f;font-style:italic"># 共i行</span>
-            <span style="color:#fb660a;font-weight:bold">for</span> j in range(len(grid[<span style="color:#0086f7;font-weight:bold">0</span>])):  <span style="color:#080;background-color:#0f140f;font-style:italic"># 共j列</span>
-                <span style="color:#fb660a;font-weight:bold">if</span> i == j == <span style="color:#0086f7;font-weight:bold">0</span>:
-                    <span style="color:#fb660a;font-weight:bold">continue</span>
-                <span style="color:#fb660a;font-weight:bold">elif</span> i == <span style="color:#0086f7;font-weight:bold">0</span>:
-                    grid[i][j] = grid[i][j-<span style="color:#0086f7;font-weight:bold">1</span>] + grid[i][j]
-                <span style="color:#fb660a;font-weight:bold">elif</span> j == <span style="color:#0086f7;font-weight:bold">0</span>:
-                    grid[i][j] = grid[i-<span style="color:#0086f7;font-weight:bold">1</span>][j] + grid[i][j]
-                <span style="color:#fb660a;font-weight:bold">else</span>:
-                    grid[i][j] = min(grid[i-<span style="color:#0086f7;font-weight:bold">1</span>][j], grid[i][j-<span style="color:#0086f7;font-weight:bold">1</span>]) + grid[i][j]
-        <span style="color:#fb660a;font-weight:bold">return</span> grid[-<span style="color:#0086f7;font-weight:bold">1</span>][-<span style="color:#0086f7;font-weight:bold">1</span>]
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution</span>(<span style="color:#a2f">object</span>):
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">minPathSum</span>(self, grid):
+        <span style="color:#b44">&#34;&#34;&#34;
+</span><span style="color:#b44">        :type grid: List[List[int]]
+</span><span style="color:#b44">        :rtype: int
+</span><span style="color:#b44">        &#34;&#34;&#34;</span>
+        <span style="color:#a2f;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#a2f">range</span>(<span style="color:#a2f">len</span>(grid)):  <span style="color:#080;font-style:italic"># 共i行</span>
+            <span style="color:#a2f;font-weight:bold">for</span> j <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#a2f">range</span>(<span style="color:#a2f">len</span>(grid[<span style="color:#666">0</span>])):  <span style="color:#080;font-style:italic"># 共j列</span>
+                <span style="color:#a2f;font-weight:bold">if</span> i <span style="color:#666">==</span> j <span style="color:#666">==</span> <span style="color:#666">0</span>:
+                    <span style="color:#a2f;font-weight:bold">continue</span>
+                <span style="color:#a2f;font-weight:bold">elif</span> i <span style="color:#666">==</span> <span style="color:#666">0</span>:
+                    grid[i][j] <span style="color:#666">=</span> grid[i][j<span style="color:#666">-</span><span style="color:#666">1</span>] <span style="color:#666">+</span> grid[i][j]
+                <span style="color:#a2f;font-weight:bold">elif</span> j <span style="color:#666">==</span> <span style="color:#666">0</span>:
+                    grid[i][j] <span style="color:#666">=</span> grid[i<span style="color:#666">-</span><span style="color:#666">1</span>][j] <span style="color:#666">+</span> grid[i][j]
+                <span style="color:#a2f;font-weight:bold">else</span>:
+                    grid[i][j] <span style="color:#666">=</span> <span style="color:#a2f">min</span>(grid[i<span style="color:#666">-</span><span style="color:#666">1</span>][j], grid[i][j<span style="color:#666">-</span><span style="color:#666">1</span>]) <span style="color:#666">+</span> grid[i][j]
+        <span style="color:#a2f;font-weight:bold">return</span> grid[<span style="color:#666">-</span><span style="color:#666">1</span>][<span style="color:#666">-</span><span style="color:#666">1</span>]
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="70-爬楼梯httpsleetcode-cncomproblemsclimbing-stairs"><a href="https://leetcode-cn.com/problems/climbing-stairs/">70. 爬楼梯</a></h3>
@@ -588,9 +588,9 @@
 <p>DP数组也可以省略</p>
 <p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWFnZXMuZ2l0ZWUuY29tL3VwbG9hZHMvaW1hZ2VzLzIwMjAvMDEzMS8xNzU2MDJfYjVlMjZlYjhfNDc5ODIyNS5wbmc?x-oss-process=image/format,png" alt="爬楼梯"></p>
 <h4 id="代码实现-1">代码实现</h4>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -604,18 +604,18 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution(object):
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">climbStairs</span>(self, n):
-        <span style="color:#0086d2">&#34;&#34;&#34;
-</span><span style="color:#0086d2">        :type n: int
-</span><span style="color:#0086d2">        :rtype: int
-</span><span style="color:#0086d2">        &#34;&#34;&#34;</span>
-        <span style="color:#fb660a;font-weight:bold">if</span> n &lt;= <span style="color:#0086f7;font-weight:bold">0</span>:
-            <span style="color:#fb660a;font-weight:bold">return</span> <span style="color:#0086f7;font-weight:bold">0</span>
-        res,last = <span style="color:#0086f7;font-weight:bold">1</span>,<span style="color:#0086f7;font-weight:bold">1</span>
-        <span style="color:#fb660a;font-weight:bold">for</span> _ in range(<span style="color:#0086f7;font-weight:bold">1</span>,n):
-            res,last = res+last,res
-        <span style="color:#fb660a;font-weight:bold">return</span> res
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution</span>(<span style="color:#a2f">object</span>):
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">climbStairs</span>(self, n):
+        <span style="color:#b44">&#34;&#34;&#34;
+</span><span style="color:#b44">        :type n: int
+</span><span style="color:#b44">        :rtype: int
+</span><span style="color:#b44">        &#34;&#34;&#34;</span>
+        <span style="color:#a2f;font-weight:bold">if</span> n <span style="color:#666">&lt;=</span> <span style="color:#666">0</span>:
+            <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">0</span>
+        res,last <span style="color:#666">=</span> <span style="color:#666">1</span>,<span style="color:#666">1</span>
+        <span style="color:#a2f;font-weight:bold">for</span> _ <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#a2f">range</span>(<span style="color:#666">1</span>,n):
+            res,last <span style="color:#666">=</span> res<span style="color:#666">+</span>last,res
+        <span style="color:#a2f;font-weight:bold">return</span> res
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="121-买卖股票的最佳时机httpsleetcode-cncomproblemsbest-time-to-buy-and-sell-stock"><a href="https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/">121. 买卖股票的最佳时机</a></h3>
@@ -639,9 +639,9 @@
 <h4 id="解题思路-2">解题思路</h4>
 <p>变量buying_price记录买入价，一旦遇到更低的买入价则更新此变量，使用max_profit记录可获得的最大收益，当收益更高是更新max_profit</p>
 <h4 id="代码实现-2">代码实现</h4>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -657,20 +657,20 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">maxProfit</span>(self, prices: List[int]) -&gt; int:
-        <span style="color:#fb660a;font-weight:bold">if</span> len(prices) == <span style="color:#0086f7;font-weight:bold">0</span>:
-            <span style="color:#fb660a;font-weight:bold">return</span> <span style="color:#0086f7;font-weight:bold">0</span>
-        max_profits = <span style="color:#0086f7;font-weight:bold">0</span>
-        buying_price = prices[<span style="color:#0086f7;font-weight:bold">0</span>]
-        <span style="color:#fb660a;font-weight:bold">for</span> i in range(len(prices)):
-            <span style="color:#fb660a;font-weight:bold">if</span> prices[i]&lt;buying_price:
-                buying_price = prices[i]
-            <span style="color:#fb660a;font-weight:bold">else</span>:
-                profit = prices[i] - buying_price
-                <span style="color:#fb660a;font-weight:bold">if</span> profit&gt;max_profits:
-                    max_profits = profit
-        <span style="color:#fb660a;font-weight:bold">return</span> max_profits
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution</span>:
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">maxProfit</span>(self, prices: List[<span style="color:#a2f">int</span>]) <span style="color:#666">-&gt;</span> <span style="color:#a2f">int</span>:
+        <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f">len</span>(prices) <span style="color:#666">==</span> <span style="color:#666">0</span>:
+            <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">0</span>
+        max_profits <span style="color:#666">=</span> <span style="color:#666">0</span>
+        buying_price <span style="color:#666">=</span> prices[<span style="color:#666">0</span>]
+        <span style="color:#a2f;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#a2f">range</span>(<span style="color:#a2f">len</span>(prices)):
+            <span style="color:#a2f;font-weight:bold">if</span> prices[i]<span style="color:#666">&lt;</span>buying_price:
+                buying_price <span style="color:#666">=</span> prices[i]
+            <span style="color:#a2f;font-weight:bold">else</span>:
+                profit <span style="color:#666">=</span> prices[i] <span style="color:#666">-</span> buying_price
+                <span style="color:#a2f;font-weight:bold">if</span> profit<span style="color:#666">&gt;</span>max_profits:
+                    max_profits <span style="color:#666">=</span> profit
+        <span style="color:#a2f;font-weight:bold">return</span> max_profits
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="198-打家劫舍httpsleetcode-cncomproblemshouse-robber"><a href="https://leetcode-cn.com/problems/house-robber/">198. 打家劫舍</a></h3>
@@ -696,9 +696,9 @@
 <p><code>dp[n] = MAX( dp[n-1], dp[n-2] + num )</code></p>
 <p>由于不可以在相邻的房屋闯入，所以在当前位置 n 房屋可盗窃的最大值，要么就是 n-1 房屋可盗窃的最大值，要么就是 n-2 房屋可盗窃的最大值加上当前房屋的值，二者之间取最大值</p>
 <h4 id="代码实现-3">代码实现</h4>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -709,15 +709,15 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">rob</span>(self, nums: List[int]) -&gt; int:
-        n = len(nums)
-        <span style="color:#fb660a;font-weight:bold">if</span> n == <span style="color:#0086f7;font-weight:bold">0</span>: <span style="color:#fb660a;font-weight:bold">return</span> <span style="color:#0086f7;font-weight:bold">0</span>
-        dp = [<span style="color:#0086f7;font-weight:bold">0</span>] * (n + <span style="color:#0086f7;font-weight:bold">1</span>)
-        dp[<span style="color:#0086f7;font-weight:bold">1</span>] = nums[<span style="color:#0086f7;font-weight:bold">0</span>]
-        <span style="color:#fb660a;font-weight:bold">for</span> i in  range(<span style="color:#0086f7;font-weight:bold">2</span>,n + <span style="color:#0086f7;font-weight:bold">1</span>):
-            dp[i] = max(dp[i - <span style="color:#0086f7;font-weight:bold">1</span>], dp[i - <span style="color:#0086f7;font-weight:bold">2</span>] + nums[i - <span style="color:#0086f7;font-weight:bold">1</span>])
-        <span style="color:#fb660a;font-weight:bold">return</span> dp[-<span style="color:#0086f7;font-weight:bold">1</span>]
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution</span>:
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">rob</span>(self, nums: List[<span style="color:#a2f">int</span>]) <span style="color:#666">-&gt;</span> <span style="color:#a2f">int</span>:
+        n <span style="color:#666">=</span> <span style="color:#a2f">len</span>(nums)
+        <span style="color:#a2f;font-weight:bold">if</span> n <span style="color:#666">==</span> <span style="color:#666">0</span>: <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">0</span>
+        dp <span style="color:#666">=</span> [<span style="color:#666">0</span>] <span style="color:#666">*</span> (n <span style="color:#666">+</span> <span style="color:#666">1</span>)
+        dp[<span style="color:#666">1</span>] <span style="color:#666">=</span> nums[<span style="color:#666">0</span>]
+        <span style="color:#a2f;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span>  <span style="color:#a2f">range</span>(<span style="color:#666">2</span>,n <span style="color:#666">+</span> <span style="color:#666">1</span>):
+            dp[i] <span style="color:#666">=</span> <span style="color:#a2f">max</span>(dp[i <span style="color:#666">-</span> <span style="color:#666">1</span>], dp[i <span style="color:#666">-</span> <span style="color:#666">2</span>] <span style="color:#666">+</span> nums[i <span style="color:#666">-</span> <span style="color:#666">1</span>])
+        <span style="color:#a2f;font-weight:bold">return</span> dp[<span style="color:#666">-</span><span style="color:#666">1</span>]
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="6参考资料">6.参考资料</h2>
@@ -744,7 +744,7 @@
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/Docker%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">Docker基础知识</a></li>
+        <li><a href="/post/Docker/Docker%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">Docker基础知识</a></li>
         
         <li><a href="/archives/">归档</a></li>
         
@@ -798,19 +798,7 @@
 <ul class="widget-list">
     
     <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-01/" title="Docker 01">Docker 01</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-02/" title="Docker 01">Docker 01</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-03/" title="Docker 01">Docker 01</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/Docker%E7%9F%A5%E8%AF%86/" title="Docker知识">Docker知识</a>
+        <a href="https://aszhc.github.io/post/%E9%85%8D%E7%BD%AE%E5%9B%BE%E5%BA%8A/" title="linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床">linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床</a>
     </li>
     
     <li>
@@ -837,6 +825,18 @@
         <a href="https://aszhc.github.io/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/" title="哈希映射和集合练习">哈希映射和集合练习</a>
     </li>
     
+    <li>
+        <a href="https://aszhc.github.io/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/" title="栈和队列练习题">栈和队列练习题</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/" title="数组、链表练习题">数组、链表练习题</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/%E9%80%92%E5%BD%92/" title="递归">递归</a>
+    </li>
+    
 </ul>
     </section>
 
@@ -847,6 +847,8 @@
 <ul class="widget-list">
     
     <li><a href="https://aszhc.github.io/categories/Docker/">Docker (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">安装与配置 (1)</a></li>
     
     <li><a href="https://aszhc.github.io/categories/%E5%B7%A5%E5%85%B7/">工具 (1)</a></li>
     
@@ -869,9 +871,13 @@
     
     <a href="https://aszhc.github.io/tags/markdown/">markdown</a>
     
+    <a href="https://aszhc.github.io/tags/markdown/">markdown</a>
+    
     <a href="https://aszhc.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
     
     <a href="https://aszhc.github.io/tags/%E5%93%88%E5%B8%8C/">哈希</a>
+    
+    <a href="https://aszhc.github.io/tags/%E5%9B%BE%E5%BA%8A/">图床</a>
     
     <a href="https://aszhc.github.io/tags/%E5%AE%B9%E5%99%A8%E5%8C%96/">容器化</a>
     

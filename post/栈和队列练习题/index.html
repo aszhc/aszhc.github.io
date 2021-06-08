@@ -220,9 +220,9 @@
 <p>输入: &ldquo;()&rdquo;
 输出: true</p>
 </blockquote>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -234,16 +234,16 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">isValid</span>(self, s: str) -&gt; bool:
-        dic = {<span style="color:#0086d2">&#39;{&#39;</span>: <span style="color:#0086d2">&#39;}&#39;</span>, <span style="color:#0086d2">&#39;[&#39;</span>: <span style="color:#0086d2">&#39;]&#39;</span>, <span style="color:#0086d2">&#39;(&#39;</span>: <span style="color:#0086d2">&#39;)&#39;</span>, <span style="color:#0086d2">&#39;?&#39;</span>: <span style="color:#0086d2">&#39;?&#39;</span>}
-        stack = [<span style="color:#0086d2">&#39;?&#39;</span>]
-        <span style="color:#fb660a;font-weight:bold">for</span> c in s:
-            <span style="color:#fb660a;font-weight:bold">if</span> c in dic:
-                stack.append(c)
-            <span style="color:#fb660a;font-weight:bold">elif</span> dic[stack.pop()] != c:
-                <span style="color:#fb660a;font-weight:bold">return</span> False
-        <span style="color:#fb660a;font-weight:bold">return</span> len(stack) == <span style="color:#0086f7;font-weight:bold">1</span>  
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution</span>:
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">isValid</span>(self, s: <span style="color:#a2f">str</span>) <span style="color:#666">-&gt;</span> <span style="color:#a2f">bool</span>:
+        dic <span style="color:#666">=</span> {<span style="color:#b44">&#39;{&#39;</span>: <span style="color:#b44">&#39;}&#39;</span>, <span style="color:#b44">&#39;[&#39;</span>: <span style="color:#b44">&#39;]&#39;</span>, <span style="color:#b44">&#39;(&#39;</span>: <span style="color:#b44">&#39;)&#39;</span>, <span style="color:#b44">&#39;?&#39;</span>: <span style="color:#b44">&#39;?&#39;</span>}
+        stack <span style="color:#666">=</span> [<span style="color:#b44">&#39;?&#39;</span>]
+        <span style="color:#a2f;font-weight:bold">for</span> c <span style="color:#a2f;font-weight:bold">in</span> s:
+            <span style="color:#a2f;font-weight:bold">if</span> c <span style="color:#a2f;font-weight:bold">in</span> dic:
+                stack<span style="color:#666">.</span>append(c)
+            <span style="color:#a2f;font-weight:bold">elif</span> dic[stack<span style="color:#666">.</span>pop()] <span style="color:#666">!=</span> c:
+                <span style="color:#a2f;font-weight:bold">return</span> False
+        <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#a2f">len</span>(stack) <span style="color:#666">==</span> <span style="color:#666">1</span>  
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="2-最小栈httpsleetcode-cncomproblemsmin-stack">2. <a href="https://leetcode-cn.com/problems/min-stack/">最小栈</a></h2>
@@ -254,9 +254,9 @@
 <li>top() —— 获取栈顶元素。</li>
 <li>getMin() —— 检索栈中的最小元素。</li>
 </ul>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -286,34 +286,34 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> MinStack:
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">MinStack</span>:
 
-    <span style="color:#fb660a;font-weight:bold">def</span> __init__(self):
-        <span style="color:#0086d2">&#34;&#34;&#34;
-</span><span style="color:#0086d2">        initialize your data structure here.
-</span><span style="color:#0086d2">        &#34;&#34;&#34;</span>
-        self.data = []
-        self.helper = []
+    <span style="color:#a2f;font-weight:bold">def</span> __init__(self):
+        <span style="color:#b44">&#34;&#34;&#34;
+</span><span style="color:#b44">        initialize your data structure here.
+</span><span style="color:#b44">        &#34;&#34;&#34;</span>
+        self<span style="color:#666">.</span>data <span style="color:#666">=</span> []
+        self<span style="color:#666">.</span>helper <span style="color:#666">=</span> []
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">push</span>(self, x: int) -&gt; None:
-        self.data.append(x)
-        <span style="color:#fb660a;font-weight:bold">if</span> len(self.helper) == <span style="color:#0086f7;font-weight:bold">0</span> or x &lt;= self.helper[-<span style="color:#0086f7;font-weight:bold">1</span>]:
-            self.helper.append(x)
-        <span style="color:#fb660a;font-weight:bold">else</span>:
-            self.helper.append(self.helper[-<span style="color:#0086f7;font-weight:bold">1</span>])
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">push</span>(self, x: <span style="color:#a2f">int</span>) <span style="color:#666">-&gt;</span> None:
+        self<span style="color:#666">.</span>data<span style="color:#666">.</span>append(x)
+        <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f">len</span>(self<span style="color:#666">.</span>helper) <span style="color:#666">==</span> <span style="color:#666">0</span> <span style="color:#a2f;font-weight:bold">or</span> x <span style="color:#666">&lt;=</span> self<span style="color:#666">.</span>helper[<span style="color:#666">-</span><span style="color:#666">1</span>]:
+            self<span style="color:#666">.</span>helper<span style="color:#666">.</span>append(x)
+        <span style="color:#a2f;font-weight:bold">else</span>:
+            self<span style="color:#666">.</span>helper<span style="color:#666">.</span>append(self<span style="color:#666">.</span>helper[<span style="color:#666">-</span><span style="color:#666">1</span>])
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">pop</span>(self) -&gt; None:
-        <span style="color:#fb660a;font-weight:bold">if</span> self.data:
-            self.helper.pop()
-            <span style="color:#fb660a;font-weight:bold">return</span> self.data.pop()
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">pop</span>(self) <span style="color:#666">-&gt;</span> None:
+        <span style="color:#a2f;font-weight:bold">if</span> self<span style="color:#666">.</span>data:
+            self<span style="color:#666">.</span>helper<span style="color:#666">.</span>pop()
+            <span style="color:#a2f;font-weight:bold">return</span> self<span style="color:#666">.</span>data<span style="color:#666">.</span>pop()
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">top</span>(self) -&gt; int:
-        <span style="color:#fb660a;font-weight:bold">if</span> self.data:
-            <span style="color:#fb660a;font-weight:bold">return</span> self.data[-<span style="color:#0086f7;font-weight:bold">1</span>]
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">top</span>(self) <span style="color:#666">-&gt;</span> <span style="color:#a2f">int</span>:
+        <span style="color:#a2f;font-weight:bold">if</span> self<span style="color:#666">.</span>data:
+            <span style="color:#a2f;font-weight:bold">return</span> self<span style="color:#666">.</span>data[<span style="color:#666">-</span><span style="color:#666">1</span>]
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">getMin</span>(self) -&gt; int:
-        <span style="color:#fb660a;font-weight:bold">if</span> self.helper:
-            <span style="color:#fb660a;font-weight:bold">return</span> self.helper[-<span style="color:#0086f7;font-weight:bold">1</span>]
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">getMin</span>(self) <span style="color:#666">-&gt;</span> <span style="color:#a2f">int</span>:
+        <span style="color:#a2f;font-weight:bold">if</span> self<span style="color:#666">.</span>helper:
+            <span style="color:#a2f;font-weight:bold">return</span> self<span style="color:#666">.</span>helper[<span style="color:#666">-</span><span style="color:#666">1</span>]
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="3-柱状图中最大的矩形httpsleetcode-cncomproblemslargest-rectangle-in-histogram">3. <a href="https://leetcode-cn.com/problems/largest-rectangle-in-histogram/">柱状图中最大的矩形</a></h2>
@@ -326,9 +326,9 @@
 <p><strong>示例:</strong></p>
 <pre><code>输入: [2,1,5,6,2,3]
 输出: 10
-</code></pre><div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+</code></pre><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -354,30 +354,30 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">largestRectangleArea</span>(self, heights: List[int]) -&gt; int:
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 1. 暴力破解</span>
-        res = <span style="color:#0086f7;font-weight:bold">0</span>
-        n = len(heights)
-        <span style="color:#fb660a;font-weight:bold">for</span> i in range(n):
-            left_i = i
-            right_i = i
-            <span style="color:#fb660a;font-weight:bold">while</span> left_i &gt;= <span style="color:#0086f7;font-weight:bold">0</span> and heights[left_i] &gt;= heights[i]:
-                left_i -= <span style="color:#0086f7;font-weight:bold">1</span>
-            <span style="color:#fb660a;font-weight:bold">while</span> right_i &lt; n and heights[right_i] &gt;= heights[i]:
-                right_i += <span style="color:#0086f7;font-weight:bold">1</span>
-            res = max(res, (right_i - left_i - <span style="color:#0086f7;font-weight:bold">1</span>) * heights[i])
-        <span style="color:#fb660a;font-weight:bold">return</span> res
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 2. 单调栈</span>
-        stack = []
-        heights = [<span style="color:#0086f7;font-weight:bold">0</span>] + heights + [<span style="color:#0086f7;font-weight:bold">0</span>]
-        res = <span style="color:#0086f7;font-weight:bold">0</span>
-        <span style="color:#fb660a;font-weight:bold">for</span> i in range(len(heights)):
-            <span style="color:#fb660a;font-weight:bold">while</span> stack and heights[stack[-<span style="color:#0086f7;font-weight:bold">1</span>]] &gt; heights[i]:
-                tmp = stack.pop()
-                res = max(res, (i - stack[-<span style="color:#0086f7;font-weight:bold">1</span>] - <span style="color:#0086f7;font-weight:bold">1</span>) * heights[tmp])
-            stack.append(i)
-        <span style="color:#fb660a;font-weight:bold">return</span> res
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution</span>:
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">largestRectangleArea</span>(self, heights: List[<span style="color:#a2f">int</span>]) <span style="color:#666">-&gt;</span> <span style="color:#a2f">int</span>:
+        <span style="color:#080;font-style:italic"># 1. 暴力破解</span>
+        res <span style="color:#666">=</span> <span style="color:#666">0</span>
+        n <span style="color:#666">=</span> <span style="color:#a2f">len</span>(heights)
+        <span style="color:#a2f;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#a2f">range</span>(n):
+            left_i <span style="color:#666">=</span> i
+            right_i <span style="color:#666">=</span> i
+            <span style="color:#a2f;font-weight:bold">while</span> left_i <span style="color:#666">&gt;=</span> <span style="color:#666">0</span> <span style="color:#a2f;font-weight:bold">and</span> heights[left_i] <span style="color:#666">&gt;=</span> heights[i]:
+                left_i <span style="color:#666">-=</span> <span style="color:#666">1</span>
+            <span style="color:#a2f;font-weight:bold">while</span> right_i <span style="color:#666">&lt;</span> n <span style="color:#a2f;font-weight:bold">and</span> heights[right_i] <span style="color:#666">&gt;=</span> heights[i]:
+                right_i <span style="color:#666">+=</span> <span style="color:#666">1</span>
+            res <span style="color:#666">=</span> <span style="color:#a2f">max</span>(res, (right_i <span style="color:#666">-</span> left_i <span style="color:#666">-</span> <span style="color:#666">1</span>) <span style="color:#666">*</span> heights[i])
+        <span style="color:#a2f;font-weight:bold">return</span> res
+        <span style="color:#080;font-style:italic"># 2. 单调栈</span>
+        stack <span style="color:#666">=</span> []
+        heights <span style="color:#666">=</span> [<span style="color:#666">0</span>] <span style="color:#666">+</span> heights <span style="color:#666">+</span> [<span style="color:#666">0</span>]
+        res <span style="color:#666">=</span> <span style="color:#666">0</span>
+        <span style="color:#a2f;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#a2f">range</span>(<span style="color:#a2f">len</span>(heights)):
+            <span style="color:#a2f;font-weight:bold">while</span> stack <span style="color:#a2f;font-weight:bold">and</span> heights[stack[<span style="color:#666">-</span><span style="color:#666">1</span>]] <span style="color:#666">&gt;</span> heights[i]:
+                tmp <span style="color:#666">=</span> stack<span style="color:#666">.</span>pop()
+                res <span style="color:#666">=</span> <span style="color:#a2f">max</span>(res, (i <span style="color:#666">-</span> stack[<span style="color:#666">-</span><span style="color:#666">1</span>] <span style="color:#666">-</span> <span style="color:#666">1</span>) <span style="color:#666">*</span> heights[tmp])
+            stack<span style="color:#666">.</span>append(i)
+        <span style="color:#a2f;font-weight:bold">return</span> res
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="4-滑动窗口最大值httpsleetcode-cncomproblemssliding-window-maximum">4. <a href="https://leetcode-cn.com/problems/sliding-window-maximum/">滑动窗口最大值</a></h2>
@@ -400,9 +400,9 @@
  1  3  -1  -3  5 [3  6  7]      7
 
 
-</code></pre><div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+</code></pre><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -412,19 +412,19 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">maxSlidingWindow</span>(self, nums: List[int], k: int) -&gt; List[int]:
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 1. 暴力模拟</span>
-        res = []
-        <span style="color:#fb660a;font-weight:bold">for</span> i in range(len(nums) - k + <span style="color:#0086f7;font-weight:bold">1</span>):
-            res.append(max(nums[i:i + k]))
-        <span style="color:#fb660a;font-weight:bold">return</span> res
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution</span>:
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">maxSlidingWindow</span>(self, nums: List[<span style="color:#a2f">int</span>], k: <span style="color:#a2f">int</span>) <span style="color:#666">-&gt;</span> List[<span style="color:#a2f">int</span>]:
+        <span style="color:#080;font-style:italic"># 1. 暴力模拟</span>
+        res <span style="color:#666">=</span> []
+        <span style="color:#a2f;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#a2f">range</span>(<span style="color:#a2f">len</span>(nums) <span style="color:#666">-</span> k <span style="color:#666">+</span> <span style="color:#666">1</span>):
+            res<span style="color:#666">.</span>append(<span style="color:#a2f">max</span>(nums[i:i <span style="color:#666">+</span> k]))
+        <span style="color:#a2f;font-weight:bold">return</span> res
 
 </code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -463,43 +463,43 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;background-color:#0f140f;font-style:italic"># 单调栈</span>
-<span style="color:#fb660a;font-weight:bold">class</span> MonotonicQueue:
-    <span style="color:#fb660a;font-weight:bold">def</span> __init__(self):
-        self.dq = deque([])
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-style:italic"># 单调栈</span>
+<span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">MonotonicQueue</span>:
+    <span style="color:#a2f;font-weight:bold">def</span> __init__(self):
+        self<span style="color:#666">.</span>dq <span style="color:#666">=</span> deque([])
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">push</span>(self, item):
-        <span style="color:#fb660a;font-weight:bold">while</span> self.dq and item &gt; self.dq[-<span style="color:#0086f7;font-weight:bold">1</span>]:
-            self.dq.pop()
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">push</span>(self, item):
+        <span style="color:#a2f;font-weight:bold">while</span> self<span style="color:#666">.</span>dq <span style="color:#a2f;font-weight:bold">and</span> item <span style="color:#666">&gt;</span> self<span style="color:#666">.</span>dq[<span style="color:#666">-</span><span style="color:#666">1</span>]:
+            self<span style="color:#666">.</span>dq<span style="color:#666">.</span>pop()
 
-        self.dq.append(item)
+        self<span style="color:#666">.</span>dq<span style="color:#666">.</span>append(item)
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">pop</span>(self, item):
-        <span style="color:#fb660a;font-weight:bold">if</span> item == self.dq[<span style="color:#0086f7;font-weight:bold">0</span>]:
-            self.dq.popleft()
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">pop</span>(self, item):
+        <span style="color:#a2f;font-weight:bold">if</span> item <span style="color:#666">==</span> self<span style="color:#666">.</span>dq[<span style="color:#666">0</span>]:
+            self<span style="color:#666">.</span>dq<span style="color:#666">.</span>popleft()
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">max</span>(self):
-        <span style="color:#fb660a;font-weight:bold">return</span> self.dq[<span style="color:#0086f7;font-weight:bold">0</span>]
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">max</span>(self):
+        <span style="color:#a2f;font-weight:bold">return</span> self<span style="color:#666">.</span>dq[<span style="color:#666">0</span>]
     
 
-<span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">maxSlidingWindow</span>(self, nums: List[int], k: int) -&gt; List[int]:
-        <span style="color:#fb660a;font-weight:bold">if</span> not nums or not k:
-            <span style="color:#fb660a;font-weight:bold">return</span> []
+<span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution</span>:
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">maxSlidingWindow</span>(self, nums: List[<span style="color:#a2f">int</span>], k: <span style="color:#a2f">int</span>) <span style="color:#666">-&gt;</span> List[<span style="color:#a2f">int</span>]:
+        <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f;font-weight:bold">not</span> nums <span style="color:#a2f;font-weight:bold">or</span> <span style="color:#a2f;font-weight:bold">not</span> k:
+            <span style="color:#a2f;font-weight:bold">return</span> []
 
-        monotonic_q = MonotonicQueue()
+        monotonic_q <span style="color:#666">=</span> MonotonicQueue()
 
-        <span style="color:#fb660a;font-weight:bold">for</span> i in range(k - <span style="color:#0086f7;font-weight:bold">1</span>):
-            monotonic_q.push(nums[i])
+        <span style="color:#a2f;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#a2f">range</span>(k <span style="color:#666">-</span> <span style="color:#666">1</span>):
+            monotonic_q<span style="color:#666">.</span>push(nums[i])
 
-        result = []
+        result <span style="color:#666">=</span> []
 
-        <span style="color:#fb660a;font-weight:bold">for</span> i in range(k - <span style="color:#0086f7;font-weight:bold">1</span>, len(nums)):
-            monotonic_q.push(nums[i])
-            result.append(monotonic_q.max())
-            monotonic_q.pop(nums[i - k + <span style="color:#0086f7;font-weight:bold">1</span>])
+        <span style="color:#a2f;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#a2f">range</span>(k <span style="color:#666">-</span> <span style="color:#666">1</span>, <span style="color:#a2f">len</span>(nums)):
+            monotonic_q<span style="color:#666">.</span>push(nums[i])
+            result<span style="color:#666">.</span>append(monotonic_q<span style="color:#666">.</span>max())
+            monotonic_q<span style="color:#666">.</span>pop(nums[i <span style="color:#666">-</span> k <span style="color:#666">+</span> <span style="color:#666">1</span>])
 
-        <span style="color:#fb660a;font-weight:bold">return</span> result
+        <span style="color:#a2f;font-weight:bold">return</span> result
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="5-设计循环双端队列httpsleetcode-cncomproblemsdesign-circular-deque">5. <a href="https://leetcode-cn.com/problems/design-circular-deque/">设计循环双端队列</a></h2>
@@ -525,9 +525,9 @@ circularDeque.isFull();				        // 返回 true
 circularDeque.deleteLast();			        // 返回 true
 circularDeque.insertFront(4);			        // 返回 true
 circularDeque.getFront();				// 返回 4
-</code></pre><div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+</code></pre><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -601,78 +601,78 @@ circularDeque.getFront();				// 返回 4
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">72
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> MyCircularDeque(object):
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">MyCircularDeque</span>(<span style="color:#a2f">object</span>):
 
-    <span style="color:#fb660a;font-weight:bold">def</span> __init__(self, k):
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 长度为k时占用k+1的空间，多出来的空间用来区分isEmpty和isFull</span>
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 首尾两个指针相等的时候为empty，尾部+1等于首部的时候为Full</span>
-        self.q = [<span style="color:#0086f7;font-weight:bold">0</span>] * (k + <span style="color:#0086f7;font-weight:bold">1</span>)
-        self.len = k + <span style="color:#0086f7;font-weight:bold">1</span>
-        self.rear = <span style="color:#0086f7;font-weight:bold">0</span>
-        self.front = <span style="color:#0086f7;font-weight:bold">0</span>
+    <span style="color:#a2f;font-weight:bold">def</span> __init__(self, k):
+        <span style="color:#080;font-style:italic"># 长度为k时占用k+1的空间，多出来的空间用来区分isEmpty和isFull</span>
+        <span style="color:#080;font-style:italic"># 首尾两个指针相等的时候为empty，尾部+1等于首部的时候为Full</span>
+        self<span style="color:#666">.</span>q <span style="color:#666">=</span> [<span style="color:#666">0</span>] <span style="color:#666">*</span> (k <span style="color:#666">+</span> <span style="color:#666">1</span>)
+        self<span style="color:#666">.</span>len <span style="color:#666">=</span> k <span style="color:#666">+</span> <span style="color:#666">1</span>
+        self<span style="color:#666">.</span>rear <span style="color:#666">=</span> <span style="color:#666">0</span>
+        self<span style="color:#666">.</span>front <span style="color:#666">=</span> <span style="color:#666">0</span>
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">move_forward</span>(self, pos):
-        <span style="color:#fb660a;font-weight:bold">return</span> (pos + <span style="color:#0086f7;font-weight:bold">1</span>) % self.len
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">move_forward</span>(self, pos):
+        <span style="color:#a2f;font-weight:bold">return</span> (pos <span style="color:#666">+</span> <span style="color:#666">1</span>) <span style="color:#666">%</span> self<span style="color:#666">.</span>len
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">move_backward</span>(self, pos):
-        <span style="color:#fb660a;font-weight:bold">return</span> (pos - <span style="color:#0086f7;font-weight:bold">1</span>) % self.len
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">move_backward</span>(self, pos):
+        <span style="color:#a2f;font-weight:bold">return</span> (pos <span style="color:#666">-</span> <span style="color:#666">1</span>) <span style="color:#666">%</span> self<span style="color:#666">.</span>len
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">insertFront</span>(self, value):
-        <span style="color:#fb660a;font-weight:bold">if</span> not self.isFull():
-            <span style="color:#080;background-color:#0f140f;font-style:italic"># 前端插入始终是先插入后移动，self.front始终指向多出来的那个坑</span>
-            self.q[self.front] = value
-            self.front = self.move_backward(self.front)
-            <span style="color:#fb660a;font-weight:bold">return</span> True
-        <span style="color:#fb660a;font-weight:bold">else</span>:
-            <span style="color:#fb660a;font-weight:bold">return</span> False
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">insertFront</span>(self, value):
+        <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f;font-weight:bold">not</span> self<span style="color:#666">.</span>isFull():
+            <span style="color:#080;font-style:italic"># 前端插入始终是先插入后移动，self.front始终指向多出来的那个坑</span>
+            self<span style="color:#666">.</span>q[self<span style="color:#666">.</span>front] <span style="color:#666">=</span> value
+            self<span style="color:#666">.</span>front <span style="color:#666">=</span> self<span style="color:#666">.</span>move_backward(self<span style="color:#666">.</span>front)
+            <span style="color:#a2f;font-weight:bold">return</span> True
+        <span style="color:#a2f;font-weight:bold">else</span>:
+            <span style="color:#a2f;font-weight:bold">return</span> False
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">insertLast</span>(self, value):
-        <span style="color:#fb660a;font-weight:bold">if</span> not self.isFull():
-            <span style="color:#080;background-color:#0f140f;font-style:italic"># 后端插入始终是先移动后插入，self.rear始终指向后端最后插入的元素</span>
-            self.rear = self.move_forward(self.rear)
-            self.q[self.rear] = value
-            <span style="color:#fb660a;font-weight:bold">return</span> True
-        <span style="color:#fb660a;font-weight:bold">else</span>:
-            <span style="color:#fb660a;font-weight:bold">return</span> False
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">insertLast</span>(self, value):
+        <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f;font-weight:bold">not</span> self<span style="color:#666">.</span>isFull():
+            <span style="color:#080;font-style:italic"># 后端插入始终是先移动后插入，self.rear始终指向后端最后插入的元素</span>
+            self<span style="color:#666">.</span>rear <span style="color:#666">=</span> self<span style="color:#666">.</span>move_forward(self<span style="color:#666">.</span>rear)
+            self<span style="color:#666">.</span>q[self<span style="color:#666">.</span>rear] <span style="color:#666">=</span> value
+            <span style="color:#a2f;font-weight:bold">return</span> True
+        <span style="color:#a2f;font-weight:bold">else</span>:
+            <span style="color:#a2f;font-weight:bold">return</span> False
 
-    <span style="color:#080;background-color:#0f140f;font-style:italic"># 删除只需要移动</span>
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">deleteFront</span>(self):
-        <span style="color:#fb660a;font-weight:bold">if</span> not self.isEmpty():
-            self.front = self.move_forward(self.front)
-            <span style="color:#fb660a;font-weight:bold">return</span> True
-        <span style="color:#fb660a;font-weight:bold">else</span>:
-            <span style="color:#fb660a;font-weight:bold">return</span> False
+    <span style="color:#080;font-style:italic"># 删除只需要移动</span>
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">deleteFront</span>(self):
+        <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f;font-weight:bold">not</span> self<span style="color:#666">.</span>isEmpty():
+            self<span style="color:#666">.</span>front <span style="color:#666">=</span> self<span style="color:#666">.</span>move_forward(self<span style="color:#666">.</span>front)
+            <span style="color:#a2f;font-weight:bold">return</span> True
+        <span style="color:#a2f;font-weight:bold">else</span>:
+            <span style="color:#a2f;font-weight:bold">return</span> False
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">deleteLast</span>(self):
-        <span style="color:#fb660a;font-weight:bold">if</span> not self.isEmpty():
-            self.rear = self.move_backward(self.rear)
-            <span style="color:#fb660a;font-weight:bold">return</span> True
-        <span style="color:#fb660a;font-weight:bold">else</span>:
-            <span style="color:#fb660a;font-weight:bold">return</span> False
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">deleteLast</span>(self):
+        <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f;font-weight:bold">not</span> self<span style="color:#666">.</span>isEmpty():
+            self<span style="color:#666">.</span>rear <span style="color:#666">=</span> self<span style="color:#666">.</span>move_backward(self<span style="color:#666">.</span>rear)
+            <span style="color:#a2f;font-weight:bold">return</span> True
+        <span style="color:#a2f;font-weight:bold">else</span>:
+            <span style="color:#a2f;font-weight:bold">return</span> False
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">getFront</span>(self):
-        <span style="color:#fb660a;font-weight:bold">if</span> not self.isEmpty():
-            <span style="color:#fb660a;font-weight:bold">return</span> self.q[self.move_forward(self.front)]
-        <span style="color:#fb660a;font-weight:bold">else</span>:
-            <span style="color:#fb660a;font-weight:bold">return</span> -<span style="color:#0086f7;font-weight:bold">1</span>
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">getFront</span>(self):
+        <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f;font-weight:bold">not</span> self<span style="color:#666">.</span>isEmpty():
+            <span style="color:#a2f;font-weight:bold">return</span> self<span style="color:#666">.</span>q[self<span style="color:#666">.</span>move_forward(self<span style="color:#666">.</span>front)]
+        <span style="color:#a2f;font-weight:bold">else</span>:
+            <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">-</span><span style="color:#666">1</span>
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">getRear</span>(self):
-        <span style="color:#fb660a;font-weight:bold">if</span> not self.isEmpty():
-            <span style="color:#fb660a;font-weight:bold">return</span> self.q[self.rear]
-        <span style="color:#fb660a;font-weight:bold">else</span>:
-            <span style="color:#fb660a;font-weight:bold">return</span> -<span style="color:#0086f7;font-weight:bold">1</span>
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">getRear</span>(self):
+        <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f;font-weight:bold">not</span> self<span style="color:#666">.</span>isEmpty():
+            <span style="color:#a2f;font-weight:bold">return</span> self<span style="color:#666">.</span>q[self<span style="color:#666">.</span>rear]
+        <span style="color:#a2f;font-weight:bold">else</span>:
+            <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">-</span><span style="color:#666">1</span>
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">isEmpty</span>(self):
-        <span style="color:#fb660a;font-weight:bold">if</span> self.front == self.rear:
-            <span style="color:#fb660a;font-weight:bold">return</span> True
-        <span style="color:#fb660a;font-weight:bold">else</span>:
-            <span style="color:#fb660a;font-weight:bold">return</span> False
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">isEmpty</span>(self):
+        <span style="color:#a2f;font-weight:bold">if</span> self<span style="color:#666">.</span>front <span style="color:#666">==</span> self<span style="color:#666">.</span>rear:
+            <span style="color:#a2f;font-weight:bold">return</span> True
+        <span style="color:#a2f;font-weight:bold">else</span>:
+            <span style="color:#a2f;font-weight:bold">return</span> False
 
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">isFull</span>(self):
-        <span style="color:#fb660a;font-weight:bold">if</span> self.move_forward(self.rear) == self.front:
-            <span style="color:#fb660a;font-weight:bold">return</span> True
-        <span style="color:#fb660a;font-weight:bold">else</span>:
-            <span style="color:#fb660a;font-weight:bold">return</span> False
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">isFull</span>(self):
+        <span style="color:#a2f;font-weight:bold">if</span> self<span style="color:#666">.</span>move_forward(self<span style="color:#666">.</span>rear) <span style="color:#666">==</span> self<span style="color:#666">.</span>front:
+            <span style="color:#a2f;font-weight:bold">return</span> True
+        <span style="color:#a2f;font-weight:bold">else</span>:
+            <span style="color:#a2f;font-weight:bold">return</span> False
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="6-接雨水httpsleetcode-cncomproblemstrapping-rain-water">6. <a href="https://leetcode-cn.com/problems/trapping-rain-water/">接雨水</a></h2>
@@ -682,9 +682,9 @@ circularDeque.getFront();				// 返回 4
 <p><strong>示例:</strong></p>
 <pre><code>输入: [0,1,0,2,1,0,1,3,2,1,2,1]
 输出: 6
-</code></pre><div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+</code></pre><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -729,54 +729,54 @@ circularDeque.getFront();				// 返回 4
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">trap</span>(self, height: List[int]) -&gt; int:
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 1. 暴力法</span>
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 能接多少雨水与左右两侧最近的比它高的有关</span>
-        <span style="color:#fb660a;font-weight:bold">if</span> not height:
-            <span style="color:#fb660a;font-weight:bold">return</span> <span style="color:#0086f7;font-weight:bold">0</span>
-        n = len(height)
-        max_left = [<span style="color:#0086f7;font-weight:bold">0</span>] * n
-        max_right = [<span style="color:#0086f7;font-weight:bold">0</span>] * n
-        max_left[<span style="color:#0086f7;font-weight:bold">0</span>] = height[<span style="color:#0086f7;font-weight:bold">0</span>]
-        max_right[-<span style="color:#0086f7;font-weight:bold">1</span>] = height[-<span style="color:#0086f7;font-weight:bold">1</span>]
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution</span>:
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">trap</span>(self, height: List[<span style="color:#a2f">int</span>]) <span style="color:#666">-&gt;</span> <span style="color:#a2f">int</span>:
+        <span style="color:#080;font-style:italic"># 1. 暴力法</span>
+        <span style="color:#080;font-style:italic"># 能接多少雨水与左右两侧最近的比它高的有关</span>
+        <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f;font-weight:bold">not</span> height:
+            <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">0</span>
+        n <span style="color:#666">=</span> <span style="color:#a2f">len</span>(height)
+        max_left <span style="color:#666">=</span> [<span style="color:#666">0</span>] <span style="color:#666">*</span> n
+        max_right <span style="color:#666">=</span> [<span style="color:#666">0</span>] <span style="color:#666">*</span> n
+        max_left[<span style="color:#666">0</span>] <span style="color:#666">=</span> height[<span style="color:#666">0</span>]
+        max_right[<span style="color:#666">-</span><span style="color:#666">1</span>] <span style="color:#666">=</span> height[<span style="color:#666">-</span><span style="color:#666">1</span>]
 
-        <span style="color:#fb660a;font-weight:bold">for</span> i in range(<span style="color:#0086f7;font-weight:bold">1</span>, n):
-            max_left[i] = max(height[i], max_left[i-<span style="color:#0086f7;font-weight:bold">1</span>])  <span style="color:#080;background-color:#0f140f;font-style:italic"># max_left处的值要么为本身，要么为前一个max_left</span>
-        <span style="color:#fb660a;font-weight:bold">for</span> i in range(n - <span style="color:#0086f7;font-weight:bold">1</span> - <span style="color:#0086f7;font-weight:bold">1</span>, -<span style="color:#0086f7;font-weight:bold">1</span>, -<span style="color:#0086f7;font-weight:bold">1</span>):
-            max_right[i] = max(height[i], max_right[i+<span style="color:#0086f7;font-weight:bold">1</span>])
-        res = <span style="color:#0086f7;font-weight:bold">0</span>
-        <span style="color:#fb660a;font-weight:bold">for</span> i in range(n):
-            res += min(max_left[i], max_right[i])-height[i]
+        <span style="color:#a2f;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#a2f">range</span>(<span style="color:#666">1</span>, n):
+            max_left[i] <span style="color:#666">=</span> <span style="color:#a2f">max</span>(height[i], max_left[i<span style="color:#666">-</span><span style="color:#666">1</span>])  <span style="color:#080;font-style:italic"># max_left处的值要么为本身，要么为前一个max_left</span>
+        <span style="color:#a2f;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#a2f">range</span>(n <span style="color:#666">-</span> <span style="color:#666">1</span> <span style="color:#666">-</span> <span style="color:#666">1</span>, <span style="color:#666">-</span><span style="color:#666">1</span>, <span style="color:#666">-</span><span style="color:#666">1</span>):
+            max_right[i] <span style="color:#666">=</span> <span style="color:#a2f">max</span>(height[i], max_right[i<span style="color:#666">+</span><span style="color:#666">1</span>])
+        res <span style="color:#666">=</span> <span style="color:#666">0</span>
+        <span style="color:#a2f;font-weight:bold">for</span> i <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#a2f">range</span>(n):
+            res <span style="color:#666">+=</span> <span style="color:#a2f">min</span>(max_left[i], max_right[i])<span style="color:#666">-</span>height[i]
          
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 2. 双指针</span>
-        <span style="color:#fb660a;font-weight:bold">if</span> not height:
-            <span style="color:#fb660a;font-weight:bold">return</span> <span style="color:#0086f7;font-weight:bold">0</span>
-        left = <span style="color:#0086f7;font-weight:bold">0</span>
-        right = len(height) - <span style="color:#0086f7;font-weight:bold">1</span>
-        res = <span style="color:#0086f7;font-weight:bold">0</span>
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 记录左右两边最大值</span>
-        left_max = height[left]
-        right_max = height[right]
-        <span style="color:#fb660a;font-weight:bold">while</span> left &lt; right:
-            <span style="color:#fb660a;font-weight:bold">if</span> height[left] &lt; height[right]:
-                <span style="color:#fb660a;font-weight:bold">if</span> left_max &gt; height[left]:
-                    res += left_max - height[left]
-                <span style="color:#fb660a;font-weight:bold">else</span>:
-                    left_max = height[left]  <span style="color:#080;background-color:#0f140f;font-style:italic"># 更新 left_max</span>
-                left += <span style="color:#0086f7;font-weight:bold">1</span>
-            <span style="color:#fb660a;font-weight:bold">else</span>:
-                <span style="color:#fb660a;font-weight:bold">if</span> right_max &gt; height[right]:
-                    res += right_max - height[right]
-                <span style="color:#fb660a;font-weight:bold">else</span>:
-                    right_max = height[right]  <span style="color:#080;background-color:#0f140f;font-style:italic"># 更新right_max</span>
-                right -= <span style="color:#0086f7;font-weight:bold">1</span>
-        <span style="color:#fb660a;font-weight:bold">return</span> res
+        <span style="color:#080;font-style:italic"># 2. 双指针</span>
+        <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f;font-weight:bold">not</span> height:
+            <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">0</span>
+        left <span style="color:#666">=</span> <span style="color:#666">0</span>
+        right <span style="color:#666">=</span> <span style="color:#a2f">len</span>(height) <span style="color:#666">-</span> <span style="color:#666">1</span>
+        res <span style="color:#666">=</span> <span style="color:#666">0</span>
+        <span style="color:#080;font-style:italic"># 记录左右两边最大值</span>
+        left_max <span style="color:#666">=</span> height[left]
+        right_max <span style="color:#666">=</span> height[right]
+        <span style="color:#a2f;font-weight:bold">while</span> left <span style="color:#666">&lt;</span> right:
+            <span style="color:#a2f;font-weight:bold">if</span> height[left] <span style="color:#666">&lt;</span> height[right]:
+                <span style="color:#a2f;font-weight:bold">if</span> left_max <span style="color:#666">&gt;</span> height[left]:
+                    res <span style="color:#666">+=</span> left_max <span style="color:#666">-</span> height[left]
+                <span style="color:#a2f;font-weight:bold">else</span>:
+                    left_max <span style="color:#666">=</span> height[left]  <span style="color:#080;font-style:italic"># 更新 left_max</span>
+                left <span style="color:#666">+=</span> <span style="color:#666">1</span>
+            <span style="color:#a2f;font-weight:bold">else</span>:
+                <span style="color:#a2f;font-weight:bold">if</span> right_max <span style="color:#666">&gt;</span> height[right]:
+                    res <span style="color:#666">+=</span> right_max <span style="color:#666">-</span> height[right]
+                <span style="color:#a2f;font-weight:bold">else</span>:
+                    right_max <span style="color:#666">=</span> height[right]  <span style="color:#080;font-style:italic"># 更新right_max</span>
+                right <span style="color:#666">-=</span> <span style="color:#666">1</span>
+        <span style="color:#a2f;font-weight:bold">return</span> res
 </code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -797,24 +797,24 @@ circularDeque.getFront();				// 返回 4
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#fb660a;font-weight:bold">class</span> Solution:
-    <span style="color:#fb660a;font-weight:bold">def</span> <span style="color:#ff0086;font-weight:bold">trap</span>(self, height: List[int]) -&gt; int:
-        <span style="color:#080;background-color:#0f140f;font-style:italic"># 单调栈</span>
-        length = len(height)
-        <span style="color:#fb660a;font-weight:bold">if</span> length &lt; <span style="color:#0086f7;font-weight:bold">3</span>: <span style="color:#fb660a;font-weight:bold">return</span> <span style="color:#0086f7;font-weight:bold">0</span>
-        res, idx = <span style="color:#0086f7;font-weight:bold">0</span>, <span style="color:#0086f7;font-weight:bold">0</span>
-        stack = []
-        <span style="color:#fb660a;font-weight:bold">while</span> idx &lt; length:
-            <span style="color:#fb660a;font-weight:bold">while</span> len(stack) &gt; <span style="color:#0086f7;font-weight:bold">0</span> and height[idx] &gt; height[stack[-<span style="color:#0086f7;font-weight:bold">1</span>]]:
-                top = stack.pop()  <span style="color:#080;background-color:#0f140f;font-style:italic"># index of the last element in the stack</span>
-                <span style="color:#fb660a;font-weight:bold">if</span> len(stack) == <span style="color:#0086f7;font-weight:bold">0</span>:
-                    <span style="color:#fb660a;font-weight:bold">break</span>
-                h = min(height[stack[-<span style="color:#0086f7;font-weight:bold">1</span>]], height[idx]) - height[top]
-                dist = idx - stack[-<span style="color:#0086f7;font-weight:bold">1</span>] - <span style="color:#0086f7;font-weight:bold">1</span>
-                res += (dist * h)
-            stack.append(idx)
-            idx += <span style="color:#0086f7;font-weight:bold">1</span>
-        <span style="color:#fb660a;font-weight:bold">return</span> res
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution</span>:
+    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">trap</span>(self, height: List[<span style="color:#a2f">int</span>]) <span style="color:#666">-&gt;</span> <span style="color:#a2f">int</span>:
+        <span style="color:#080;font-style:italic"># 单调栈</span>
+        length <span style="color:#666">=</span> <span style="color:#a2f">len</span>(height)
+        <span style="color:#a2f;font-weight:bold">if</span> length <span style="color:#666">&lt;</span> <span style="color:#666">3</span>: <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">0</span>
+        res, idx <span style="color:#666">=</span> <span style="color:#666">0</span>, <span style="color:#666">0</span>
+        stack <span style="color:#666">=</span> []
+        <span style="color:#a2f;font-weight:bold">while</span> idx <span style="color:#666">&lt;</span> length:
+            <span style="color:#a2f;font-weight:bold">while</span> <span style="color:#a2f">len</span>(stack) <span style="color:#666">&gt;</span> <span style="color:#666">0</span> <span style="color:#a2f;font-weight:bold">and</span> height[idx] <span style="color:#666">&gt;</span> height[stack[<span style="color:#666">-</span><span style="color:#666">1</span>]]:
+                top <span style="color:#666">=</span> stack<span style="color:#666">.</span>pop()  <span style="color:#080;font-style:italic"># index of the last element in the stack</span>
+                <span style="color:#a2f;font-weight:bold">if</span> <span style="color:#a2f">len</span>(stack) <span style="color:#666">==</span> <span style="color:#666">0</span>:
+                    <span style="color:#a2f;font-weight:bold">break</span>
+                h <span style="color:#666">=</span> <span style="color:#a2f">min</span>(height[stack[<span style="color:#666">-</span><span style="color:#666">1</span>]], height[idx]) <span style="color:#666">-</span> height[top]
+                dist <span style="color:#666">=</span> idx <span style="color:#666">-</span> stack[<span style="color:#666">-</span><span style="color:#666">1</span>] <span style="color:#666">-</span> <span style="color:#666">1</span>
+                res <span style="color:#666">+=</span> (dist <span style="color:#666">*</span> h)
+            stack<span style="color:#666">.</span>append(idx)
+            idx <span style="color:#666">+=</span> <span style="color:#666">1</span>
+        <span style="color:#a2f;font-weight:bold">return</span> res
 
 </code></pre></td></tr></table>
 </div>
@@ -836,7 +836,7 @@ circularDeque.getFront();				// 返回 4
         
         <li><a href="/post/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li>
         
-        <li><a href="/post/Docker%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">Docker基础知识</a></li>
+        <li><a href="/post/Docker/Docker%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">Docker基础知识</a></li>
         
         <li><a href="/archives/">归档</a></li>
         
@@ -890,19 +890,7 @@ circularDeque.getFront();				// 返回 4
 <ul class="widget-list">
     
     <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-01/" title="Docker 01">Docker 01</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-02/" title="Docker 01">Docker 01</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-03/" title="Docker 01">Docker 01</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/Docker%E7%9F%A5%E8%AF%86/" title="Docker知识">Docker知识</a>
+        <a href="https://aszhc.github.io/post/%E9%85%8D%E7%BD%AE%E5%9B%BE%E5%BA%8A/" title="linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床">linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床</a>
     </li>
     
     <li>
@@ -929,6 +917,18 @@ circularDeque.getFront();				// 返回 4
         <a href="https://aszhc.github.io/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/" title="哈希映射和集合练习">哈希映射和集合练习</a>
     </li>
     
+    <li>
+        <a href="https://aszhc.github.io/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/" title="栈和队列练习题">栈和队列练习题</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/" title="数组、链表练习题">数组、链表练习题</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/%E9%80%92%E5%BD%92/" title="递归">递归</a>
+    </li>
+    
 </ul>
     </section>
 
@@ -939,6 +939,8 @@ circularDeque.getFront();				// 返回 4
 <ul class="widget-list">
     
     <li><a href="https://aszhc.github.io/categories/Docker/">Docker (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">安装与配置 (1)</a></li>
     
     <li><a href="https://aszhc.github.io/categories/%E5%B7%A5%E5%85%B7/">工具 (1)</a></li>
     
@@ -961,9 +963,13 @@ circularDeque.getFront();				// 返回 4
     
     <a href="https://aszhc.github.io/tags/markdown/">markdown</a>
     
+    <a href="https://aszhc.github.io/tags/markdown/">markdown</a>
+    
     <a href="https://aszhc.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
     
     <a href="https://aszhc.github.io/tags/%E5%93%88%E5%B8%8C/">哈希</a>
+    
+    <a href="https://aszhc.github.io/tags/%E5%9B%BE%E5%BA%8A/">图床</a>
     
     <a href="https://aszhc.github.io/tags/%E5%AE%B9%E5%99%A8%E5%8C%96/">容器化</a>
     

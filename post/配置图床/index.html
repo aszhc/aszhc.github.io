@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>About | 學而</title>
-    <meta property="og:title" content="About - 學而">
+    <title>linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床 | 學而</title>
+    <meta property="og:title" content="linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床 - 學而">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2021-01-03T14:51:30&#43;08:00'>
+    <meta property="article:published_time" content='2021-06-08T15:15:13&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2021-01-03T14:51:30&#43;08:00'>
+    <meta property="article:modified_time" content='2021-06-08T15:15:13&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,博客,项目管理,python,公众号">
-    <meta name="description" content="About">
+    <meta name="description" content="linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床">
         
     <meta name="author" content="周闖">
-    <meta property="og:url" content="https://aszhc.github.io/about/">
+    <meta property="og:url" content="https://aszhc.github.io/post/%E9%85%8D%E7%BD%AE%E5%9B%BE%E5%BA%8A/">
     
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 
@@ -61,13 +61,13 @@
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
-                    <a class="" href="https://aszhc.github.io">首页</a>
+                    <a class="current" href="https://aszhc.github.io">首页</a>
                     
                     <a  href="https://aszhc.github.io/collect/" title="搜集">搜集</a>
                     
                     <a  href="https://aszhc.github.io/archives/" title="归档">归档</a>
                     
-                    <a class="current" href="https://aszhc.github.io/about/" title="关于">关于</a>
+                    <a  href="https://aszhc.github.io/about/" title="关于">关于</a>
                     
                 </nav>
             </div>
@@ -146,7 +146,14 @@
 <div class="post-toc" style="position: absolute; top: 188px;">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-        <nav id="TableOfContents"></nav>
+        <nav id="TableOfContents">
+  <ol>
+    <li><a href="#1-安装typora">1. 安装Typora</a></li>
+    <li><a href="#2-配置gitee仓库">2. 配置gitee仓库</a></li>
+    <li><a href="#3-安装配置picgo-core">3. 安装配置PicGo-Core</a></li>
+    <li><a href="#4-验证并配置typora">4. 验证并配置typora</a></li>
+  </ol>
+</nav>
     </div>
 </div>
 <script type="text/javascript">
@@ -178,11 +185,18 @@
 </script>
     <article class="post">
         <header>
-            <h1 class="post-title">About</h1>
+            <h1 class="post-title">linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床</h1>
         </header>
         <date class="post-meta meta-date">
-            2021年1月3日
+            2021年6月8日
         </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://aszhc.github.io/categories/%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE'>安装与配置</a></span>
+            
+        </div>
         
         
         <div class="post-meta">
@@ -192,11 +206,111 @@
         
         
         <div class="post-content">
-            <h1 id="hello-world-">Hello World ！</h1>
-<pre><code>尘劳迥脱事非常，紧把绳头做一场。
+            <h2 id="1-安装typora">1. 安装Typora</h2>
+<p>下载地址：<a href="https://www.typora.io/">typora</a></p>
+<h2 id="2-配置gitee仓库">2. 配置gitee仓库</h2>
+<ul>
+<li>新建一个公开仓库，创建一个分支</li>
+</ul>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210608145556.png" alt="image-20210608145553807"></p>
+<ul>
+<li>进入个人中心——&gt;安全设置——&gt;私人令牌，建立一个token令牌，令牌的权限选择projects，提交即可。</li>
+</ul>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210608151533.png" alt="image-20210608145801619"></p>
+<ul>
+<li>复制好令牌，一旦关闭就不会以明文的方式显示了。</li>
+</ul>
+<h2 id="3-安装配置picgo-core">3. 安装配置PicGo-Core</h2>
+<ul>
+<li>
+<p>安装PicGo-Core</p>
+<p>在Typora中点击 文件-&gt; 偏好设置-&gt; 图像</p>
+<p>在上传服务设定选项选择PicGo-Core</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210608145114.png" alt="image-20210608145112045"></p>
+<p>下载速度可能有些慢，稍等一会。</p>
+</li>
+<li>
+<p>配置PicGo-Core</p>
+<ol>
+<li>点击验证图片上传选项，会报错，在报错数据中可以看到picgo安装目录</li>
+</ol>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210608151532.png" alt="image-20210608150413735"></p>
+<ol start="2">
+<li>
+<p>使用cd命令进入到这个目录，即可看到可执行文件picgo</p>
+<p>接下来使用命令安装如下安装插件：</p>
+</li>
+</ol>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">./picgo install gitee-uploader
+  
+./picgo install super-prefix
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>
+<p>点击配置文件</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210608150726.png" alt="image-20210608150723799"></p>
+</li>
+</ol>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+<span style="color:#008000;font-weight:bold">&#34;picBed&#34;</span>: {
+  <span style="color:#008000;font-weight:bold">&#34;uploader&#34;</span>: <span style="color:#b44">&#34;当前的上传图床&#34;</span>, 
+  <span style="color:#008000;font-weight:bold">&#34;gitee&#34;</span>: {
+    <span style="color:#008000;font-weight:bold">&#34;repo&#34;</span>: <span style="color:#b44">&#34;username/reponame&#34;</span>,
+    <span style="color:#008000;font-weight:bold">&#34;token&#34;</span>: <span style="color:#b44">&#34;gitee 私人令牌 必填&#34;</span>, 
+    <span style="color:#008000;font-weight:bold">&#34;path&#34;</span>: <span style="color:#b44">&#34;自定义存储路径&#34;</span>, 
+    <span style="color:#008000;font-weight:bold">&#34;customUrl&#34;</span>: <span style="color:#b44">&#34;域名，没有可以不填&#34;</span>,
+    <span style="color:#008000;font-weight:bold">&#34;branch&#34;</span>: <span style="color:#b44">&#34;分支名，默认是 master&#34;</span> 
+  }
+},
+<span style="color:#008000;font-weight:bold">&#34;picgoPlugins&#34;</span>: {
+  <span style="color:#008000;font-weight:bold">&#34;picgo-plugin-gitee-uploader&#34;</span>: <span style="color:#a2f;font-weight:bold">true</span>,
+  <span style="color:#008000;font-weight:bold">&#34;picgo-plugin-super-prefix&#34;</span>: <span style="color:#a2f;font-weight:bold">true</span>
+},
+<span style="color:#008000;font-weight:bold">&#34;picgo-plugin-super-prefix&#34;</span>: {
+  <span style="color:#008000;font-weight:bold">&#34;fileFormat&#34;</span>: <span style="color:#b44">&#34;YYYYMMDDHHmmss&#34;</span>
+} 
+}
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h2 id="4-验证并配置typora">4. 验证并配置typora</h2>
+<p>点击验证图片上传选项，如果成功则说明PicGo-Core与gitee配置成功</p>
+<p><img src="/home/zhou/.config/Typora/typora-user-images/image-20210608150944419.png" alt="image-20210608150944419"></p>
+<p>在typora中你可以如下配置插入图片规则，此时当你插入图片时图像自动保存到gitee仓库中</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210608151211.png" alt="image-20210608151211006"></p>
 
-不经一番寒彻骨，怎得梅花扑鼻香。
-</code></pre>
         </div>
 
         
@@ -208,15 +322,15 @@
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/">哈希映射和集合练习</a></li>
+        <li><a href="/post/markdown%E4%B8%AD%E7%9A%84emoji%E5%9B%BE%E6%A0%87%E6%A0%87%E7%AD%BE%E8%A1%A8/">Markdown中的emoji图标标签表</a></li>
         
-        <li><a href="/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/">栈和队列练习题</a></li>
+        <li><a href="/post/Golang-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/">Golang Struct 内存对齐</a></li>
         
-        <li><a href="/post/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/">数组、链表练习题</a></li>
+        <li><a href="/post/Golang-Slice%E5%8E%9F%E7%90%86/">Golang Slice原理</a></li>
         
-        <li><a href="/post/%E9%80%92%E5%BD%92/">递归</a></li>
+        <li><a href="/post/Golang-Map%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">Golang Map的实现原理</a></li>
         
-        <li><a href="/post/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li>
+        <li><a href="/post/Golang%E4%B8%ADmake%E4%B8%8Enew%E6%9C%89%E4%BD%95%E5%8C%BA%E5%88%AB/">Golang中make与new有何区别？</a></li>
         
     </ul>
 </div>
@@ -224,7 +338,13 @@
 
         <div class="post-meta meta-tags">
             
-            没有标签
+            <ul class="clearfix">
+                
+                <li><a href='https://aszhc.github.io/tags/%E5%9B%BE%E5%BA%8A'>图床</a></li>
+                
+                <li><a href='https://aszhc.github.io/tags/Markdown'>Markdown</a></li>
+                
+            </ul>
             
         </div>
     </article>

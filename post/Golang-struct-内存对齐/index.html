@@ -226,9 +226,9 @@
             <h1 id="struct-内存对齐">struct 内存对齐</h1>
 <h2 id="如何计算结构体占用的空间">如何计算结构体占用的空间</h2>
 <p>在 Go 语言中，我们可以使用 <code>unsafe.Sizeof</code> 计算出一个数据类型实例需要占用的字节数。</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -251,40 +251,40 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">package</span> main
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a2f;font-weight:bold">package</span> main
 
-<span style="color:#fb660a;font-weight:bold">import</span> (
-	<span style="color:#0086d2">&#34;fmt&#34;</span>
-	<span style="color:#0086d2">&#34;unsafe&#34;</span>
+<span style="color:#a2f;font-weight:bold">import</span> (
+	<span style="color:#b44">&#34;fmt&#34;</span>
+	<span style="color:#b44">&#34;unsafe&#34;</span>
 )
 
-<span style="color:#fb660a;font-weight:bold">type</span> Args <span style="color:#fb660a;font-weight:bold">struct</span> {
-    num1 <span style="color:#cdcaa9;font-weight:bold">int</span>
-    num2 <span style="color:#cdcaa9;font-weight:bold">int</span>
+<span style="color:#a2f;font-weight:bold">type</span> Args <span style="color:#a2f;font-weight:bold">struct</span> {
+    num1 <span style="color:#0b0;font-weight:bold">int</span>
+    num2 <span style="color:#0b0;font-weight:bold">int</span>
 }
 
-<span style="color:#fb660a;font-weight:bold">type</span> Flag <span style="color:#fb660a;font-weight:bold">struct</span> {
-    num1 <span style="color:#cdcaa9;font-weight:bold">int16</span>
-    num2 <span style="color:#cdcaa9;font-weight:bold">int32</span>
+<span style="color:#a2f;font-weight:bold">type</span> Flag <span style="color:#a2f;font-weight:bold">struct</span> {
+    num1 <span style="color:#0b0;font-weight:bold">int16</span>
+    num2 <span style="color:#0b0;font-weight:bold">int32</span>
 }
 
-<span style="color:#fb660a;font-weight:bold">func</span> <span style="color:#ff0086;font-weight:bold">main</span>() {
-    fmt.<span style="color:#ff0086;font-weight:bold">Println</span>(unsafe.<span style="color:#ff0086;font-weight:bold">Sizeof</span>(Args{}))
-    fmt.<span style="color:#ff0086;font-weight:bold">Println</span>(unsafe.<span style="color:#ff0086;font-weight:bold">Sizeof</span>(Flag{}))
+<span style="color:#a2f;font-weight:bold">func</span> <span style="color:#00a000">main</span>() {
+    fmt.<span style="color:#00a000">Println</span>(unsafe.<span style="color:#00a000">Sizeof</span>(Args{}))
+    fmt.<span style="color:#00a000">Println</span>(unsafe.<span style="color:#00a000">Sizeof</span>(Flag{}))
 }
 </code></pre></td></tr></table>
 </div>
 </div><p>运行上面的例子将会输出：</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">$ <span style="color:#fb660a;font-weight:bold">go</span> run main.<span style="color:#fb660a;font-weight:bold">go</span>
-<span style="color:#0086f7;font-weight:bold">16</span>
-<span style="color:#0086f7;font-weight:bold">8</span>
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="">$</span> <span style="color:#a2f;font-weight:bold">go</span> run main.<span style="color:#a2f;font-weight:bold">go</span>
+<span style="color:#666">16</span>
+<span style="color:#666">8</span>
 </code></pre></td></tr></table>
 </div>
 </div><ul>
@@ -450,9 +450,9 @@ unsafe.Alignof(Flag{}) // 4
 <h2 id="struct内存对齐技巧">struct内存对齐技巧</h2>
 <h3 id="合理布局减少内存占用">合理布局减少内存占用</h3>
 <p>假设一个 struct 包含三个字段，<code>a int8</code>、<code>b int16</code>、<code>c int64</code>，顺序会对 struct 的大小产生影响吗？我们来做一个实验：</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -470,22 +470,22 @@ unsafe.Alignof(Flag{}) // 4
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">type</span> demo1 <span style="color:#fb660a;font-weight:bold">struct</span> {
-	a <span style="color:#cdcaa9;font-weight:bold">int8</span>
-	b <span style="color:#cdcaa9;font-weight:bold">int16</span>
-	c <span style="color:#cdcaa9;font-weight:bold">int32</span>
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a2f;font-weight:bold">type</span> demo1 <span style="color:#a2f;font-weight:bold">struct</span> {
+	a <span style="color:#0b0;font-weight:bold">int8</span>
+	b <span style="color:#0b0;font-weight:bold">int16</span>
+	c <span style="color:#0b0;font-weight:bold">int32</span>
 }
 
-<span style="color:#fb660a;font-weight:bold">type</span> demo2 <span style="color:#fb660a;font-weight:bold">struct</span> {
-	a <span style="color:#cdcaa9;font-weight:bold">int8</span>
-	c <span style="color:#cdcaa9;font-weight:bold">int32</span>
-	b <span style="color:#cdcaa9;font-weight:bold">int16</span>
+<span style="color:#a2f;font-weight:bold">type</span> demo2 <span style="color:#a2f;font-weight:bold">struct</span> {
+	a <span style="color:#0b0;font-weight:bold">int8</span>
+	c <span style="color:#0b0;font-weight:bold">int32</span>
+	b <span style="color:#0b0;font-weight:bold">int16</span>
 }
 
-<span style="color:#fb660a;font-weight:bold">func</span> <span style="color:#ff0086;font-weight:bold">main</span>() {
-	fmt.<span style="color:#ff0086;font-weight:bold">Println</span>(unsafe.<span style="color:#ff0086;font-weight:bold">Sizeof</span>(demo1{})) <span style="color:#080;background-color:#0f140f;font-style:italic">// 8
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>	fmt.<span style="color:#ff0086;font-weight:bold">Println</span>(unsafe.<span style="color:#ff0086;font-weight:bold">Sizeof</span>(demo2{})) <span style="color:#080;background-color:#0f140f;font-style:italic">// 12
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>}
+<span style="color:#a2f;font-weight:bold">func</span> <span style="color:#00a000">main</span>() {
+	fmt.<span style="color:#00a000">Println</span>(unsafe.<span style="color:#00a000">Sizeof</span>(demo1{})) <span style="color:#080;font-style:italic">// 8
+</span><span style="color:#080;font-style:italic"></span>	fmt.<span style="color:#00a000">Println</span>(unsafe.<span style="color:#00a000">Sizeof</span>(demo2{})) <span style="color:#080;font-style:italic">// 12
+</span><span style="color:#080;font-style:italic"></span>}
 </code></pre></td></tr></table>
 </div>
 </div><p>答案是会产生影响。每个字段按照自身的对齐倍数来确定在内存中的偏移量，字段排列顺序不同，上一个字段因偏移而浪费的大小也不同。</p>
@@ -508,9 +508,9 @@ unsafe.Alignof(Flag{}) // 4
 <h3 id="空struct">空struct</h3>
 <p>空 <code>struct{}</code> 大小为 0，作为其他 struct 的字段时，一般不需要内存对齐。但是有一种情况除外：即当 <code>struct{}</code> 作为结构体最后一个字段时，需要内存对齐。因为如果有指针指向该字段, 返回的地址将在结构体之外，如果此指针一直存活不释放对应的内存，就会有内存泄露的问题（该内存不因结构体释放而释放）。</p>
 <p>因此，当 <code>struct{}</code> 作为其他 struct 最后一个字段时，需要填充额外的内存保证安全。我们做个试验，验证下这种情况。</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -526,20 +526,20 @@ unsafe.Alignof(Flag{}) // 4
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">type</span> demo3 <span style="color:#fb660a;font-weight:bold">struct</span> {
-	c <span style="color:#cdcaa9;font-weight:bold">int32</span>
-	a <span style="color:#fb660a;font-weight:bold">struct</span>{}
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a2f;font-weight:bold">type</span> demo3 <span style="color:#a2f;font-weight:bold">struct</span> {
+	c <span style="color:#0b0;font-weight:bold">int32</span>
+	a <span style="color:#a2f;font-weight:bold">struct</span>{}
 }
 
-<span style="color:#fb660a;font-weight:bold">type</span> demo4 <span style="color:#fb660a;font-weight:bold">struct</span> {
-	a <span style="color:#fb660a;font-weight:bold">struct</span>{}
-	c <span style="color:#cdcaa9;font-weight:bold">int32</span>
+<span style="color:#a2f;font-weight:bold">type</span> demo4 <span style="color:#a2f;font-weight:bold">struct</span> {
+	a <span style="color:#a2f;font-weight:bold">struct</span>{}
+	c <span style="color:#0b0;font-weight:bold">int32</span>
 }
 
-<span style="color:#fb660a;font-weight:bold">func</span> <span style="color:#ff0086;font-weight:bold">main</span>() {
-	fmt.<span style="color:#ff0086;font-weight:bold">Println</span>(unsafe.<span style="color:#ff0086;font-weight:bold">Sizeof</span>(demo3{})) <span style="color:#080;background-color:#0f140f;font-style:italic">// 8
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>	fmt.<span style="color:#ff0086;font-weight:bold">Println</span>(unsafe.<span style="color:#ff0086;font-weight:bold">Sizeof</span>(demo4{})) <span style="color:#080;background-color:#0f140f;font-style:italic">// 4
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>}
+<span style="color:#a2f;font-weight:bold">func</span> <span style="color:#00a000">main</span>() {
+	fmt.<span style="color:#00a000">Println</span>(unsafe.<span style="color:#00a000">Sizeof</span>(demo3{})) <span style="color:#080;font-style:italic">// 8
+</span><span style="color:#080;font-style:italic"></span>	fmt.<span style="color:#00a000">Println</span>(unsafe.<span style="color:#00a000">Sizeof</span>(demo4{})) <span style="color:#080;font-style:italic">// 4
+</span><span style="color:#080;font-style:italic"></span>}
 </code></pre></td></tr></table>
 </div>
 </div><p>可以看到，<code>demo4{}</code> 的大小为 4 字节，与字段 c 占据空间一致，而 <code>demo3{}</code> 的大小为 8 字节，即额外填充了 4 字节的空间。</p>
@@ -613,19 +613,7 @@ unsafe.Alignof(Flag{}) // 4
 <ul class="widget-list">
     
     <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-01/" title="Docker 01">Docker 01</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-02/" title="Docker 01">Docker 01</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-03/" title="Docker 01">Docker 01</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/Docker%E7%9F%A5%E8%AF%86/" title="Docker知识">Docker知识</a>
+        <a href="https://aszhc.github.io/post/%E9%85%8D%E7%BD%AE%E5%9B%BE%E5%BA%8A/" title="linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床">linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床</a>
     </li>
     
     <li>
@@ -652,6 +640,18 @@ unsafe.Alignof(Flag{}) // 4
         <a href="https://aszhc.github.io/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/" title="哈希映射和集合练习">哈希映射和集合练习</a>
     </li>
     
+    <li>
+        <a href="https://aszhc.github.io/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/" title="栈和队列练习题">栈和队列练习题</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/" title="数组、链表练习题">数组、链表练习题</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/%E9%80%92%E5%BD%92/" title="递归">递归</a>
+    </li>
+    
 </ul>
     </section>
 
@@ -662,6 +662,8 @@ unsafe.Alignof(Flag{}) // 4
 <ul class="widget-list">
     
     <li><a href="https://aszhc.github.io/categories/Docker/">Docker (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">安装与配置 (1)</a></li>
     
     <li><a href="https://aszhc.github.io/categories/%E5%B7%A5%E5%85%B7/">工具 (1)</a></li>
     
@@ -684,9 +686,13 @@ unsafe.Alignof(Flag{}) // 4
     
     <a href="https://aszhc.github.io/tags/markdown/">markdown</a>
     
+    <a href="https://aszhc.github.io/tags/markdown/">markdown</a>
+    
     <a href="https://aszhc.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
     
     <a href="https://aszhc.github.io/tags/%E5%93%88%E5%B8%8C/">哈希</a>
+    
+    <a href="https://aszhc.github.io/tags/%E5%9B%BE%E5%BA%8A/">图床</a>
     
     <a href="https://aszhc.github.io/tags/%E5%AE%B9%E5%99%A8%E5%8C%96/">容器化</a>
     

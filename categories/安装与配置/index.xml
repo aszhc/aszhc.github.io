@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>markdown on 學而</title>
-    <link>https://aszhc.github.io/tags/markdown/</link>
-    <description>Recent content in markdown on 學而</description>
+    <title>安装与配置 on 學而</title>
+    <link>https://aszhc.github.io/categories/%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/</link>
+    <description>Recent content in 安装与配置 on 學而</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Tue, 08 Jun 2021 15:15:13 +0800</lastBuildDate>
     
-	<atom:link href="https://aszhc.github.io/tags/markdown/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://aszhc.github.io/categories/%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -18,15 +18,6 @@
       
       <guid>https://aszhc.github.io/post/%E9%85%8D%E7%BD%AE%E5%9B%BE%E5%BA%8A/</guid>
       <description>1. 安装Typora 下载地址：typora 2. 配置gitee仓库 新建一个公开仓库，创建一个分支 进入个人中心——&amp;gt;安全设置——&amp;gt;私人令</description>
-    </item>
-    
-    <item>
-      <title>Markdown中的emoji图标标签表</title>
-      <link>https://aszhc.github.io/post/markdown%E4%B8%AD%E7%9A%84emoji%E5%9B%BE%E6%A0%87%E6%A0%87%E7%AD%BE%E8%A1%A8/</link>
-      <pubDate>Sat, 08 May 2021 14:35:44 +0800</pubDate>
-      
-      <guid>https://aszhc.github.io/post/markdown%E4%B8%AD%E7%9A%84emoji%E5%9B%BE%E6%A0%87%E6%A0%87%E7%AD%BE%E8%A1%A8/</guid>
-      <description>markdown中的emoji图标标签表 这是一篇关于markdown中快速插入Emoji表情的语法速查表，以后写markdown想要插入em</description>
     </item>
     
   </channel>

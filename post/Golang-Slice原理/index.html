@@ -232,56 +232,56 @@
 <ul>
 <li>
 <p>变量声明</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">var</span> s []<span style="color:#cdcaa9;font-weight:bold">int</span>
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a2f;font-weight:bold">var</span> s []<span style="color:#0b0;font-weight:bold">int</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>这种方式声明的切片变量和声明其他类型的变量一样，变量值都为零值，对于切片来讲零值为nil。</p>
 </li>
 <li>
 <p>字面量</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">s1 := []<span style="color:#cdcaa9;font-weight:bold">int</span>{}			<span style="color:#080;background-color:#0f140f;font-style:italic">// 空切片
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>s2 := []<span style="color:#cdcaa9;font-weight:bold">int</span>{<span style="color:#0086f7;font-weight:bold">1</span>, <span style="color:#0086f7;font-weight:bold">2</span>, <span style="color:#0086f7;font-weight:bold">3</span>}	<span style="color:#080;background-color:#0f140f;font-style:italic">//长度为3的切片
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">s1 <span style="color:#666">:=</span> []<span style="color:#0b0;font-weight:bold">int</span>{}			<span style="color:#080;font-style:italic">// 空切片
+</span><span style="color:#080;font-style:italic"></span>s2 <span style="color:#666">:=</span> []<span style="color:#0b0;font-weight:bold">int</span>{<span style="color:#666">1</span>, <span style="color:#666">2</span>, <span style="color:#666">3</span>}	<span style="color:#080;font-style:italic">//长度为3的切片
 </span></code></pre></td></tr></table>
 </div>
 </div><p>空切片是指长度为空，其值并不是nil。</p>
 </li>
 <li>
 <p>使用内置函数make( )</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">s1 := make([]<span style="color:#cdcaa9;font-weight:bold">int</span>, <span style="color:#0086f7;font-weight:bold">12</span>)		<span style="color:#080;background-color:#0f140f;font-style:italic">// 指定长度
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>s2 := make([]<span style="color:#cdcaa9;font-weight:bold">int</span>, <span style="color:#0086f7;font-weight:bold">10</span>, <span style="color:#0086f7;font-weight:bold">100</span>)	<span style="color:#080;background-color:#0f140f;font-style:italic">// 指定长度和空间
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">s1 <span style="color:#666">:=</span> <span style="color:#a2f">make</span>([]<span style="color:#0b0;font-weight:bold">int</span>, <span style="color:#666">12</span>)		<span style="color:#080;font-style:italic">// 指定长度
+</span><span style="color:#080;font-style:italic"></span>s2 <span style="color:#666">:=</span> <span style="color:#a2f">make</span>([]<span style="color:#0b0;font-weight:bold">int</span>, <span style="color:#666">10</span>, <span style="color:#666">100</span>)	<span style="color:#080;font-style:italic">// 指定长度和空间
 </span></code></pre></td></tr></table>
 </div>
 </div><p>指定长度的同时指定预估空间，可以有效的减少切片扩容时内存分配以及拷贝次数。</p>
 </li>
 <li>
 <p>从切片和数组中切取</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">array := []<span style="color:#cdcaa9;font-weight:bold">int</span>{<span style="color:#0086f7;font-weight:bold">1</span>, <span style="color:#0086f7;font-weight:bold">2</span>, <span style="color:#0086f7;font-weight:bold">3</span>, <span style="color:#0086f7;font-weight:bold">4</span>, <span style="color:#0086f7;font-weight:bold">5</span>}
-s1 := array[<span style="color:#0086f7;font-weight:bold">0</span>:<span style="color:#0086f7;font-weight:bold">2</span>]	
-s2 := s1[<span style="color:#0086f7;font-weight:bold">0</span>:<span style="color:#0086f7;font-weight:bold">1</span>]
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">array <span style="color:#666">:=</span> []<span style="color:#0b0;font-weight:bold">int</span>{<span style="color:#666">1</span>, <span style="color:#666">2</span>, <span style="color:#666">3</span>, <span style="color:#666">4</span>, <span style="color:#666">5</span>}
+s1 <span style="color:#666">:=</span> array[<span style="color:#666">0</span>:<span style="color:#666">2</span>]	
+s2 <span style="color:#666">:=</span> s1[<span style="color:#666">0</span>:<span style="color:#666">1</span>]
 </code></pre></td></tr></table>
 </div>
 </div><p>切片表达式[low:high]表示的是左闭右开的区间，切取的长度为high-low</p>
@@ -294,20 +294,20 @@ s2 := s1[<span style="color:#0086f7;font-weight:bold">0</span>:<span style="colo
 <h2 id="实现原理">实现原理</h2>
 <h3 id="数据结构">数据结构</h3>
 <p>源码包中src/runtime/slice.go:slice定义了Slice的数据结构：</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">type</span> slice <span style="color:#fb660a;font-weight:bold">struct</span> {
-	array unsafe.Pointer	<span style="color:#080;background-color:#0f140f;font-style:italic">// 用来存储实际数据的数组指针，指向一块连续的内存
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>	len   <span style="color:#cdcaa9;font-weight:bold">int</span>	<span style="color:#080;background-color:#0f140f;font-style:italic">// 切片中元素的数量
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>	cap   <span style="color:#cdcaa9;font-weight:bold">int</span>	<span style="color:#080;background-color:#0f140f;font-style:italic">// array数组的长度
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>}
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a2f;font-weight:bold">type</span> slice <span style="color:#a2f;font-weight:bold">struct</span> {
+	array unsafe.Pointer	<span style="color:#080;font-style:italic">// 用来存储实际数据的数组指针，指向一块连续的内存
+</span><span style="color:#080;font-style:italic"></span>	len   <span style="color:#0b0;font-weight:bold">int</span>	<span style="color:#080;font-style:italic">// 切片中元素的数量
+</span><span style="color:#080;font-style:italic"></span>	cap   <span style="color:#0b0;font-weight:bold">int</span>	<span style="color:#080;font-style:italic">// array数组的长度
+</span><span style="color:#080;font-style:italic"></span>}
 </code></pre></td></tr></table>
 </div>
 </div><p>从数据结构看Slice很清晰, array指针指向底层数组，len表示切片长度，cap表示底层数组容量。</p>
@@ -352,27 +352,27 @@ s2 := s1[<span style="color:#0086f7;font-weight:bold">0</span>:<span style="colo
 <h4 id="5特殊切片">5）特殊切片</h4>
 <p>跟据数组或切片生成新的切片一般使用<code>slice := array[start:end]</code>方式，这种新生成的切片并没有指定切片的容量，实际上新切片的容量是从start开始直至array的结束。</p>
 <p>比如下面两个切片，长度和容量都是一致的，使用共同的内存地址：</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">sliceA := make([]<span style="color:#cdcaa9;font-weight:bold">int</span>, <span style="color:#0086f7;font-weight:bold">5</span>, <span style="color:#0086f7;font-weight:bold">10</span>)
-sliceB := sliceA[<span style="color:#0086f7;font-weight:bold">0</span>:<span style="color:#0086f7;font-weight:bold">5</span>]
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">sliceA <span style="color:#666">:=</span> <span style="color:#a2f">make</span>([]<span style="color:#0b0;font-weight:bold">int</span>, <span style="color:#666">5</span>, <span style="color:#666">10</span>)
+sliceB <span style="color:#666">:=</span> sliceA[<span style="color:#666">0</span>:<span style="color:#666">5</span>]
 </code></pre></td></tr></table>
 </div>
 </div><p>根据数组或切片生成切片还有另一种写法，即切片同时也指定容量，即slice[start​：end:cap], 其中cap即为新切片的容量，当然容量不能超过原切片实际值，如下所示：</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    sliceA := make([]<span style="color:#cdcaa9;font-weight:bold">int</span>, <span style="color:#0086f7;font-weight:bold">5</span>, <span style="color:#0086f7;font-weight:bold">10</span>)  <span style="color:#080;background-color:#0f140f;font-style:italic">//length = 5; capacity = 10
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>    sliceB := sliceA[<span style="color:#0086f7;font-weight:bold">0</span>:<span style="color:#0086f7;font-weight:bold">5</span>]         <span style="color:#080;background-color:#0f140f;font-style:italic">//length = 5; capacity = 10
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>    sliceC := sliceA[<span style="color:#0086f7;font-weight:bold">0</span>:<span style="color:#0086f7;font-weight:bold">5</span>:<span style="color:#0086f7;font-weight:bold">5</span>]       <span style="color:#080;background-color:#0f140f;font-style:italic">//length = 5; capacity = 5
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    sliceA <span style="color:#666">:=</span> <span style="color:#a2f">make</span>([]<span style="color:#0b0;font-weight:bold">int</span>, <span style="color:#666">5</span>, <span style="color:#666">10</span>)  <span style="color:#080;font-style:italic">//length = 5; capacity = 10
+</span><span style="color:#080;font-style:italic"></span>    sliceB <span style="color:#666">:=</span> sliceA[<span style="color:#666">0</span>:<span style="color:#666">5</span>]         <span style="color:#080;font-style:italic">//length = 5; capacity = 10
+</span><span style="color:#080;font-style:italic"></span>    sliceC <span style="color:#666">:=</span> sliceA[<span style="color:#666">0</span>:<span style="color:#666">5</span>:<span style="color:#666">5</span>]       <span style="color:#080;font-style:italic">//length = 5; capacity = 5
 </span></code></pre></td></tr></table>
 </div>
 </div><p>这切片方法不常见，在Golang源码里能够见到，不过非常利于切片的理解。</p>
@@ -461,19 +461,7 @@ sliceB := sliceA[<span style="color:#0086f7;font-weight:bold">0</span>:<span sty
 <ul class="widget-list">
     
     <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-01/" title="Docker 01">Docker 01</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-02/" title="Docker 01">Docker 01</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-03/" title="Docker 01">Docker 01</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/Docker%E7%9F%A5%E8%AF%86/" title="Docker知识">Docker知识</a>
+        <a href="https://aszhc.github.io/post/%E9%85%8D%E7%BD%AE%E5%9B%BE%E5%BA%8A/" title="linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床">linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床</a>
     </li>
     
     <li>
@@ -500,6 +488,18 @@ sliceB := sliceA[<span style="color:#0086f7;font-weight:bold">0</span>:<span sty
         <a href="https://aszhc.github.io/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/" title="哈希映射和集合练习">哈希映射和集合练习</a>
     </li>
     
+    <li>
+        <a href="https://aszhc.github.io/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/" title="栈和队列练习题">栈和队列练习题</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/" title="数组、链表练习题">数组、链表练习题</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/%E9%80%92%E5%BD%92/" title="递归">递归</a>
+    </li>
+    
 </ul>
     </section>
 
@@ -510,6 +510,8 @@ sliceB := sliceA[<span style="color:#0086f7;font-weight:bold">0</span>:<span sty
 <ul class="widget-list">
     
     <li><a href="https://aszhc.github.io/categories/Docker/">Docker (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">安装与配置 (1)</a></li>
     
     <li><a href="https://aszhc.github.io/categories/%E5%B7%A5%E5%85%B7/">工具 (1)</a></li>
     
@@ -532,9 +534,13 @@ sliceB := sliceA[<span style="color:#0086f7;font-weight:bold">0</span>:<span sty
     
     <a href="https://aszhc.github.io/tags/markdown/">markdown</a>
     
+    <a href="https://aszhc.github.io/tags/markdown/">markdown</a>
+    
     <a href="https://aszhc.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
     
     <a href="https://aszhc.github.io/tags/%E5%93%88%E5%B8%8C/">哈希</a>
+    
+    <a href="https://aszhc.github.io/tags/%E5%9B%BE%E5%BA%8A/">图床</a>
     
     <a href="https://aszhc.github.io/tags/%E5%AE%B9%E5%99%A8%E5%8C%96/">容器化</a>
     

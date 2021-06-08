@@ -234,9 +234,9 @@
 <p>1）初始化</p>
 <p>map支持字面量初始化和map( )初始化</p>
 <p>字面量初始化</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -247,21 +247,21 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">func</span> <span style="color:#ff0086;font-weight:bold">MapInitByLiteral</span>() {
-	m := <span style="color:#fb660a;font-weight:bold">map</span>[<span style="color:#cdcaa9;font-weight:bold">string</span>]<span style="color:#cdcaa9;font-weight:bold">int</span>{
-		<span style="color:#0086d2">&#34;apple&#34;</span>:  <span style="color:#0086f7;font-weight:bold">2</span>,
-		<span style="color:#0086d2">&#34;banana&#34;</span>: <span style="color:#0086f7;font-weight:bold">3</span>,
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a2f;font-weight:bold">func</span> <span style="color:#00a000">MapInitByLiteral</span>() {
+	m <span style="color:#666">:=</span> <span style="color:#a2f;font-weight:bold">map</span>[<span style="color:#0b0;font-weight:bold">string</span>]<span style="color:#0b0;font-weight:bold">int</span>{
+		<span style="color:#b44">&#34;apple&#34;</span>:  <span style="color:#666">2</span>,
+		<span style="color:#b44">&#34;banana&#34;</span>: <span style="color:#666">3</span>,
 	}
-	<span style="color:#fb660a;font-weight:bold">for</span> k, v := <span style="color:#fb660a;font-weight:bold">range</span> m {
-		fmt.<span style="color:#ff0086;font-weight:bold">Printf</span>(<span style="color:#0086d2">&#34;%s=%d\n&#34;</span>, k, v)
+	<span style="color:#a2f;font-weight:bold">for</span> k, v <span style="color:#666">:=</span> <span style="color:#a2f;font-weight:bold">range</span> m {
+		fmt.<span style="color:#00a000">Printf</span>(<span style="color:#b44">&#34;%s=%d\n&#34;</span>, k, v)
 	}
 }
 </code></pre></td></tr></table>
 </div>
 </div><p>make( )初始化</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
@@ -272,21 +272,21 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">func</span> <span style="color:#ff0086;font-weight:bold">MapInitByLiteral</span>() {
-   m := make(<span style="color:#fb660a;font-weight:bold">map</span>[<span style="color:#cdcaa9;font-weight:bold">string</span>]<span style="color:#cdcaa9;font-weight:bold">int</span>, <span style="color:#0086f7;font-weight:bold">10</span>)
-   m[<span style="color:#0086d2">&#34;apple&#34;</span>] = <span style="color:#0086f7;font-weight:bold">2</span>
-   m[<span style="color:#0086d2">&#34;banana&#34;</span>] = <span style="color:#0086f7;font-weight:bold">3</span>
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a2f;font-weight:bold">func</span> <span style="color:#00a000">MapInitByLiteral</span>() {
+   m <span style="color:#666">:=</span> <span style="color:#a2f">make</span>(<span style="color:#a2f;font-weight:bold">map</span>[<span style="color:#0b0;font-weight:bold">string</span>]<span style="color:#0b0;font-weight:bold">int</span>, <span style="color:#666">10</span>)
+   m[<span style="color:#b44">&#34;apple&#34;</span>] = <span style="color:#666">2</span>
+   m[<span style="color:#b44">&#34;banana&#34;</span>] = <span style="color:#666">3</span>
 
-   <span style="color:#fb660a;font-weight:bold">for</span> k, v := <span style="color:#fb660a;font-weight:bold">range</span> m {
-      fmt.<span style="color:#ff0086;font-weight:bold">Printf</span>(<span style="color:#0086d2">&#34;%s=%d\n&#34;</span>, k, v)
+   <span style="color:#a2f;font-weight:bold">for</span> k, v <span style="color:#666">:=</span> <span style="color:#a2f;font-weight:bold">range</span> m {
+      fmt.<span style="color:#00a000">Printf</span>(<span style="color:#b44">&#34;%s=%d\n&#34;</span>, k, v)
    }
 }
 </code></pre></td></tr></table>
 </div>
 </div><p>2）增删改查</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -298,14 +298,14 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">func</span> <span style="color:#ff0086;font-weight:bold">MapCRUD</span>() {
-   m := make(<span style="color:#fb660a;font-weight:bold">map</span>[<span style="color:#cdcaa9;font-weight:bold">string</span>]<span style="color:#cdcaa9;font-weight:bold">string</span>, <span style="color:#0086f7;font-weight:bold">10</span>)
-   m[<span style="color:#0086d2">&#34;apple&#34;</span>] = <span style="color:#0086d2">&#34;red&#34;</span>   <span style="color:#080;background-color:#0f140f;font-style:italic">// 增加
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>   m[<span style="color:#0086d2">&#34;apple&#34;</span>] = <span style="color:#0086d2">&#34;green&#34;</span> <span style="color:#080;background-color:#0f140f;font-style:italic">// 修改
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>   delete(m, <span style="color:#0086d2">&#34;apple&#34;</span>)   <span style="color:#080;background-color:#0f140f;font-style:italic">// 删除
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>   v, ok := m[<span style="color:#0086d2">&#34;apple&#34;</span>]  <span style="color:#080;background-color:#0f140f;font-style:italic">// 查询
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>   <span style="color:#fb660a;font-weight:bold">if</span> ok {
-      fmt.<span style="color:#ff0086;font-weight:bold">Printf</span>(<span style="color:#0086d2">&#34;apple-%s\n&#34;</span>, v)
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a2f;font-weight:bold">func</span> <span style="color:#00a000">MapCRUD</span>() {
+   m <span style="color:#666">:=</span> <span style="color:#a2f">make</span>(<span style="color:#a2f;font-weight:bold">map</span>[<span style="color:#0b0;font-weight:bold">string</span>]<span style="color:#0b0;font-weight:bold">string</span>, <span style="color:#666">10</span>)
+   m[<span style="color:#b44">&#34;apple&#34;</span>] = <span style="color:#b44">&#34;red&#34;</span>   <span style="color:#080;font-style:italic">// 增加
+</span><span style="color:#080;font-style:italic"></span>   m[<span style="color:#b44">&#34;apple&#34;</span>] = <span style="color:#b44">&#34;green&#34;</span> <span style="color:#080;font-style:italic">// 修改
+</span><span style="color:#080;font-style:italic"></span>   <span style="color:#a2f">delete</span>(m, <span style="color:#b44">&#34;apple&#34;</span>)   <span style="color:#080;font-style:italic">// 删除
+</span><span style="color:#080;font-style:italic"></span>   v, ok <span style="color:#666">:=</span> m[<span style="color:#b44">&#34;apple&#34;</span>]  <span style="color:#080;font-style:italic">// 查询
+</span><span style="color:#080;font-style:italic"></span>   <span style="color:#a2f;font-weight:bold">if</span> ok {
+      fmt.<span style="color:#00a000">Printf</span>(<span style="color:#b44">&#34;apple-%s\n&#34;</span>, v)
    }
 }
 </code></pre></td></tr></table>
@@ -325,9 +325,9 @@
 <h3 id="数据结构">数据结构</h3>
 <p>golang的map使用Hash表作为底层实现，一个hash表中可以有多个bucket，，而每个bucket保存了map中的一个或一组键值对。</p>
 <p>1）map的数据结构</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
@@ -342,19 +342,19 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">type</span> hmap <span style="color:#fb660a;font-weight:bold">struct</span> {
-	count     <span style="color:#cdcaa9;font-weight:bold">int</span> <span style="color:#080;background-color:#0f140f;font-style:italic">// 当前报错的元素个数
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>	flags     <span style="color:#cdcaa9;font-weight:bold">uint8</span>
-	B         <span style="color:#cdcaa9;font-weight:bold">uint8</span>  <span style="color:#080;background-color:#0f140f;font-style:italic">// bucket数组的大小 log_2 of # of buckets
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>	noverflow <span style="color:#cdcaa9;font-weight:bold">uint16</span> <span style="color:#080;background-color:#0f140f;font-style:italic">// approximate number of overflow buckets; see incrnoverflow for details
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>	hash0     <span style="color:#cdcaa9;font-weight:bold">uint32</span> <span style="color:#080;background-color:#0f140f;font-style:italic">// hash seed
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>
-	buckets    unsafe.Pointer <span style="color:#080;background-color:#0f140f;font-style:italic">// bucket数组，数组的长度为2^B
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>	oldbuckets unsafe.Pointer <span style="color:#080;background-color:#0f140f;font-style:italic">// 老旧的bucket数组，用于扩容
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>	nevacuate  <span style="color:#cdcaa9;font-weight:bold">uintptr</span>        <span style="color:#080;background-color:#0f140f;font-style:italic">// progress counter for evacuation (buckets less than this have been evacuated)
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>
-	extra *mapextra <span style="color:#080;background-color:#0f140f;font-style:italic">// optional fields
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>}
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a2f;font-weight:bold">type</span> hmap <span style="color:#a2f;font-weight:bold">struct</span> {
+	count     <span style="color:#0b0;font-weight:bold">int</span> <span style="color:#080;font-style:italic">// 当前报错的元素个数
+</span><span style="color:#080;font-style:italic"></span>	flags     <span style="color:#0b0;font-weight:bold">uint8</span>
+	B         <span style="color:#0b0;font-weight:bold">uint8</span>  <span style="color:#080;font-style:italic">// bucket数组的大小 log_2 of # of buckets
+</span><span style="color:#080;font-style:italic"></span>	noverflow <span style="color:#0b0;font-weight:bold">uint16</span> <span style="color:#080;font-style:italic">// approximate number of overflow buckets; see incrnoverflow for details
+</span><span style="color:#080;font-style:italic"></span>	hash0     <span style="color:#0b0;font-weight:bold">uint32</span> <span style="color:#080;font-style:italic">// hash seed
+</span><span style="color:#080;font-style:italic"></span>
+	buckets    unsafe.Pointer <span style="color:#080;font-style:italic">// bucket数组，数组的长度为2^B
+</span><span style="color:#080;font-style:italic"></span>	oldbuckets unsafe.Pointer <span style="color:#080;font-style:italic">// 老旧的bucket数组，用于扩容
+</span><span style="color:#080;font-style:italic"></span>	nevacuate  <span style="color:#0b0;font-weight:bold">uintptr</span>        <span style="color:#080;font-style:italic">// progress counter for evacuation (buckets less than this have been evacuated)
+</span><span style="color:#080;font-style:italic"></span>
+	extra <span style="color:#666">*</span>mapextra <span style="color:#080;font-style:italic">// optional fields
+</span><span style="color:#080;font-style:italic"></span>}
 </code></pre></td></tr></table>
 </div>
 </div><p>下图展示一个拥有4个bucket的map：</p>
@@ -363,20 +363,20 @@
 <p><code>bucket</code>很多时候被翻译为桶，所谓的<code>哈希桶</code>实际上就是bucket。</p>
 <p>2）bucket的数据结构</p>
 <p>bucket数据结构由<code>runtime/map.go/bmap</code>定义：</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#fb660a;font-weight:bold">type</span> bmap <span style="color:#fb660a;font-weight:bold">struct</span> {
-    tophash [<span style="color:#0086f7;font-weight:bold">8</span>]<span style="color:#cdcaa9;font-weight:bold">uint8</span> <span style="color:#080;background-color:#0f140f;font-style:italic">//存储哈希值的高8位
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>    data    <span style="color:#cdcaa9;font-weight:bold">byte</span>[<span style="color:#0086f7;font-weight:bold">1</span>]  <span style="color:#080;background-color:#0f140f;font-style:italic">//key value数据:key/key/key/.../value/value/value...
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>    overflow *bmap   <span style="color:#080;background-color:#0f140f;font-style:italic">//溢出bucket的地址
-</span><span style="color:#080;background-color:#0f140f;font-style:italic"></span>}
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a2f;font-weight:bold">type</span> bmap <span style="color:#a2f;font-weight:bold">struct</span> {
+    tophash [<span style="color:#666">8</span>]<span style="color:#0b0;font-weight:bold">uint8</span> <span style="color:#080;font-style:italic">//存储哈希值的高8位
+</span><span style="color:#080;font-style:italic"></span>    data    <span style="color:#0b0;font-weight:bold">byte</span>[<span style="color:#666">1</span>]  <span style="color:#080;font-style:italic">//key value数据:key/key/key/.../value/value/value...
+</span><span style="color:#080;font-style:italic"></span>    overflow <span style="color:#666">*</span>bmap   <span style="color:#080;font-style:italic">//溢出bucket的地址
+</span><span style="color:#080;font-style:italic"></span>}
 </code></pre></td></tr></table>
 </div>
 </div><p>每个bucket可以存储8个键值对。</p>
@@ -395,12 +395,12 @@
 <p>bucket数据结构指示下一个bucket的指针称为overflow bucket，意为当前bucket盛不下而溢出的部分。事实上哈希冲突并不是好事情，它降低了存取效率，好的哈希算法可以保证哈希值的随机性，但冲突过多也是要控制的，后面会再详细介绍。</p>
 <h3 id="负载因子">负载因子</h3>
 <p>负载因子用于衡量一个哈希表冲突情况，公式为：</p>
-<div class="highlight"><div style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="color:#fff;background-color:#111;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">负载因子 = 键数量/bucket数量
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">负载因子 = 键数量<span style="color:#666">/</span>bucket数量
 </code></pre></td></tr></table>
 </div>
 </div><p>例如，对于一个bucket数量为4，包含4个键值对的哈希表来说，这个哈希表的负载因子为1.</p>
@@ -530,19 +530,7 @@
 <ul class="widget-list">
     
     <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-01/" title="Docker 01">Docker 01</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-02/" title="Docker 01">Docker 01</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-03/" title="Docker 01">Docker 01</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/Docker%E7%9F%A5%E8%AF%86/" title="Docker知识">Docker知识</a>
+        <a href="https://aszhc.github.io/post/%E9%85%8D%E7%BD%AE%E5%9B%BE%E5%BA%8A/" title="linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床">linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床</a>
     </li>
     
     <li>
@@ -569,6 +557,18 @@
         <a href="https://aszhc.github.io/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/" title="哈希映射和集合练习">哈希映射和集合练习</a>
     </li>
     
+    <li>
+        <a href="https://aszhc.github.io/post/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/" title="栈和队列练习题">栈和队列练习题</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E7%BB%83%E4%B9%A0%E9%A2%98/" title="数组、链表练习题">数组、链表练习题</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/%E9%80%92%E5%BD%92/" title="递归">递归</a>
+    </li>
+    
 </ul>
     </section>
 
@@ -579,6 +579,8 @@
 <ul class="widget-list">
     
     <li><a href="https://aszhc.github.io/categories/Docker/">Docker (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">安装与配置 (1)</a></li>
     
     <li><a href="https://aszhc.github.io/categories/%E5%B7%A5%E5%85%B7/">工具 (1)</a></li>
     
@@ -601,9 +603,13 @@
     
     <a href="https://aszhc.github.io/tags/markdown/">markdown</a>
     
+    <a href="https://aszhc.github.io/tags/markdown/">markdown</a>
+    
     <a href="https://aszhc.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
     
     <a href="https://aszhc.github.io/tags/%E5%93%88%E5%B8%8C/">哈希</a>
+    
+    <a href="https://aszhc.github.io/tags/%E5%9B%BE%E5%BA%8A/">图床</a>
     
     <a href="https://aszhc.github.io/tags/%E5%AE%B9%E5%99%A8%E5%8C%96/">容器化</a>
     

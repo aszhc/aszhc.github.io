@@ -6,10 +6,19 @@
     <description>Recent content in Categories on 學而</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 08 May 2021 14:35:44 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 08 Jun 2021 15:15:13 +0800</lastBuildDate>
     
 	<atom:link href="https://aszhc.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>安装与配置</title>
+      <link>https://aszhc.github.io/categories/%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Tue, 08 Jun 2021 15:15:13 +0800</pubDate>
+      
+      <guid>https://aszhc.github.io/categories/%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>工具</title>
