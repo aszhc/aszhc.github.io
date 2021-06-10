@@ -1,24 +1,26 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-	<meta name="generator" content="Hugo 0.68.3" />
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>學而 | Computers do not solve problems, they execute solutions.</title>
-    <meta property="og:title" content="學而 | Computers do not solve problems, they execute solutions.">
-    <meta property="og:type" content="website">
+    <title> | 學而</title>
+    <meta property="og:title" content=" - 學而">
+    <meta property="og:type" content="article">
+        
+        
     <meta name="Keywords" content="golang,go语言,go语言笔记,博客,项目管理,python,公众号">
-    <meta name="description" content="专注于IT互联网，包括但不限于Go语言(golang)、Python、等">
-    <meta property="og:url" content="https://aszhc.github.io/">
+    <meta name="description" content="">
+        
+    <meta name="author" content="周闖">
+    <meta property="og:url" content="https://aszhc.github.io/post/Git%E5%9F%BA%E7%A1%80/">
     
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 
     <link rel="stylesheet" href='/css/normalize.css'>
     <link rel="stylesheet" href='/css/style.css'>
-    <link rel="alternate" type="application/rss+xml+xml" href="https://aszhc.github.io/index.xml" title="學而" />
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     
@@ -47,11 +49,9 @@
         <div class="col-group">
             <div class="site-name ">
                 
-                    <h1>
-                        <a id="logo" href="https://aszhc.github.io">
-                            學而
-                        </a>
-                    </h1>
+                    <a id="logo" href="https://aszhc.github.io">
+                        學而
+                    </a>
                 
                 <p class="description">Computers do not solve problems, they execute solutions.</p>
             </div>
@@ -78,134 +78,272 @@
                 <div class="col-8" id="main">
                     
 <div class="res-cons">
-    
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 250px;
+        margin-left: -300px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ol>
+    <li><a href="#删除文件">删除文件</a></li>
+    <li><a href="#连接远程库">连接远程库</a></li>
+    <li><a href="#分支管理">分支管理</a>
+      <ol>
+        <li><a href="#创建并合并分支">创建并合并分支</a></li>
+        <li><a href="#解决冲突">解决冲突</a></li>
+        <li><a href="#分支管理策略">分支管理策略</a></li>
+        <li><a href="#多人协作">多人协作</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
     <article class="post">
         <header>
-            <h1 class="post-title">
-                <a href="https://aszhc.github.io/post/%E9%80%92%E5%BD%92/" title="递归">递归</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2020年3月2日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='https://aszhc.github.io/categories/%E7%AE%97%E6%B3%95'>算法</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            To iterate is human, to recurse, divine. 人理解迭代，神理解递归。 什么是递归 递归算法（英语：recursion algorithm）在计算机科学中是指一种通过重复将问题分……
-        </div>
-        <p class="readmore"><a href="https://aszhc.github.io/post/%E9%80%92%E5%BD%92/">阅读全文</a></p>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://aszhc.github.io/post/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" title="动态规划">动态规划</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2020年2月1日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='https://aszhc.github.io/categories/%E7%AE%97%E6%B3%95'>算法</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            动态规划入门 动态规划(Dynamic programming, 简称DP), 通过把原问题分解为相对简单的子问题的方式求解复杂问题的方法。 DP常常适用于有重叠子问题和最……
-        </div>
-        <p class="readmore"><a href="https://aszhc.github.io/post/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">阅读全文</a></p>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://aszhc.github.io/post/Docker/Docker%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="Docker基础知识">Docker基础知识</a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            2019年6月3日
-        </date>
-        
-        <div class="post-meta">
-            <span>|</span>
-            
-            <span class="meta-category"><a href='https://aszhc.github.io/categories/Docker'>Docker</a></span>
-            
-        </div>
-        
-        <div class="post-content">
-            Docker 安装 Ubuntu 19安装 安装命令 1 2 sudo apt update sudo apt install docker.io CentOS 7安装 这里只介绍用仓库下载安装的方式。 为了方便添加软件源，支持 devicemapper 存储类型，安装如下软件包： 1 2 3……
-        </div>
-        <p class="readmore"><a href="https://aszhc.github.io/post/Docker/Docker%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">阅读全文</a></p>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://aszhc.github.io/post/Git%E5%9F%BA%E7%A1%80/" title=""></a>
-            </h1>
+            <h1 class="post-title"></h1>
         </header>
         <date class="post-meta meta-date">
             1年1月1日
         </date>
         
-        <div class="post-content">
-            # 将次目录编程git可以管理的仓库 git init # 查看git仓库状态 git status # 查看具体修改内容 git diff # 提交到仓库 1. 将文件修改添加到暂存区 git add 例如： git add readme.txt 2. 将……
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
         </div>
-        <p class="readmore"><a href="https://aszhc.github.io/post/Git%E5%9F%BA%E7%A1%80/">阅读全文</a></p>
-    </article>
-    
-    <article class="post">
-        <header>
-            <h1 class="post-title">
-                <a href="https://aszhc.github.io/post/Linux/01/" title=""></a>
-            </h1>
-        </header>
-        <date class="post-meta meta-date">
-            1年1月1日
-        </date>
+        
         
         <div class="post-content">
-            网络连接的三种模式 桥接模式 虚拟系统可以和外部系统通讯，但是容易造成冲突 NAT模式 网络地址转换模式，虚拟系统可以和外部系统通讯，不造成IP冲突……
-        </div>
-        <p class="readmore"><a href="https://aszhc.github.io/post/Linux/01/">阅读全文</a></p>
-    </article>
-    
-    
+            <pre><code># 将次目录编程git可以管理的仓库
+git init
 
+# 查看git仓库状态
+git status 
 
+# 查看具体修改内容
+git diff 
 
-<ol class="page-navigator">
-    
-    <li class="prev">
-        <a href="https://aszhc.github.io/">上一页</a>
-    </li>
-    
+# 提交到仓库
+1. 将文件修改添加到暂存区
+git add
+	例如： git add readme.txt
+	
+2. 将暂存区的内容提交到当前分支  类似快照功能
+git commit 
+	例如：git commit -m &quot;add distributed&quot;
+	
+# 查看历史记录
+git log
+		# git中HEAD表示当前版本
 
-    
-    <li >
-        <a href="https://aszhc.github.io/">1</a>
-    </li>
-    
-    <li  class="current">
-        <a href="https://aszhc.github.io/page/2/">2</a>
-    </li>
-    
+# 回退上一个版本
+git reset --hard HEAD^
 
-    
+# 到某个版本
+git reset --hard xxxx
+		xxxx 为commit id
+		commit 可以使用git reflog 查找
+	
+场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
+
+场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD &lt;file&gt;，就回到了场景1，第二步按场景1操作。
+
+</code></pre><h2 id="删除文件">删除文件</h2>
+<p>touch test.txt</p>
+<p>git add test.txt</p>
+<p>git commit -m &ldquo;add test.txt&rdquo;</p>
+<p>rm test.txt</p>
+<p>git status</p>
+<pre><code>On branch master
+Changes not staged for commit:
+  (use &quot;git add/rm &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+
+	deleted:    test.txt
+
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+</code></pre><p>如果却是要从版本库中删除该文件，用git rm 命令删除</p>
+<p>git rm test.txt</p>
+<p>如果错删</p>
+<p>git checkout &ndash; test.txt</p>
+<h2 id="连接远程库">连接远程库</h2>
+<p>git remote add origin <a href="mailto:git@github.com">git@github.com</a>:asahc/xxx.git</p>
+<p>删除远程库</p>
+<p>git remote rm origin</p>
+<h2 id="分支管理">分支管理</h2>
+<h3 id="创建并合并分支">创建并合并分支</h3>
+<p>创建<code>dev</code>并切换到<code>dev</code>分支：</p>
+<pre><code>git checkout -b dev
+</code></pre><p>加<code>-b</code>参数，相当于一下两条命令：</p>
+<pre><code>$ git branch dev
+$ git checkout dev
+</code></pre><p>用<code>git branch</code>命令查看当前分支：</p>
+<p>切换分支：<code>git checkout &lt;name&gt;</code>或者<code>git switch &lt;name&gt;</code></p>
+<p>创建+切换分支：<code>git checkout -b &lt;name&gt;</code>或者<code>git switch -c &lt;name&gt;</code></p>
+<p>合并某分支到当前分支：<code>git merge &lt;name&gt;</code></p>
+<p>删除分支：<code>git branch -d &lt;name&gt;</code></p>
+<h3 id="解决冲突">解决冲突</h3>
+<p>当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。</p>
+<p>解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。</p>
+<p>用<code>git log --graph</code>命令可以看到分支合并图。</p>
+<h3 id="分支管理策略">分支管理策略</h3>
+<p>通常，合并分支时，如果可能，Git会用<code>Fast forward</code>模式，但这种模式下，删除分支后，会丢掉分支信息。</p>
+<p>如果要强制禁用<code>Fast forward</code>模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。</p>
+<p><code>--no-ff</code>方式的<code>git merge</code>：</p>
+<h3 id="多人协作">多人协作</h3>
+<p>当你的小伙伴从远程库clone时，默认情况下，你的小伙伴只能看到本地的<code>master</code>分支。不信可以用<code>git branch</code>命令看看：</p>
+<pre><code>$ git branch
+* master
+</code></pre><p>现在，你的小伙伴要在<code>dev</code>分支上开发，就必须创建远程<code>origin</code>的<code>dev</code>分支到本地，于是他用这个命令创建本地<code>dev</code>分支：</p>
+<pre><code>$ git checkout -b dev origin/dev
+</code></pre><p>现在，他就可以在<code>dev</code>上继续修改，然后，时不时地把<code>dev</code>分支<code>push</code>到远程：</p>
+<p>推送失败，因为你的小伙伴的最新提交和你试图推送的提交有冲突，解决办法也很简单，Git已经提示我们，先用<code>git pull</code>把最新的提交从<code>origin/dev</code>抓下来，然后，在本地合并，解决冲突，再推送：</p>
+<p><code>git pull</code>也失败了，原因是没有指定本地<code>dev</code>分支与远程<code>origin/dev</code>分支的链接，根据提示，设置<code>dev</code>和<code>origin/dev</code>的链接：</p>
+<pre><code>$ git branch --set-upstream-to=origin/dev dev
+Branch 'dev' set up to track remote branch 'dev' from 'origin'.
+</code></pre><p>因此，多人协作的工作模式通常是这样：</p>
+<ol>
+<li>首先，可以试图用<code>git push origin &lt;branch-name&gt;</code>推送自己的修改；</li>
+<li>如果推送失败，则因为远程分支比你的本地更新，需要先用<code>git pull</code>试图合并；</li>
+<li>如果合并有冲突，则解决冲突，并在本地提交；</li>
+<li>没有冲突或者解决掉冲突后，再用<code>git push origin &lt;branch-name&gt;</code>推送就能成功！</li>
 </ol>
+<p>如果<code>git pull</code>提示<code>no tracking information</code>，则说明本地分支和远程分支的链接关系没有创建，用命令<code>git branch --set-upstream-to &lt;branch-name&gt; origin/&lt;branch-name&gt;</code>。</p>
+<p>这就是多人协作的工作模式，一旦熟悉了，就非常简单。</p>
+
+        </div>
+
+        
 
 
+        
 
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/Golang/Golang-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">Golang 单元测试</a></li>
+        
+        <li><a href="/post/%E9%85%8D%E7%BD%AE%E5%9B%BE%E5%BA%8A/">linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床</a></li>
+        
+        <li><a href="/post/markdown%E4%B8%AD%E7%9A%84emoji%E5%9B%BE%E6%A0%87%E6%A0%87%E7%AD%BE%E8%A1%A8/">Markdown中的emoji图标标签表</a></li>
+        
+        <li><a href="/post/Golang-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/">Golang Struct 内存对齐</a></li>
+        
+        <li><a href="/post/Golang-Slice%E5%8E%9F%E7%90%86/">Golang Slice原理</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            没有标签
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "aszhc/aszhc.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
 </div>
 
                 </div>
@@ -376,6 +514,17 @@
     </div>
 </footer>
 
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
 
 
 <a id="rocket" href="#top"></a>
