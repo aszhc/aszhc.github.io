@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>使用CircleCI&#43;GitHub 进行CI/CD | PHOENIX</title>
+    <meta property="og:title" content="使用CircleCI&#43;GitHub 进行CI/CD - PHOENIX">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2021-06-11T19:38:08&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2021-06-11T19:38:08&#43;08:00'>
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,博客,项目管理,python,公众号">
+    <meta name="description" content="使用CircleCI&#43;GitHub 进行CI/CD">
+        
+    <meta name="author" content="周闖">
+    <meta property="og:url" content="https://aszhc.github.io/post/%E6%9C%AA%E5%8F%91%E5%B8%83/CircleCI/">
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-4031353640611810",
+        enable_page_level_ads: true
+    });
+    </script>
+    
+
+
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://aszhc.github.io">
+                        PHOENIX
+                    </a>
+                
+                <p class="description">Computers do not solve problems, they execute solutions.</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://aszhc.github.io">首页</a>
+                    
+                    <a  href="https://aszhc.github.io/collect/" title="搜集">搜集</a>
+                    
+                    <a  href="https://aszhc.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://aszhc.github.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 250px;
+        margin-left: -300px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ol>
+    <li><a href="#ci">CI</a>
+      <ol>
+        <li><a href="#创建一个简单的python项目">创建一个简单的Python项目</a></li>
+        <li><a href="#将项目push到github">将项目Push到GitHub</a></li>
+        <li><a href="#在circleci中设置ci">在CircleCI中设置CI</a></li>
+        <li><a href="#测试circleci是否工作">测试CircleCI是否工作</a></li>
+      </ol>
+    </li>
+    <li><a href="#cd">CD</a>
+      <ol>
+        <li><a href="#需要环境">需要环境</a></li>
+        <li><a href="#使用gin框架创建一个简单的go-api">使用Gin框架创建一个简单的Go API</a></li>
+        <li><a href="#使用heroku部署">使用Heroku部署</a></li>
+        <li><a href="#将项目连接到circleci">将项目连接到CircleCI</a></li>
+        <li><a href="#使用circleci自动化部署">使用CircleCI自动化部署</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">使用CircleCI&#43;GitHub 进行CI/CD</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年6月11日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://aszhc.github.io/categories/CI/CD'>CI/CD</a></span>
+            
+        </div>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            <h1 id="使用circlecigithub-进行cicd">使用CircleCI+GitHub 进行CI/CD</h1>
+<p>持续集成/持续部署 （CI/CD）是一种开发实践，允许软件团队在多个平台上更轻松、更快速地构建、测试和部署应用程序。<a href="https://bbs.huaweicloud.com/forum/thread-104238-1-1.html#">CircleCI</a>是一个流行的自动化平台，允许您为项目构建和维护 CI/CD 工作流。</p>
+<h2 id="ci">CI</h2>
+<h3 id="创建一个简单的python项目">创建一个简单的Python项目</h3>
+<p>创建项目 circle-demo:</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir circle-demo
+</code></pre></td></tr></table>
+</div>
+</div><p>在项目中创建&quot;main.py&rdquo;，main.py中的内容如下：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">Add</span>(a, b):
+        <span style="color:#a2f;font-weight:bold">return</span> a <span style="color:#666">+</span> b
+        
+<span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">SayHello</span>():
+        <span style="color:#a2f;font-weight:bold">print</span>(<span style="color:#b44">&#34;sup world from srcmake&#34;</span>)
+
+<span style="color:#a2f;font-weight:bold">if</span> __name__ <span style="color:#666">==</span> <span style="color:#b44">&#39;__main__&#39;</span>:
+        SayHello()
+</code></pre></td></tr></table>
+</div>
+</div><p>我们可以使用以下命令（在您的终端中）运行测试：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python3 main.py
+</code></pre></td></tr></table>
+</div>
+</div><p>创建一个“main-test.py”用来测试，main.py中的内容</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-style:italic"># Import Add 函数， 并使用断言检测功能</span>
+<span style="color:#a2f;font-weight:bold">from</span> <span style="color:#00f;font-weight:bold">main</span> <span style="color:#a2f;font-weight:bold">import</span> Add
+
+<span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">TestAdd</span>():
+    <span style="color:#a2f;font-weight:bold">assert</span> Add(<span style="color:#666">2</span>, <span style="color:#666">3</span>) <span style="color:#666">==</span> <span style="color:#666">5</span>
+    <span style="color:#a2f;font-weight:bold">print</span>(<span style="color:#b44">&#34;Add Function works correctly&#34;</span>)
+    
+<span style="color:#a2f;font-weight:bold">if</span> __name__ <span style="color:#666">==</span> <span style="color:#b44">&#39;__main__&#39;</span>:
+        TestAdd()
+</code></pre></td></tr></table>
+</div>
+</div><p>我们可以使用以下命令（在您的终端中）运行测试：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python3 main-test.py
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="将项目push到github">将项目Push到GitHub</h3>
+<p>创建一个github仓库，给仓库命名为“circleci-demo”</p>
+<p>将本地的项目push到github仓库中,在本地项目中运行：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git init
+git add .
+git commit -m <span style="color:#b44">&#34;Initial commit&#34;</span>
+git remote add origin 仓库地址
+git push -u origin master
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="在circleci中设置ci">在CircleCI中设置CI</h3>
+<p>因此，我们的GitHub repo设置了，现在我们希望通过设置Circleci来启用CI。</p>
+<p>我们需要创建一个配置文件，以便Circleci将知道我们想要的操作。</p>
+<p>创建名为“.circleci”的文件夹，并在它的内部创建名为“config.yml”的文件。</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir .circleci
+touch .circleci/config.yml
+</code></pre></td></tr></table>
+</div>
+</div><p>打开“.circleci/config.yml” ，修改内容如下（注释不用写）：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#a2f;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#666">2.1</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>build:<span style="color:#bbb">	</span><span style="color:#080;font-style:italic"># 创建</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">working_directory</span>:<span style="color:#bbb"> </span>~/circleci-python<span style="color:#bbb">	</span><span style="color:#080;font-style:italic"># 工作目录</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>docker:<span style="color:#bbb">	</span><span style="color:#080;font-style:italic"># 使用Docker</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">image</span>:<span style="color:#bbb"> </span><span style="color:#b44">&#34;circleci/python:3.6.4&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- checkout<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 检查内容</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">run</span>:<span style="color:#bbb"> </span>python3<span style="color:#bbb"> </span>main.py<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 运行创建命令</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">test</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 测试</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">working_directory</span>:<span style="color:#bbb"> </span>~/circleci-python<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">docker</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">image</span>:<span style="color:#bbb"> </span><span style="color:#b44">&#34;circleci/python:3.6.4&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- checkout<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">run</span>:<span style="color:#bbb"> </span>python3<span style="color:#bbb"> </span>main-test.py<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 运行测试命令</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">workflows</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 工作流程</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>build_and_test:<span style="color:#bbb">	</span><span style="color:#080;font-style:italic"># 起的名字：创建并测试 </span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- build<span style="color:#bbb"> 	
+</span><span style="color:#bbb">      </span>- test:<span style="color:#bbb">	
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">requires</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 测试的前提是创建</span><span style="color:#bbb">
+</span><span style="color:#bbb">            </span>- build<span style="color:#bbb">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>这里有两种类型的任务，我们希望CircleCI执行以下操作：运行main.py以及运行我们的测试文件。</p>
+<p>在官方文档 <a href="https://circleci.com/docs/2.0/hello-world/">CircleCI 文档</a> 中可以学习到更加复杂的配置</p>
+<p>编写config.yml后，进入<a href="https://circleci.com/">CircleCI&rsquo;s 网站</a>，使用你的GitHub账号进行登录，并授权访问刚刚创建的circleci-demo仓库。</p>
+<p>现在将刚创建的配置文件push到github，</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git add .
+git commit -m <span style="color:#b44">&#34;Adds CircleCI config file&#34;</span>
+git push
+</code></pre></td></tr></table>
+</div>
+</div><p>Circleci应检测代码更改并为我们的分支运行我们的build_and_test工作流。 我们应该能够看到Circleci网站上的工作。</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210611150428.png" alt="image-20210611150427713"></p>
+<h3 id="测试circleci是否工作">测试CircleCI是否工作</h3>
+<p>现在我们测试CircleCI，首先创建并切换到一条新的git分支add-test：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git checkout -b add-test
+</code></pre></td></tr></table>
+</div>
+</div><p>将如下代码加入main-test.py中的TestAdd()函数中：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">assert</span> Add(<span style="color:#666">5</span>, <span style="color:#666">5</span>) <span style="color:#666">==</span> <span style="color:#666">10</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>push这条git分支到github：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git add .
+git commit -m <span style="color:#b44">&#34;add test to make sure 5+5 is equa to 10&#34;</span>
+git push --set-upstream origin add-test
+</code></pre></td></tr></table>
+</div>
+</div><p>我们可以在github仓库看到这个分支请求，可以在circleci中看到正在运行的作业。</p>
+<p>当然，CI（和单元测试）的有用部分正在确保我们的代码库正常工作。现在我们创建一条错误的测试，看circleci是否能够报错，在main-test.py中的TestAdd函数中添加如下代码：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">assert</span> Add(<span style="color:#666">5</span>, <span style="color:#666">5</span>) <span style="color:#666">==</span> <span style="color:#666">11</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>将项目push到github：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git add .
+git commit -m <span style="color:#b44">&#34;Add error test to test circleci&#34;</span>
+git push
+</code></pre></td></tr></table>
+</div>
+</div><p>我们可以发现circleci中发现并报错。</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210611151742.png" alt="image-20210611151741383"></p>
+<p>点击报红的标志可以发现出错的地方。</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210611151857.png" alt="image-20210611151856676"></p>
+<p>在github中如果circleci出错会阻止用户Merge pull request</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210611180511.png" alt="image-20210611152002667"></p>
+<h2 id="cd">CD</h2>
+<p>连续部署在很多方面都是有益的。它有助于标准化应用程序的部署步骤，并保护它免受未记录的更改。它还有助于避免执行重复步骤，并让您更专注于开发。借助 CircleCI，您可以跨所有不同的部署流程进行单一视图，以便进行开发、测试和生产。</p>
+<h3 id="需要环境">需要环境</h3>
+<ol>
+<li>Golang</li>
+<li>Heroku</li>
+<li>CircleCI</li>
+<li>GitHub</li>
+</ol>
+<h3 id="使用gin框架创建一个简单的go-api">使用Gin框架创建一个简单的Go API</h3>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir go-registration-api
+<span style="color:#a2f">cd</span> go-registration-api
+</code></pre></td></tr></table>
+</div>
+</div><p>使用go mod初始化</p>
+<pre><code>go mod init go-registration-api
+</code></pre><p>安装Gin框架环境</p>
+<pre><code>go get -u github.com/gin-gonic/gin
+</code></pre><p>创建main.go添加如下内容：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a2f;font-weight:bold">package</span> main
+
+<span style="color:#a2f;font-weight:bold">import</span> <span style="color:#b44">&#34;github.com/gin-gonic/gin&#34;</span>
+
+<span style="color:#a2f;font-weight:bold">func</span> <span style="color:#00a000">main</span>() {
+	r <span style="color:#666">:=</span> gin.<span style="color:#00a000">Default</span>()
+	r.<span style="color:#00a000">GET</span>(<span style="color:#b44">&#34;/&#34;</span>, <span style="color:#a2f;font-weight:bold">func</span>(c <span style="color:#666">*</span>gin.Context) {
+		c.<span style="color:#00a000">JSON</span>(<span style="color:#666">200</span>, gin.H{
+			<span style="color:#b44">&#34;message&#34;</span>: <span style="color:#b44">&#34;Welcome to the Go Registration API&#34;</span>,
+		})
+	})
+
+	r.<span style="color:#00a000">POST</span>(<span style="color:#b44">&#34;/register&#34;</span>, <span style="color:#a2f;font-weight:bold">func</span>(c <span style="color:#666">*</span>gin.Context) {
+		fullname <span style="color:#666">:=</span> c.<span style="color:#00a000">PostForm</span>(<span style="color:#b44">&#34;fullname&#34;</span>)
+		phone <span style="color:#666">:=</span> c.<span style="color:#00a000">PostForm</span>(<span style="color:#b44">&#34;phone&#34;</span>)
+		email <span style="color:#666">:=</span> c.<span style="color:#00a000">PostForm</span>(<span style="color:#b44">&#34;email&#34;</span>)
+
+		c.<span style="color:#00a000">JSON</span>(<span style="color:#666">200</span>, gin.H{
+			<span style="color:#b44">&#34;status&#34;</span>:   <span style="color:#b44">&#34;success&#34;</span>,
+			<span style="color:#b44">&#34;message&#34;</span>:  <span style="color:#b44">&#34;User details successfully posted&#34;</span>,
+			<span style="color:#b44">&#34;fullname&#34;</span>: fullname,
+			<span style="color:#b44">&#34;phone&#34;</span>:    phone,
+			<span style="color:#b44">&#34;email&#34;</span>:    email,
+		})
+	})
+	r.<span style="color:#00a000">Run</span>()
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>这里我创建了两个端点：</p>
+<ul>
+<li><code>/</code>:发送一个GET请求，返回一个json字符串欢迎信息。</li>
+<li><code>/register</code>:发送一个POST请求，POST请求包含用户数据，返回json响应。</li>
+</ul>
+<p>开启应用服务：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go run main.go
+</code></pre></td></tr></table>
+</div>
+</div><p>为了方便，不需要运行<code>go run main.go</code>, 我们可以创建<code>makefile</code>如下：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-makefile" data-lang="makefile"><span style="color:#00a000">dev</span><span style="color:#666">:</span>
+	go run main.go
+</code></pre></td></tr></table>
+</div>
+</div><p>现在我们可以使用make dev命令开启应用</p>
+<p>:triangular_flag_on_post:   <strong>可以使用postman验证功能</strong></p>
+<h3 id="使用heroku部署">使用Heroku部署</h3>
+<p>这里选择Heroku部署我们的go应用，在 <a href="https://dashboard.heroku.com/apps">Heroku dashboard</a> 中新建一个Heroku应用程序，起名为go-registration-api或者其他。</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210611184014.png" alt="image-20210611184014215"></p>
+<p>还需要一个Heroku API key，位于您的帐户设置页面上。 您可以从下拉菜单中访问帐户设置。</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210611184137.png" alt="image-20210611184137153"></p>
+<h3 id="将项目连接到circleci">将项目连接到CircleCI</h3>
+<ol>
+<li>
+<p>首先将项目push到GitHub仓库，然后在CircleCI中添加该项目。</p>
+</li>
+<li>
+<p>添加环境变量</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210611184550.png" alt="image-20210611184549191"></p>
+<p>这里有两个环境变量需要添加：</p>
+<ul>
+<li>HEROKU_APP_NAME：在这个例子中，heroku name 为go-registration-api</li>
+<li>HEROKU_API_KEY：在帐户选项中上查找您的Heroku帐户API密钥</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用circleci自动化部署">使用CircleCI自动化部署</h3>
+<p>首先在Go应用的根目录中创建一个Procfile（无扩展名），添加以下命令：</p>
+<pre><code>web: bin/go-registration-api
+</code></pre><p>Heroku在bin目录中运行我们的Go应用程序的构建版本</p>
+<p>现在我们配置CircleCI的配置文件，创建.circleci文件夹，并在此文件夹中创建config.yml，内容如下：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#a2f;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#666">2.1</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">orbs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">heroku</span>:<span style="color:#bbb"> </span>circleci/heroku@<span style="color:#666">0.0.10</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">workflows</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">heroku_deploy</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- heroku/deploy-via-git<span style="color:#bbb">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>提交对项目的更改，然后推送到远程存储库以运行部署脚本。</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210611185358.png" alt="image-20210611185357986"></p>
+<p>这里如果不出意外，已经部署好了。</p>
+<p>我们可以查看<code>https://go-registration-api.herokuapp.com</code>或者使用Postman，检测功能是否完整。</p>
+
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/Golang/Golang-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">Golang 单元测试</a></li>
+        
+        <li><a href="/post/%E9%85%8D%E7%BD%AE%E5%9B%BE%E5%BA%8A/">linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床</a></li>
+        
+        <li><a href="/post/markdown%E4%B8%AD%E7%9A%84emoji%E5%9B%BE%E6%A0%87%E6%A0%87%E7%AD%BE%E8%A1%A8/">Markdown中的emoji图标标签表</a></li>
+        
+        <li><a href="/post/Golang/Golang-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/">Golang Struct 内存对齐</a></li>
+        
+        <li><a href="/post/Golang/Golang-Slice%E5%8E%9F%E7%90%86/">Golang Slice原理</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='https://aszhc.github.io/tags/%E8%BF%90%E7%BB%B4'>运维</a></li>
+                
+                <li><a href='https://aszhc.github.io/tags/%E9%83%A8%E7%BD%B2'>部署</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "aszhc/aszhc.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://aszhc.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://aszhc.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://aszhc.github.io/post/%E6%9C%AA%E5%8F%91%E5%B8%83/CircleCI/" title="使用CircleCI&#43;GitHub 进行CI/CD">使用CircleCI&#43;GitHub 进行CI/CD</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Golang/Golang-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="Golang 单元测试">Golang 单元测试</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/%E9%85%8D%E7%BD%AE%E5%9B%BE%E5%BA%8A/" title="linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床">linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/markdown%E4%B8%AD%E7%9A%84emoji%E5%9B%BE%E6%A0%87%E6%A0%87%E7%AD%BE%E8%A1%A8/" title="Markdown中的emoji图标标签表">Markdown中的emoji图标标签表</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Golang/Golang-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/" title="Golang Struct 内存对齐">Golang Struct 内存对齐</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Golang/Golang-Slice%E5%8E%9F%E7%90%86/" title="Golang Slice原理">Golang Slice原理</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Golang/Golang-Map%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" title="Golang Map的实现原理">Golang Map的实现原理</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Golang/Golang%E4%B8%ADmake%E4%B8%8Enew%E6%9C%89%E4%BD%95%E5%8C%BA%E5%88%AB/" title="Golang中make与new有何区别？">Golang中make与new有何区别？</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/algorithm/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/" title="哈希映射和集合练习">哈希映射和集合练习</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/algorithm/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%BB%83%E4%B9%A0%E9%A2%98/" title="栈和队列练习题">栈和队列练习题</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li><a href="https://aszhc.github.io/categories/CI/CD/">CI/CD (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/Docker/">Docker (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">安装与配置 (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E5%B7%A5%E5%85%B7/">工具 (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E7%AE%97%E6%B3%95/">算法 (5)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络 (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/">语言基础 (5)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://aszhc.github.io/tags/Golang/">Golang</a>
+    
+    <a href="https://aszhc.github.io/tags/markdown/">markdown</a>
+    
+    <a href="https://aszhc.github.io/tags/markdown/">markdown</a>
+    
+    <a href="https://aszhc.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
+    
+    <a href="https://aszhc.github.io/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">单元测试</a>
+    
+    <a href="https://aszhc.github.io/tags/%E5%93%88%E5%B8%8C/">哈希</a>
+    
+    <a href="https://aszhc.github.io/tags/%E5%9B%BE%E5%BA%8A/">图床</a>
+    
+    <a href="https://aszhc.github.io/tags/%E5%AE%B9%E5%99%A8%E5%8C%96/">容器化</a>
+    
+    <a href="https://aszhc.github.io/tags/%E6%95%B0%E7%BB%84/">数组</a>
+    
+    <a href="https://aszhc.github.io/tags/%E6%A0%88/">栈</a>
+    
+    <a href="https://aszhc.github.io/tags/%E7%AC%94%E8%AE%B0/">笔记</a>
+    
+    <a href="https://aszhc.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
+    
+    <a href="https://aszhc.github.io/tags/%E9%80%92%E5%BD%92/">递归</a>
+    
+    <a href="https://aszhc.github.io/tags/%E9%83%A8%E7%BD%B2/">部署</a>
+    
+    <a href="https://aszhc.github.io/tags/%E9%93%BE%E6%8E%A5/">链接</a>
+    
+    <a href="https://aszhc.github.io/tags/%E9%93%BE%E8%A1%A8/">链表</a>
+    
+    <a href="https://aszhc.github.io/tags/%E9%98%9F%E5%88%97/">队列</a>
+    
+    <a href="https://aszhc.github.io/tags/%E9%9B%86%E5%90%88/">集合</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Andrew_ZhouC" title="我的CSDN博客">我的CSDN博客</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://github.com/aszhc" title="我的github">我的github</a>
+        </li>
+        
+    </ul>
+</section>
+
+	
+	<section class="widget">
+        <h3 class="widget-title">公众号</h3>
+		<ul class="widget-list">
+        <li>
+            
+                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJ%0AChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/%0A2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgo%0AKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABkAGQDASIAAhEBAxEB/8QA%0AHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUF%0ABAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkK%0AFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1%0Adnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXG%0Ax8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEB%0AAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAEC%0AAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRom%0AJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOE%0AhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU%0A1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6jvLqCytJ%0Arq8mjgtoEaSWWVgqRqBksxPAAHJJrmf+FkeB/wDocfDn/gzh/wDiqX4tf8kr%0A8Y/9ga8/9EPXzJ4h1rwv4C8B+AZJfAOgaxdarpKXE89zGFcsAuSTtOSc0AfT%0A9r8QfBt1cxW9r4s8PzTyuI4449RhZnYnAUANkknjFaE/ibQrddRafWtNiXTS%0Aq3pe6RRaljhRJk/JntnGa+Wmm0DxB4O8A+J9J8K6VoF7J4ytbN/sUYBKLk4L%0AYBwTg49hR8Vvhb8T9V8deLpvDlhM2g6xcI8iJfwxpcqgG3chcHg5xkUAfWwu%0AoDaC6E0ZtinmiXcNmzGd2emMc5rP0LxLoXiAzDQdZ03UzBt837HdJN5ec43b%0A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%0AigAooooAKKKKACiiigD/2Q==">
+           
+        </li>
+    </ul>
+    </section>
+	
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://aszhc.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+    <div class="container">
+        &copy; 2021 <a href="https://aszhc.github.io">PHOENIX By 周闖</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank"></a>         	</a>.
+        
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+</body>
+
+</html>
