@@ -13,10 +13,10 @@
     
     <item>
       <title>使用CircleCI&#43;GitHub 进行CI/CD</title>
-      <link>https://aszhc.github.io/post/%E6%9C%AA%E5%8F%91%E5%B8%83/CircleCI/</link>
+      <link>https://aszhc.github.io/post/CircleCI/</link>
       <pubDate>Fri, 11 Jun 2021 19:38:08 +0800</pubDate>
       
-      <guid>https://aszhc.github.io/post/%E6%9C%AA%E5%8F%91%E5%B8%83/CircleCI/</guid>
+      <guid>https://aszhc.github.io/post/CircleCI/</guid>
       <description>使用CircleCI+GitHub 进行CI/CD 持续集成/持续部署 （CI/CD）是一种开发实践，允许软件团队在多个平台上更轻松、更快速地构建</description>
     </item>
     

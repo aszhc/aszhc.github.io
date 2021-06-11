@@ -6,20 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>递归 | PHOENIX</title>
-    <meta property="og:title" content="递归 - PHOENIX">
+    <title>使用CircleCI&#43;GitHub 进行CI/CD | PHOENIX</title>
+    <meta property="og:title" content="使用CircleCI&#43;GitHub 进行CI/CD - PHOENIX">
     <meta property="og:type" content="article">
         
-    <meta property="article:published_time" content='2020-03-02T13:02:35&#43;08:00'>
+    <meta property="article:published_time" content='2021-06-11T19:38:08&#43;08:00'>
         
         
-    <meta property="article:modified_time" content='2020-03-02T13:02:35&#43;08:00'>
+    <meta property="article:modified_time" content='2021-06-11T19:38:08&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,博客,项目管理,python,公众号">
-    <meta name="description" content="递归">
+    <meta name="description" content="使用CircleCI&#43;GitHub 进行CI/CD">
         
     <meta name="author" content="周闖">
-    <meta property="og:url" content="https://aszhc.github.io/post/algorithm/%E9%80%92%E5%BD%92/">
+    <meta property="og:url" content="https://aszhc.github.io/post/CircleCI/">
     
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 
@@ -148,20 +148,23 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ol>
-    <li><a href="#递归的两个条件">递归的两个条件：</a></li>
-    <li><a href="#递归算法的一般形式">递归算法的一般形式：</a></li>
-    <li><a href="#阶乘">阶乘</a>
+    <li><a href="#ci">CI</a>
       <ol>
-        <li><a href="#递归过程">递归过程</a></li>
+        <li><a href="#创建一个简单的python项目">创建一个简单的Python项目</a></li>
+        <li><a href="#将项目push到github">将项目Push到GitHub</a></li>
+        <li><a href="#在circleci中设置ci">在CircleCI中设置CI</a></li>
+        <li><a href="#测试circleci是否工作">测试CircleCI是否工作</a></li>
       </ol>
     </li>
-  </ol>
-
-  <ol>
-    <li><a href="#1-斐波那契数列">1. 斐波那契数列</a></li>
-    <li><a href="#2猴子吃桃子">2.猴子吃桃子</a></li>
-    <li><a href="#3汉诺塔问题">3.汉诺塔问题</a></li>
-    <li><a href="#4-反转单链表">4. 反转单链表</a></li>
+    <li><a href="#cd">CD</a>
+      <ol>
+        <li><a href="#需要环境">需要环境</a></li>
+        <li><a href="#使用gin框架创建一个简单的go-api">使用Gin框架创建一个简单的Go API</a></li>
+        <li><a href="#使用heroku部署">使用Heroku部署</a></li>
+        <li><a href="#将项目连接到circleci">将项目连接到CircleCI</a></li>
+        <li><a href="#使用circleci自动化部署">使用CircleCI自动化部署</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
     </div>
@@ -195,16 +198,16 @@
 </script>
     <article class="post">
         <header>
-            <h1 class="post-title">递归</h1>
+            <h1 class="post-title">使用CircleCI&#43;GitHub 进行CI/CD</h1>
         </header>
         <date class="post-meta meta-date">
-            2020年3月2日
+            2021年6月11日
         </date>
         
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='https://aszhc.github.io/categories/%E7%AE%97%E6%B3%95'>算法</a></span>
+            <span class="meta-category"><a href='https://aszhc.github.io/categories/CI/CD'>CI/CD</a></span>
             
         </div>
         
@@ -215,39 +218,27 @@
         </div>
         
         
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
         <div class="post-content">
-            <blockquote>
-<p>To iterate is human, to recurse, divine.</p>
-<p>人理解迭代，神理解递归。</p>
-</blockquote>
-<h1 id="什么是递归">什么是递归</h1>
-<p><strong>递归算法</strong>（英语：recursion algorithm）在计算机科学中是指一种通过重复将问题分解为同类的子问题而解决问题的方法。递归式方法可以被用于解决很多的计算机科学问题，因此它是计算机科学中十分重要的一个概念。</p>
-<p>简单地说，就是如果在函数中存在着调用函数本身的情况，这种现象就叫递归。</p>
-<p>「递归」，先有「递」再有「归」，「递」的意思是将问题拆解成子问题来解决， 子问题再拆解成子子问题，&hellip;，直到被拆解的子问题无需再拆分成更细的子问题（即可以求解），「归」是说最小的子问题解决了，那么它的上一层子问题也就解决了，上一层的子问题解决了，上上层子问题自然也就解决了</p>
-<h2 id="递归的两个条件">递归的两个条件：</h2>
-<ul>
-<li>可以通过递归调用来缩小问题规模，且新问题与原问题有着相同的形式。（自身调用）</li>
-<li>存在一种简单情境，可以使递归在简单情境下退出。（递归出口）</li>
-</ul>
-<h2 id="递归算法的一般形式">递归算法的一般形式：</h2>
+            <h1 id="使用circlecigithub-进行cicd">使用CircleCI+GitHub 进行CI/CD</h1>
+<p>持续集成/持续部署 （CI/CD）是一种开发实践，允许软件团队在多个平台上更轻松、更快速地构建、测试和部署应用程序。<a href="https://bbs.huaweicloud.com/forum/thread-104238-1-1.html#">CircleCI</a>是一个流行的自动化平台，允许您为项目构建和维护 CI/CD 工作流。</p>
+<h2 id="ci">CI</h2>
+<h3 id="创建一个简单的python项目">创建一个简单的Python项目</h3>
+<p>创建项目 circle-demo:</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">f</span>(mode):
-    <span style="color:#a2f;font-weight:bold">if</span> end_condition:  <span style="color:#080;font-style:italic"># 递归出口</span>
-        end
-    <span style="color:#a2f;font-weight:bold">else</span>:
-        f(mode_small)  <span style="color:#080;font-style:italic"># 递归本身，递归</span>
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir circle-demo
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="阶乘">阶乘</h2>
-<p>一个数的阶乘是递归简单而典型的例子，阶乘的递推公式为：factorial(n)=n*factorial(n-1)，其中n为非负整数,且0!=1,1!=1</p>
+</div><p>在项目中创建&quot;main.py&rdquo;，main.py中的内容如下：</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -260,40 +251,26 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">factorial</span>(i):
-    <span style="color:#b44">&#34;&#34;&#34;阶乘&#34;&#34;&#34;</span>
-    <span style="color:#a2f;font-weight:bold">if</span> i <span style="color:#666">&lt;</span> <span style="color:#666">0</span>:
-        <span style="color:#a2f;font-weight:bold">return</span>
-    <span style="color:#a2f;font-weight:bold">elif</span> i <span style="color:#666">&lt;=</span> <span style="color:#666">2</span>:
-        <span style="color:#a2f;font-weight:bold">return</span> i
-    <span style="color:#a2f;font-weight:bold">else</span>:
-        <span style="color:#a2f;font-weight:bold">return</span> i <span style="color:#666">*</span> factorial(i<span style="color:#666">-</span><span style="color:#666">1</span>)
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">Add</span>(a, b):
+        <span style="color:#a2f;font-weight:bold">return</span> a <span style="color:#666">+</span> b
+        
+<span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">SayHello</span>():
+        <span style="color:#a2f;font-weight:bold">print</span>(<span style="color:#b44">&#34;sup world from srcmake&#34;</span>)
+
+<span style="color:#a2f;font-weight:bold">if</span> __name__ <span style="color:#666">==</span> <span style="color:#b44">&#39;__main__&#39;</span>:
+        SayHello()
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="递归过程">递归过程</h3>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlczIwMTUuY25ibG9ncy5jb20vYmxvZy83NzY4ODcvMjAxNjA1Lzc3Njg4Ny0yMDE2MDUwNTE5NDYwODA2MC05NTIzMDU4NTIucG5n?x-oss-process=image/format,png" alt="递归"></p>
-<p>这个调用的过程和栈的工作原理一样，递归调用就是通过栈这种数据结构完成的。整个过程实际上就是一个栈的入栈和出栈的问题。</p>
-<p><strong>递归中的&quot;递&quot;就是入栈，&ldquo;归&quot;就是出栈。</strong></p>
-<p>入栈和出栈 的过程：</p>
+</div><p>我们可以使用以下命令（在您的终端中）运行测试：</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">def</span> <span style="">递归</span>(n):
-    <span style="color:#a2f;font-weight:bold">print</span>(<span style="color:#b44">&#34;递进：&#34;</span> <span style="color:#666">+</span> <span style="color:#a2f">str</span>(n))
-    <span style="color:#a2f;font-weight:bold">if</span> n <span style="color:#666">&gt;</span> <span style="color:#666">0</span>:
-        <span style="">递归</span>(n<span style="color:#666">-</span><span style="color:#666">1</span>)
-    <span style="color:#a2f;font-weight:bold">print</span>(<span style="color:#b44">&#34;回归：&#34;</span> <span style="color:#666">+</span> <span style="color:#a2f">str</span>(n))
-<span style="">递归</span>(<span style="color:#666">3</span>)
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python3 main.py
 </code></pre></td></tr></table>
 </div>
-</div><p>output:</p>
+</div><p>创建一个“main-test.py”用来测试，main.py中的内容</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -304,34 +281,32 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="">递进：</span><span style="color:#666">3</span>
-<span style="">递进：</span><span style="color:#666">2</span>
-<span style="">递进：</span><span style="color:#666">1</span>
-<span style="">递进：</span><span style="color:#666">0</span>
-<span style="">回归：</span><span style="color:#666">0</span>
-<span style="">回归：</span><span style="color:#666">1</span>
-<span style="">回归：</span><span style="color:#666">2</span>
-<span style="">回归：</span><span style="color:#666">3</span>
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-style:italic"># Import Add 函数， 并使用断言检测功能</span>
+<span style="color:#a2f;font-weight:bold">from</span> <span style="color:#00f;font-weight:bold">main</span> <span style="color:#a2f;font-weight:bold">import</span> Add
+
+<span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">TestAdd</span>():
+    <span style="color:#a2f;font-weight:bold">assert</span> Add(<span style="color:#666">2</span>, <span style="color:#666">3</span>) <span style="color:#666">==</span> <span style="color:#666">5</span>
+    <span style="color:#a2f;font-weight:bold">print</span>(<span style="color:#b44">&#34;Add Function works correctly&#34;</span>)
+    
+<span style="color:#a2f;font-weight:bold">if</span> __name__ <span style="color:#666">==</span> <span style="color:#b44">&#39;__main__&#39;</span>:
+        TestAdd()
 </code></pre></td></tr></table>
 </div>
-</div><p>递归过程：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pLmxvbGkubmV0LzIwMTgvMDgvMTIvNWI2ZmFjMjA2YWJlNi5qcGc?x-oss-process=image/format,png" alt=""></p>
-<h1 id="递归算法解决思路">递归算法解决思路</h1>
-<p>套路：</p>
-<ol>
-<li><strong>明确你这个函数想要干什么</strong></li>
-<li><strong>寻找递归结束条件</strong></li>
-<li><strong>找出函数的等价关系式</strong>（递归中最难的一步）</li>
-</ol>
-<h1 id="经典例题">经典例题</h1>
-<h2 id="1-斐波那契数列">1. 斐波那契数列</h2>
-<p>形如 1、1、2、3、5、8、13、21、34 &hellip;的数列</p>
-<ol>
-<li>由这个数列我们可以容易发现其递推公式：f(n)=f(n-1)+f(n-2)</li>
-<li>递归结束条件：当n=1或者n=2时，f(1)=f(2)=1</li>
-</ol>
+</div><p>我们可以使用以下命令（在您的终端中）运行测试：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">python3 main-test.py
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="将项目push到github">将项目Push到GitHub</h3>
+<p>创建一个github仓库，给仓库命名为“circleci-demo”</p>
+<p>将本地的项目push到github仓库中,在本地项目中运行：</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -339,94 +314,30 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">fibonacci</span>(i):
-    <span style="color:#b44">&#34;&#34;&#34;斐波那契数列&#34;&#34;&#34;</span>
-    <span style="color:#a2f;font-weight:bold">if</span> i <span style="color:#666">&lt;=</span> <span style="color:#666">2</span>:
-        <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">1</span>
-    <span style="color:#a2f;font-weight:bold">else</span>:
-        <span style="color:#a2f;font-weight:bold">return</span> fibonacci(i<span style="color:#666">-</span><span style="color:#666">1</span>) <span style="color:#666">+</span> fibonacci(i<span style="color:#666">-</span><span style="color:#666">2</span>)
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git init
+git add .
+git commit -m <span style="color:#b44">&#34;Initial commit&#34;</span>
+git remote add origin 仓库地址
+git push -u origin master
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="2猴子吃桃子">2.猴子吃桃子</h2>
-<p>猴子第一天摘下若干个桃子，当即吃了一半，还不过瘾，又多吃了一个，第二天早上又将剩下的桃子吃掉一半，又多吃了一个。以后每天早上都吃前一天剩下的一半零一个。到第10天早上想再吃时，见只剩下一个桃子了。求第一天共摘多少个桃子？</p>
-<ol>
-<li>最后一天时，只剩下一个桃子 (结束条件)</li>
-<li>当天的桃子等于上一天加一的和乘二   <code>(monkey(n-1)+1)*2</code></li>
-</ol>
+</div><h3 id="在circleci中设置ci">在CircleCI中设置CI</h3>
+<p>因此，我们的GitHub repo设置了，现在我们希望通过设置Circleci来启用CI。</p>
+<p>我们需要创建一个配置文件，以便Circleci将知道我们想要的操作。</p>
+<p>创建名为“.circleci”的文件夹，并在它的内部创建名为“config.yml”的文件。</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">monkey</span>(n):
-    <span style="color:#b44">&#34;&#34;&#34;猴子分桃&#34;&#34;&#34;</span>
-    <span style="color:#a2f;font-weight:bold">if</span> n <span style="color:#666">==</span> <span style="color:#666">1</span>:
-        <span style="color:#a2f;font-weight:bold">return</span> <span style="color:#666">1</span>
-    <span style="color:#a2f;font-weight:bold">else</span>:
-        <span style="color:#a2f;font-weight:bold">return</span> (monkey(n<span style="color:#666">-</span><span style="color:#666">1</span>)<span style="color:#666">+</span><span style="color:#666">1</span>)<span style="color:#666">*</span><span style="color:#666">2</span>
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir .circleci
+touch .circleci/config.yml
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="3汉诺塔问题">3.汉诺塔问题</h2>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2ltYWdlcy5jbml0YmxvZy5jb20vaS81ODUxNTEvMjAxNDA2LzI0MTYwMjIyMzMwODUzMy5naWY" alt="汉诺塔"></p>
-<p>相传在古印度圣庙中，有一种被称为汉诺塔(Hanoi)的游戏。该游戏是在一块铜板装置上，有三根杆(编号A、B、C)，在A杆自下而上、由大到小按顺序放置64个金盘(如下图)。游戏的目标：把A杆上的金盘全部移到C杆上，并仍保持原有顺序叠好。操作规则：每次只能移动一个盘子，并且在移动过程中三根杆上都始终保持大盘在下，小盘在上，操作过程中盘子可以置于A、B、C任一杆上。</p>
-<p>解题方法：</p>
-<ol>
-<li>
-<p>将最上面的n-1个圆盘从初始位移动到过渡位</p>
-</li>
-<li>
-<p>将初始位的最底下的一个圆盘移动到目标位</p>
-</li>
-<li>
-<p>将过渡位的n-1个圆盘移动到目标位</p>
-</li>
-</ol>
-<ul>
-<li>当只剩下一个盘子时，直接移动到C （结束条件）</li>
-<li>将n-1只盘子看成整体，通过c移动到b,然后a移动到c，最后b处的n-1只盘子经过a移动到c</li>
-</ul>
-<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">hanoi</span>(n, a, b, c):  <span style="color:#080;font-style:italic"># a为初始位，b为过渡位，c为目标位</span>
-    <span style="color:#b44">&#34;&#34;&#34;汉诺塔&#34;&#34;&#34;</span>
-    <span style="color:#a2f;font-weight:bold">if</span> n <span style="color:#666">==</span> <span style="color:#666">1</span>:
-        <span style="color:#a2f;font-weight:bold">print</span>(a, <span style="color:#b44">&#39;--&gt;&#39;</span>, c)
-    <span style="color:#a2f;font-weight:bold">else</span>:
-        hanoi(n<span style="color:#666">-</span><span style="color:#666">1</span>, a, c, b)  <span style="color:#080;font-style:italic"># 初始位为a,通过c移动到b</span>
-        <span style="color:#a2f;font-weight:bold">print</span>(a, <span style="color:#b44">&#39;--&gt;&#39;</span>, c)
-        hanoi(n<span style="color:#666">-</span><span style="color:#666">1</span>, b, a, c)  <span style="color:#080;font-style:italic"># 初始位为b,通过a移动到c</span>
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="4-反转单链表">4. 反转单链表</h2>
-<p>反转一个单链表。</p>
-<p><strong>示例:</strong></p>
-<pre><code>输入: 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL
-输出: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL
-</code></pre><ol>
-<li>结束条件：当链表为空表或者只有一个节点</li>
-<li>递的操作：
-1.得到尾部节点:<code>new_head = self.reverseList(head.next)</code>
-2.翻转当前节点：<code>head.next.next = head</code>
-3.拆掉当前节点的next：<code>head.next = None</code></li>
-</ol>
+</div><p>打开“.circleci/config.yml” ，修改内容如下（注释不用写）：</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -445,56 +356,260 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#080;font-style:italic"># Definition for singly-linked list.</span>
-<span style="color:#080;font-style:italic"># class ListNode:</span>
-<span style="color:#080;font-style:italic">#     def __init__(self, x):</span>
-<span style="color:#080;font-style:italic">#         self.val = x</span>
-<span style="color:#080;font-style:italic">#         self.next = None</span>
-
-
-<span style="color:#a2f;font-weight:bold">class</span> <span style="color:#00f">Solution</span>:
-    <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">reverseList</span>(self, head: ListNode) <span style="color:#666">-&gt;</span> ListNode:
-        <span style="color:#b44">&#34;&#34;&#34;反转单链表&#34;&#34;&#34;</span>
-        <span style="color:#a2f;font-weight:bold">if</span> head <span style="color:#a2f;font-weight:bold">is</span> None <span style="color:#a2f;font-weight:bold">or</span> head<span style="color:#666">.</span>next <span style="color:#a2f;font-weight:bold">is</span> None:
-            <span style="color:#a2f;font-weight:bold">return</span> head
-        new_head <span style="color:#666">=</span> self<span style="color:#666">.</span>reverseList(head<span style="color:#666">.</span>next)
-        head<span style="color:#666">.</span>next<span style="color:#666">.</span>next <span style="color:#666">=</span> head
-        head<span style="color:#666">.</span>next <span style="color:#666">=</span> None
-        <span style="color:#a2f;font-weight:bold">return</span> new_head
-</code></pre></td></tr></table>
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#a2f;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#666">2.1</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>build:<span style="color:#bbb">	</span><span style="color:#080;font-style:italic"># 创建</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">working_directory</span>:<span style="color:#bbb"> </span>~/circleci-python<span style="color:#bbb">	</span><span style="color:#080;font-style:italic"># 工作目录</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span>docker:<span style="color:#bbb">	</span><span style="color:#080;font-style:italic"># 使用Docker</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">image</span>:<span style="color:#bbb"> </span><span style="color:#b44">&#34;circleci/python:3.6.4&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- checkout<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 检查内容</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">run</span>:<span style="color:#bbb"> </span>python3<span style="color:#bbb"> </span>main.py<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 运行创建命令</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">test</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 测试</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">working_directory</span>:<span style="color:#bbb"> </span>~/circleci-python<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">docker</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">image</span>:<span style="color:#bbb"> </span><span style="color:#b44">&#34;circleci/python:3.6.4&#34;</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">steps</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- checkout<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">run</span>:<span style="color:#bbb"> </span>python3<span style="color:#bbb"> </span>main-test.py<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 运行测试命令</span><span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">workflows</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 工作流程</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span>build_and_test:<span style="color:#bbb">	</span><span style="color:#080;font-style:italic"># 起的名字：创建并测试 </span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- build<span style="color:#bbb"> 	
+</span><span style="color:#bbb">      </span>- test:<span style="color:#bbb">	
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">requires</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 测试的前提是创建</span><span style="color:#bbb">
+</span><span style="color:#bbb">            </span>- build<span style="color:#bbb">
+</span></code></pre></td></tr></table>
 </div>
-</div><h1 id="适用递归的问题">适用递归的问题</h1>
-<ol>
-<li>数据的定义是按递归定义的。如Fibonacci函数。</li>
-<li>问题解法按递归算法实现。如Hanoi问题。</li>
-<li>数据的结构形式是按递归定义的。如二叉树、广义表等。</li>
-</ol>
-<h1 id="递归和递推的异同">递归和递推的异同</h1>
-<p>递推和递归有着很多的相似之处，递推甚至可以看做是递归的反方向，但对比其细节是存在很多不同的。</p>
-<p><strong>递归法</strong>：把问题转化为规模更小的子问题解决，思考的重点在于建立原问题和子问题之间的联系。有的问题有很明确的递归结构，但是需要仔细的思考，才能正确的转化为结构相同的子问题。</p>
-<p><strong>递推法</strong>：根据已知信息不断的计算出未知信息，直到得到结果，思考的重点在于“步步为营”。</p>
-<h1 id="尾递归">尾递归</h1>
-<p>尾递归相对传统递归，其是一种特例。在尾递归中，先执行某部分的计算，然后开始调用递归，所以你可以得到当前的计算结果，而这个结果也将作为参数传入下一次递归。这也就是说函数调用出现在调用者函数的尾部，因为是尾部，所以其有一个优越于传统递归之处在于无需去保存任何局部变量，从内存消耗上，实现节约特性。</p>
-<p>普通递归调用：</p>
+</div><p>这里有两种类型的任务，我们希望CircleCI执行以下操作：运行main.py以及运行我们的测试文件。</p>
+<p>在官方文档 <a href="https://circleci.com/docs/2.0/hello-world/">CircleCI 文档</a> 中可以学习到更加复杂的配置</p>
+<p>编写config.yml后，进入<a href="https://circleci.com/">CircleCI&rsquo;s 网站</a>，使用你的GitHub账号进行登录，并授权访问刚刚创建的circleci-demo仓库。</p>
+<p>现在将刚创建的配置文件push到github，</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">recursion</span>(n):
-    <span style="color:#a2f;font-weight:bold">if</span> n<span style="color:#666">==</span><span style="color:#666">1</span>:
-        <span style="color:#a2f;font-weight:bold">return</span> n
-    <span style="color:#a2f;font-weight:bold">else</span>:
-        <span style="color:#a2f;font-weight:bold">return</span> n<span style="color:#666">+</span>recursion(n<span style="color:#666">-</span><span style="color:#666">1</span>)  
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git add .
+git commit -m <span style="color:#b44">&#34;Adds CircleCI config file&#34;</span>
+git push
 </code></pre></td></tr></table>
 </div>
-</div><p>调用这个函数recursion（5），编译器会执行：</p>
+</div><p>Circleci应检测代码更改并为我们的分支运行我们的build_and_test工作流。 我们应该能够看到Circleci网站上的工作。</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210611150428.png" alt="image-20210611150427713"></p>
+<h3 id="测试circleci是否工作">测试CircleCI是否工作</h3>
+<p>现在我们测试CircleCI，首先创建并切换到一条新的git分支add-test：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git checkout -b add-test
+</code></pre></td></tr></table>
+</div>
+</div><p>将如下代码加入main-test.py中的TestAdd()函数中：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">assert</span> Add(<span style="color:#666">5</span>, <span style="color:#666">5</span>) <span style="color:#666">==</span> <span style="color:#666">10</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>push这条git分支到github：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git add .
+git commit -m <span style="color:#b44">&#34;add test to make sure 5+5 is equa to 10&#34;</span>
+git push --set-upstream origin add-test
+</code></pre></td></tr></table>
+</div>
+</div><p>我们可以在github仓库看到这个分支请求，可以在circleci中看到正在运行的作业。</p>
+<p>当然，CI（和单元测试）的有用部分正在确保我们的代码库正常工作。现在我们创建一条错误的测试，看circleci是否能够报错，在main-test.py中的TestAdd函数中添加如下代码：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a2f;font-weight:bold">assert</span> Add(<span style="color:#666">5</span>, <span style="color:#666">5</span>) <span style="color:#666">==</span> <span style="color:#666">11</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>将项目push到github：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git add .
+git commit -m <span style="color:#b44">&#34;Add error test to test circleci&#34;</span>
+git push
+</code></pre></td></tr></table>
+</div>
+</div><p>我们可以发现circleci中发现并报错。</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210611151742.png" alt="image-20210611151741383"></p>
+<p>点击报红的标志可以发现出错的地方。</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210611151857.png" alt="image-20210611151856676"></p>
+<p>在github中如果circleci出错会阻止用户Merge pull request</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210611180511.png" alt="image-20210611152002667"></p>
+<h2 id="cd">CD</h2>
+<p>连续部署在很多方面都是有益的。它有助于标准化应用程序的部署步骤，并保护它免受未记录的更改。它还有助于避免执行重复步骤，并让您更专注于开发。借助 CircleCI，您可以跨所有不同的部署流程进行单一视图，以便进行开发、测试和生产。</p>
+<h3 id="需要环境">需要环境</h3>
+<ol>
+<li>Golang</li>
+<li>Heroku</li>
+<li>CircleCI</li>
+<li>GitHub</li>
+</ol>
+<h3 id="使用gin框架创建一个简单的go-api">使用Gin框架创建一个简单的Go API</h3>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir go-registration-api
+<span style="color:#a2f">cd</span> go-registration-api
+</code></pre></td></tr></table>
+</div>
+</div><p>使用go mod初始化</p>
+<pre><code>go mod init go-registration-api
+</code></pre><p>安装Gin框架环境</p>
+<pre><code>go get -u github.com/gin-gonic/gin
+</code></pre><p>创建main.go添加如下内容：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a2f;font-weight:bold">package</span> main
+
+<span style="color:#a2f;font-weight:bold">import</span> <span style="color:#b44">&#34;github.com/gin-gonic/gin&#34;</span>
+
+<span style="color:#a2f;font-weight:bold">func</span> <span style="color:#00a000">main</span>() {
+	r <span style="color:#666">:=</span> gin.<span style="color:#00a000">Default</span>()
+	r.<span style="color:#00a000">GET</span>(<span style="color:#b44">&#34;/&#34;</span>, <span style="color:#a2f;font-weight:bold">func</span>(c <span style="color:#666">*</span>gin.Context) {
+		c.<span style="color:#00a000">JSON</span>(<span style="color:#666">200</span>, gin.H{
+			<span style="color:#b44">&#34;message&#34;</span>: <span style="color:#b44">&#34;Welcome to the Go Registration API&#34;</span>,
+		})
+	})
+
+	r.<span style="color:#00a000">POST</span>(<span style="color:#b44">&#34;/register&#34;</span>, <span style="color:#a2f;font-weight:bold">func</span>(c <span style="color:#666">*</span>gin.Context) {
+		fullname <span style="color:#666">:=</span> c.<span style="color:#00a000">PostForm</span>(<span style="color:#b44">&#34;fullname&#34;</span>)
+		phone <span style="color:#666">:=</span> c.<span style="color:#00a000">PostForm</span>(<span style="color:#b44">&#34;phone&#34;</span>)
+		email <span style="color:#666">:=</span> c.<span style="color:#00a000">PostForm</span>(<span style="color:#b44">&#34;email&#34;</span>)
+
+		c.<span style="color:#00a000">JSON</span>(<span style="color:#666">200</span>, gin.H{
+			<span style="color:#b44">&#34;status&#34;</span>:   <span style="color:#b44">&#34;success&#34;</span>,
+			<span style="color:#b44">&#34;message&#34;</span>:  <span style="color:#b44">&#34;User details successfully posted&#34;</span>,
+			<span style="color:#b44">&#34;fullname&#34;</span>: fullname,
+			<span style="color:#b44">&#34;phone&#34;</span>:    phone,
+			<span style="color:#b44">&#34;email&#34;</span>:    email,
+		})
+	})
+	r.<span style="color:#00a000">Run</span>()
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>这里我创建了两个端点：</p>
+<ul>
+<li><code>/</code>:发送一个GET请求，返回一个json字符串欢迎信息。</li>
+<li><code>/register</code>:发送一个POST请求，POST请求包含用户数据，返回json响应。</li>
+</ul>
+<p>开启应用服务：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go run main.go
+</code></pre></td></tr></table>
+</div>
+</div><p>为了方便，不需要运行<code>go run main.go</code>, 我们可以创建<code>makefile</code>如下：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-makefile" data-lang="makefile"><span style="color:#00a000">dev</span><span style="color:#666">:</span>
+	go run main.go
+</code></pre></td></tr></table>
+</div>
+</div><p>现在我们可以使用make dev命令开启应用</p>
+<p>:triangular_flag_on_post:   <strong>可以使用postman验证功能</strong></p>
+<h3 id="使用heroku部署">使用Heroku部署</h3>
+<p>这里选择Heroku部署我们的go应用，在 <a href="https://dashboard.heroku.com/apps">Heroku dashboard</a> 中新建一个Heroku应用程序，起名为go-registration-api或者其他。</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210611184014.png" alt="image-20210611184014215"></p>
+<p>还需要一个Heroku API key，位于您的帐户设置页面上。 您可以从下拉菜单中访问帐户设置。</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210611184137.png" alt="image-20210611184137153"></p>
+<h3 id="将项目连接到circleci">将项目连接到CircleCI</h3>
+<ol>
+<li>
+<p>首先将项目push到GitHub仓库，然后在CircleCI中添加该项目。</p>
+</li>
+<li>
+<p>添加环境变量</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210611184550.png" alt="image-20210611184549191"></p>
+<p>这里有两个环境变量需要添加：</p>
+<ul>
+<li>HEROKU_APP_NAME：在这个例子中，heroku name 为go-registration-api</li>
+<li>HEROKU_API_KEY：在帐户选项中上查找您的Heroku帐户API密钥</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用circleci自动化部署">使用CircleCI自动化部署</h3>
+<p>首先在Go应用的根目录中创建一个Procfile（无扩展名），添加以下命令：</p>
+<pre><code>web: bin/go-registration-api
+</code></pre><p>Heroku在bin目录中运行我们的Go应用程序的构建版本</p>
+<p>现在我们配置CircleCI的配置文件，创建.circleci文件夹，并在此文件夹中创建config.yml，内容如下：</p>
 <div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -506,69 +621,19 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">recursion(<span style="color:#666">5</span>)
-<span style="color:#666">5</span><span style="color:#666">+</span>recursion(<span style="color:#666">4</span>)
-<span style="color:#666">5</span><span style="color:#666">+</span>(<span style="color:#666">4</span><span style="color:#666">+</span>recursion(<span style="color:#666">3</span>))
-<span style="color:#666">5</span><span style="color:#666">+</span>(<span style="color:#666">4</span><span style="color:#666">+</span>(<span style="color:#666">3</span><span style="color:#666">+</span>recursion(<span style="color:#666">2</span>)))
-<span style="color:#666">5</span><span style="color:#666">+</span>(<span style="color:#666">4</span><span style="color:#666">+</span>(<span style="color:#666">3</span><span style="color:#666">+</span>(<span style="color:#666">2</span><span style="color:#666">+</span>recursion(<span style="color:#666">1</span>))))
-<span style="color:#666">5</span><span style="color:#666">+</span>(<span style="color:#666">4</span><span style="color:#666">+</span>(<span style="color:#666">3</span><span style="color:#666">+</span>(<span style="color:#666">2</span><span style="color:#666">+</span><span style="color:#666">1</span>)))
-<span style="color:#666">15</span>
-</code></pre></td></tr></table>
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#a2f;font-weight:bold">version</span>:<span style="color:#bbb"> </span><span style="color:#666">2.1</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">orbs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">heroku</span>:<span style="color:#bbb"> </span>circleci/heroku@<span style="color:#666">0.0.10</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">workflows</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">heroku_deploy</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">jobs</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- heroku/deploy-via-git<span style="color:#bbb">
+</span></code></pre></td></tr></table>
 </div>
-</div><p>此处编译器会分配递归栈来保存中间结果下来看尾递归实现：</p>
-<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> <span style="color:#a2f;font-weight:bold">def</span> <span style="color:#00a000">tail_recursion</span>(n,total<span style="color:#666">=</span><span style="color:#666">0</span>):
-        <span style="color:#a2f;font-weight:bold">if</span> n<span style="color:#666">==</span><span style="color:#666">0</span>:
-            <span style="color:#a2f;font-weight:bold">return</span> total
-        <span style="color:#a2f;font-weight:bold">else</span>:
-            <span style="color:#a2f;font-weight:bold">return</span> tail_recursion(n<span style="color:#666">-</span><span style="color:#666">1</span>,  total<span style="color:#666">+</span>n)  
-</code></pre></td></tr></table>
-</div>
-</div><p>此时，编译器做的工作：</p>
-<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tail_recursion(<span style="color:#666">5</span>,<span style="color:#666">0</span>)
-tail_recursion(<span style="color:#666">4</span>,<span style="color:#666">5</span>)
-tail_recursion(<span style="color:#666">3</span>,<span style="color:#666">9</span>)
-tail_recursion(<span style="color:#666">2</span>,<span style="color:#666">12</span>)
-tail_recursion(<span style="color:#666">1</span>,<span style="color:#666">14</span>)
-tail_recursion(<span style="color:#666">0</span>,<span style="color:#666">15</span>)
-<span style="color:#666">15</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>你可以看到当前时刻的计算值作为第二个参数传入下一个递归，使得系统不再需要保留之前计算结果。</p>
-<p>但是<strong>python本身不支持尾递归</strong>（没有对尾递归做优化），而且对递归的次数有限制，当递归深度超过1000时，会抛出异常。</p>
-<h1 id="总结">总结</h1>
-<p>递归是非常基础的算法，思考递归时要抛弃程序设计的细节</p>
-<ol>
-<li>
-<p>明确递归函数功能</p>
-</li>
-<li>
-<p>递归程序出口设计</p>
-</li>
-<li>
-<p>递归要有规模递减</p>
-</li>
-</ol>
-<p>递归思想在动态规划，回溯算法，二叉树的深度优先搜索等都有密切的涉及。</p>
+</div><p>提交对项目的更改，然后推送到远程存储库以运行部署脚本。</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210611185358.png" alt="image-20210611185357986"></p>
+<p>这里如果不出意外，已经部署好了。</p>
+<p>我们可以查看<code>https://go-registration-api.herokuapp.com</code>或者使用Postman，检测功能是否完整。</p>
 
         </div>
 
@@ -581,15 +646,15 @@ tail_recursion(<span style="color:#666">0</span>,<span style="color:#666">15</sp
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/algorithm/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a></li>
+        <li><a href="/post/Golang/Golang-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">Golang 单元测试</a></li>
         
-        <li><a href="/post/Docker/Docker%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">Docker基础知识</a></li>
+        <li><a href="/post/%E9%85%8D%E7%BD%AE%E5%9B%BE%E5%BA%8A/">linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床</a></li>
         
-        <li><a href="/post/Git%E5%9F%BA%E7%A1%80/"></a></li>
+        <li><a href="/post/markdown%E4%B8%AD%E7%9A%84emoji%E5%9B%BE%E6%A0%87%E6%A0%87%E7%AD%BE%E8%A1%A8/">Markdown中的emoji图标标签表</a></li>
         
-        <li><a href="/post/Linux/01/"></a></li>
+        <li><a href="/post/Golang/Golang-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/">Golang Struct 内存对齐</a></li>
         
-        <li><a href="/archives/">归档</a></li>
+        <li><a href="/post/Golang/Golang-Slice%E5%8E%9F%E7%90%86/">Golang Slice原理</a></li>
         
     </ul>
 </div>
@@ -599,7 +664,9 @@ tail_recursion(<span style="color:#666">0</span>,<span style="color:#666">15</sp
             
             <ul class="clearfix">
                 
-                <li><a href='https://aszhc.github.io/tags/%E9%80%92%E5%BD%92'>递归</a></li>
+                <li><a href='https://aszhc.github.io/tags/%E8%BF%90%E7%BB%B4'>运维</a></li>
+                
+                <li><a href='https://aszhc.github.io/tags/%E9%83%A8%E7%BD%B2'>部署</a></li>
                 
             </ul>
             
