@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Docker 01 | 學而</title>
-    <meta property="og:title" content="Docker 01 - 學而">
+    <title>容器的基础概念与操作 | PHOENIX</title>
+    <meta property="og:title" content="容器的基础概念与操作 - PHOENIX">
     <meta property="og:type" content="article">
         
     <meta property="article:published_time" content='2021-06-08T10:59:52&#43;08:00'>
@@ -16,7 +16,7 @@
     <meta property="article:modified_time" content='2021-06-08T10:59:52&#43;08:00'>
         
     <meta name="Keywords" content="golang,go语言,go语言笔记,博客,项目管理,python,公众号">
-    <meta name="description" content="Docker 01">
+    <meta name="description" content="容器的基础概念与操作">
         
     <meta name="author" content="周闖">
     <meta property="og:url" content="https://aszhc.github.io/post/Docker/Docker-01/">
@@ -54,7 +54,7 @@
             <div class="site-name ">
                 
                     <a id="logo" href="https://aszhc.github.io">
-                        學而
+                        PHOENIX
                     </a>
                 
                 <p class="description">Computers do not solve problems, they execute solutions.</p>
@@ -146,7 +146,75 @@
 <div class="post-toc" style="position: absolute; top: 188px;">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-        <nav id="TableOfContents"></nav>
+        <nav id="TableOfContents">
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#chroot">chroot</a></li>
+        <li><a href="#namespace">Namespace</a></li>
+        <li><a href="#cgroups">Cgroups</a></li>
+        <li><a href="#联合文件系统">联合文件系统</a></li>
+      </ol>
+    </li>
+    <li><a href="#docker-核心概念">Docker 核心概念</a>
+      <ol>
+        <li><a href="#镜像">镜像</a></li>
+        <li><a href="#容器">容器</a></li>
+        <li><a href="#仓库">仓库</a></li>
+        <li><a href="#镜像容器仓库三者之间的关系">镜像、容器、仓库，三者之间的关系</a></li>
+        <li><a href="#docker架构">Docker架构</a></li>
+        <li><a href="#docker-客户端">Docker 客户端</a></li>
+        <li><a href="#docker-服务端">Docker 服务端</a></li>
+      </ol>
+    </li>
+    <li><a href="#关于镜像的基础命令">关于镜像的基础命令</a>
+      <ol>
+        <li><a href="#镜像操作">镜像操作</a></li>
+        <li><a href="#镜像的实现原理">镜像的实现原理</a></li>
+      </ol>
+    </li>
+    <li><a href="#容器的基本操作">容器的基本操作</a>
+      <ol>
+        <li><a href="#什么是容器">什么是容器</a></li>
+        <li><a href="#容器的生命周期">容器的生命周期</a></li>
+        <li><a href="#容器的操作">容器的操作</a></li>
+      </ol>
+    </li>
+    <li><a href="#搭建自己的仓库">搭建自己的仓库</a>
+      <ol>
+        <li><a href="#什么是仓库">什么是仓库</a></li>
+        <li><a href="#公有镜像仓库">公有镜像仓库</a></li>
+        <li><a href="#搭建私有仓库">搭建私有仓库</a></li>
+        <li><a href="#持久化镜像存储">持久化镜像存储</a></li>
+        <li><a href="#构建外部可访问的镜像仓库">构建外部可访问的镜像仓库</a></li>
+        <li><a href="#私有仓库进阶">私有仓库进阶</a></li>
+      </ol>
+    </li>
+    <li><a href="#如何编写最优的dockerfile">如何编写最优的Dockerfile</a>
+      <ol>
+        <li><a href="#docker书写原则">Docker书写原则</a></li>
+        <li><a href="#dockerfile指令书写建议">Dockerfile指令书写建议</a></li>
+      </ol>
+    </li>
+    <li><a href="#基于内核的弱隔离系统如何保障安全性">基于内核的弱隔离系统如何保障安全性</a>
+      <ol>
+        <li><a href="#docker与虚拟机的区别">Docker与虚拟机的区别</a></li>
+        <li><a href="#容器的安全问题">容器的安全问题</a></li>
+        <li><a href="#如何解决容器的安全问题">如何解决容器的安全问题</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ol>
+    </li>
+    <li><a href="#容器监控容器监控原理及-cadvisor-的安装与使用">容器监控：容器监控原理及 cAdvisor 的安装与使用</a>
+      <ol>
+        <li><a href="#使用docekr-stats命令">使用docekr stats命令</a></li>
+        <li><a href="#cadvisor">cAdvisor</a></li>
+        <li><a href="#cadvisor-的安装与使用">cAdvisor 的安装与使用</a></li>
+        <li><a href="#监控原理">监控原理</a></li>
+        <li><a href="#监控系统是如何获取容器的内存限制的">监控系统是如何获取容器的内存限制的？</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
     </div>
 </div>
 <script type="text/javascript">
@@ -178,11 +246,18 @@
 </script>
     <article class="post">
         <header>
-            <h1 class="post-title">Docker 01</h1>
+            <h1 class="post-title">容器的基础概念与操作</h1>
         </header>
         <date class="post-meta meta-date">
             2021年6月8日
         </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='https://aszhc.github.io/categories/Docker'>Docker</a></span>
+            
+        </div>
         
         
         <div class="post-meta">
@@ -191,9 +266,1010 @@
         </div>
         
         
+        <div class="clear" style="display: none">
+            <div class="toc-article">
+                <div class="toc-title">文章目录</div>
+            </div>
+        </div>
+        
         <div class="post-content">
-            <h1 id="hello-docker-01">Hello Docker 01</h1>
-<p><img src="pic/1.jpg" alt="image"></p>
+            <h1 id="容器的基础概念与操作">容器的基础概念与操作</h1>
+<p>提起容器就不得不说 chroot，因为 chroot 是最早的容器雏形。chroot 意味着切换根目录，有了 chroot 就意味着我们可以把任何目录更改为当前进程的根目录，这与容器非常相似，下面我们通过一个实例了解下 chroot。</p>
+<h3 id="chroot">chroot</h3>
+<blockquote>
+<p>chroot 是在 Unix 和 Linux 系统的一个操作，针对正在运作的软件行程和它的子进程，改变它外显的根目录。一个运行在这个环境下，经由 chroot 设置根目录的程序，它不能够对这个指定根目录之外的文件进行访问动作，不能读取，也不能更改它的内容。</p>
+</blockquote>
+<p>通俗地说 ，chroot 就是可以改变某进程的根目录，使这个程序不能访问目录之外的其他目录，这个跟我们在一个容器中是很相似的。下面我们通过一个实例来演示下 chroot。</p>
+<p>首先我们在当前目录下创建一个 rootfs 目录：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir rootfs
+</code></pre></td></tr></table>
+</div>
+</div><p>这里为了方便演示，我使用现成的 busybox 镜像来创建一个系统，镜像的概念和组成后面我会详细讲解，如果你没有 Docker 基础可以把下面的操作命令理解成在 rootfs 下创建了一些目录和放置了一些二进制文件。</p>
+<pre><code>$ cd rootfs 
+$ docker export $(docker create busybox) -o busybox.tar
+$ tar -xf busybox.tar
+</code></pre><p>执行完上面的命令后，在 rootfs 目录下，我们会得到一些目录和文件。下面我们使用 ls 命令查看一下 rootfs 目录下的内容。</p>
+<pre><code>$ ls
+bin  busybox.tar  dev  etc  home  proc  root  sys  tmp  usr  var
+</code></pre><p>可以看到我们在 rootfs 目录下初始化了一些目录，下面让我们通过一条命令来见证 chroot 的神奇之处。使用以下命令，可以启动一个 sh 进程，并且把 /home/centos/rootfs 作为 sh 进程的根目录。</p>
+<pre><code>$ sudo chroot /home/centos/rootfs /bin/sh
+</code></pre><p>此时，我们的命令行窗口已经处于上述命令启动的 sh 进程中。在当前 sh 命令行窗口下，我们使用 ls 命令查看一下当前进程，看是否真的与主机上的其他目录隔离开了。</p>
+<pre><code>/ # /bin/ls /
+bin  busybox.tar  dev  etc  home  proc  root  sys  tmp  usr  var
+</code></pre><p>这里可以看到当前进程的根目录已经变成了主机上的 /home/centos/rootfs 目录。这样就实现了当前进程与主机的隔离。到此为止，一个目录隔离的容器就完成了。</p>
+<p>但是，此时还不能称之为一个容器，为什么呢？你可以在上一步（使用 chroot 启动命令行窗口）执行以下命令，查看如下路由信息：</p>
+<pre><code>/etc # /bin/ip route
+default via 172.20.1.1 dev eth0
+172.17.0.0/16 dev docker0 scope link  src 172.17.0.1
+172.20.1.0/24 dev eth0 scope link  src 172.20.1.3
+</code></pre><p>执行 ip route 命令后，你可以看到网络信息并没有隔离，实际上进程等信息此时也并未隔离。要想实现一个完整的容器，我们还需要 Linux 的其他三项技术： <strong>Namespace、Cgroups 和联合文件系统</strong>。</p>
+<p>Docker 是利用 Linux 的 Namespace 、Cgroups 和联合文件系统三大机制来保证实现的， 所以它的原理是使用 Namespace 做主机名、网络、PID 等资源的隔离，使用 Cgroups 对进程或者进程组做资源（例如：CPU、内存等）的限制，联合文件系统用于镜像构建和容器运行环境。</p>
+<p>后面我会对这些技术进行详细讲解，这里我就简单解释下它们的作用。</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210608180149.png" alt=""></p>
+<h3 id="namespace">Namespace</h3>
+<p>Namespace 是 Linux 内核的一项功能，该功能对内核资源进行隔离，使得容器中的进程都可以在单独的命名空间中运行，并且只可以访问当前容器命名空间的资源。Namespace 可以隔离进程 ID、主机名、用户 ID、文件名、网络访问和进程间通信等相关资源。</p>
+<p>Docker 主要用到以下五种命名空间。</p>
+<ul>
+<li>
+<p>pid namespace：用于隔离进程 ID。</p>
+</li>
+<li>
+<p>net namespace：隔离网络接口，在虚拟的 net namespace 内用户可以拥有自己独立的 IP、路由、端口等。</p>
+</li>
+<li>
+<p>mnt namespace：文件系统挂载点隔离。</p>
+</li>
+<li>
+<p>ipc namespace：信号量,消息队列和共享内存的隔离。</p>
+</li>
+<li>
+<p>uts namespace：主机名和域名的隔离。</p>
+</li>
+</ul>
+<h3 id="cgroups">Cgroups</h3>
+<p>Cgroups 是一种 Linux 内核功能，可以限制和隔离进程的资源使用情况（CPU、内存、磁盘 I/O、网络等）。在容器的实现中，Cgroups 通常用来限制容器的 CPU 和内存等资源的使用。</p>
+<h3 id="联合文件系统">联合文件系统</h3>
+<p>联合文件系统，又叫 UnionFS，是一种通过创建文件层进程操作的文件系统，因此，联合文件系统非常轻快。Docker 使用联合文件系统为容器提供构建层，使得容器可以实现写时复制以及镜像的分层构建和存储。常用的联合文件系统有 AUFS、Overlay 和 Devicemapper 等。</p>
+<h2 id="docker-核心概念">Docker 核心概念</h2>
+<h3 id="镜像">镜像</h3>
+<p>是一个只读文件和文件夹的组合，它包含了容器运行时所需要的所有基础文件和配置信息，是容器启动的基础</p>
+<p>获取镜像的两种方式</p>
+<ol>
+<li>自己创建镜像</li>
+<li>从功能镜像仓库拉取别人制作好的镜像</li>
+</ol>
+<h3 id="容器">容器</h3>
+<p>容器是镜像的运行实体。容器运行着真正的应用进程。容器有初建、运行、停止、暂停和删除五种状态。</p>
+<h3 id="仓库">仓库</h3>
+<p>Docker 的镜像仓库类似于代码仓库，用来存储和分发 Docker 镜像。镜像仓库分为公共镜像仓库和私有镜像仓库。</p>
+<h3 id="镜像容器仓库三者之间的关系">镜像、容器、仓库，三者之间的关系</h3>
+<p><img src="https://s0.lgstatic.com/i/image/M00/49/93/Ciqc1F9PYryALHVmAABihjRzo4c527.png" alt=""></p>
+<h3 id="docker架构">Docker架构</h3>
+<p><img src="https://s0.lgstatic.com/i/image/M00/49/93/Ciqc1F9PYtCAC1GSAADIK4E6wrc368.png" alt=""></p>
+<p>Docker 整体架构采用 C/S（客户端 / 服务器）模式，主要由客户端和服务端两大部分组成。客户端负责发送操作指令，服务端负责接收和处理指令。客户端和服务端通信有多种方式，既可以在同一台机器上通过UNIX套接字通信，也可以通过网络连接远程通信。</p>
+<h3 id="docker-客户端">Docker 客户端</h3>
+<p>Docker 客户端其实是一种泛称。其中 docker 命令是 Docker 用户与 Docker 服务端交互的主要方式。除了使用 docker 命令的方式，还可以使用直接请求 REST API 的方式与 Docker 服务端交互，甚至还可以使用各种语言的 SDK 与 Docker 服务端交互。目前社区维护着 Go、Java、Python、PHP 等数十种语言的 SDK，足以满足你的日常需求。</p>
+<h3 id="docker-服务端">Docker 服务端</h3>
+<p>Docker 服务端是 Docker 所有后台服务的统称。其中 dockerd 是一个非常重要的后台管理进程，它负责响应和处理来自 Docker 客户端的请求，然后将客户端的请求转化为 Docker 的具体操作。例如镜像、容器、网络和挂载卷等具体对象的操作和管理。</p>
+<p>Docker 从诞生到现在，服务端经历了多次架构重构。起初，服务端的组件是全部集成在 docker 二进制里。但是从 1.11 版本开始， dockerd 已经成了独立的二进制，此时的容器也不是直接由 dockerd 来启动了，而是集成了 containerd、runC 等多个组件。</p>
+<p>虽然 Docker 的架构在不停重构，但是各个模块的基本功能和定位并没有变化。它和一般的 C/S 架构系统一样，Docker 服务端模块负责和 Docker 客户端交互，并管理 Docker 的容器、镜像、网络等资源。</p>
+<h2 id="关于镜像的基础命令">关于镜像的基础命令</h2>
+<p>镜像是一个只读的 Docker 容器模板，包含启动容器所需要的所有文件系统结构和内容。简单来讲，镜像是一个特殊的文件系统，它提供了容器运行时所需的程序、软件库、资源、配置等静态数据。即<strong>镜像不包含任何动态数据，镜像内容在构建后不会被改变。</strong></p>
+<h3 id="镜像操作">镜像操作</h3>
+<p><img src="https://s0.lgstatic.com/i/image/M00/4A/AD/CgqCHl9SDkWAaxh7AAFaMgWI7cI029.png" alt="Lark20200904-175130.png"></p>
+<ul>
+<li>
+<p>拉取镜像，使用docker pull命令拉取远程仓库的镜像到本地 ；</p>
+</li>
+<li>
+<p>重命名镜像，使用docker tag命令“重命名”镜像 ；</p>
+</li>
+<li>
+<p>查看镜像，使用docker image ls或docker images命令查看本地已经存在的镜像 ；</p>
+</li>
+<li>
+<p>删除镜像，使用docker rmi命令删除无用镜像 ；</p>
+</li>
+<li>
+<p>构建镜像，构建镜像有两种方式。第一种方式是使用docker build命令基于 Dockerfile 构建镜像，也是我比较推荐的镜像构建方式；第二种方式是使用docker commit命令基于已经运行的容器提交为镜像。</p>
+</li>
+</ul>
+<p>Dockerfile常用指令：</p>
+<table>
+<thead>
+<tr>
+<th>Dockerfile指令</th>
+<th>指令简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FROM</td>
+<td>Dockerfile 除了注释第一行必须是 FROM ，FROM 后面跟镜像名称，代表我们要基于哪个基础镜像构建我们的容器。</td>
+</tr>
+<tr>
+<td>RUN</td>
+<td>RUN 后面跟一个具体的命令，类似于 Linux 命令行执行命令。</td>
+</tr>
+<tr>
+<td>ADD</td>
+<td>拷贝本机文件或者远程文件到镜像内</td>
+</tr>
+<tr>
+<td>COPY</td>
+<td>拷贝本机文件到镜像内</td>
+</tr>
+<tr>
+<td>USER</td>
+<td>指定容器启动的用户</td>
+</tr>
+<tr>
+<td>ENTRYPOINT</td>
+<td>容器的启动命令</td>
+</tr>
+<tr>
+<td>CMD</td>
+<td>CMD 为 ENTRYPOINT 指令提供默认参数，也可以单独使用 CMD 指定容器启动参数</td>
+</tr>
+<tr>
+<td>ENV</td>
+<td>指定容器运行时的环境变量，格式为 key=value</td>
+</tr>
+<tr>
+<td>ARG</td>
+<td>定义外部变量，构建镜像时可以使用 build-arg = 的格式传递参数用于构建</td>
+</tr>
+<tr>
+<td>EXPOSE</td>
+<td>指定容器监听的端口，格式为 [port]/tcp 或者 [port]/udp</td>
+</tr>
+<tr>
+<td>WORKDIR</td>
+<td>为 Dockerfile 中跟在其后的所有 RUN、CMD、ENTRYPOINT、COPY 和 ADD 命令设置工作目录。</td>
+</tr>
+</tbody>
+</table>
+<p>一个Dockerfile实例：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#a2f;font-weight:bold">FROM</span><span style="color:#b44"> centos:7</span><span style="">
+</span><span style=""></span><span style="color:#a2f;font-weight:bold">COPY</span> nginx.repo /etc/yum.repos.d/nginx.repo<span style="">
+</span><span style=""></span><span style="color:#a2f;font-weight:bold">RUN</span> yum install -y nginx<span style="">
+</span><span style=""></span><span style="color:#a2f;font-weight:bold">EXPOSE</span><span style="color:#b44"> 80</span><span style="">
+</span><span style=""></span><span style="color:#a2f;font-weight:bold">ENV</span> <span style="color:#b8860b">HOST</span><span style="color:#666">=</span>mynginx
+<span style="color:#a2f;font-weight:bold">CMD</span> [<span style="color:#b44">&#34;nginx&#34;</span>,<span style="color:#b44">&#34;-g&#34;</span>,<span style="color:#b44">&#34;daemon off;&#34;</span>]<span style="">
+</span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第一行表示我要基于 centos:7 这个镜像来构建自定义镜像。这里需要注意，每个 Dockerfile 的第一行除了注释都必须以 FROM 开头。</li>
+<li>第二行表示拷贝本地文件 nginx.repo 文件到容器内的 /etc/yum.repos.d 目录下。这里拷贝 nginx.repo 文件是为了添加 nginx 的安装源。</li>
+<li>第三行表示在容器内运行yum install -y nginx命令，安装 nginx 服务到容器内，执行完第三行命令，容器内的 nginx 已经安装完成。</li>
+<li>第四行声明容器内业务（nginx）使用 80 端口对外提供服务。</li>
+<li>第五行定义容器启动时的环境变量 HOST=mynginx，容器启动后可以获取到环境变量 HOST 的值为 mynginx。</li>
+<li>第六行定义容器的启动命令，命令格式为 json 数组。这里设置了容器的启动命令为 nginx ，并且添加了 nginx 的启动参数 -g &lsquo;daemon off;&rsquo; ，使得 nginx 以前台的方式启动。</li>
+</ul>
+<h3 id="镜像的实现原理">镜像的实现原理</h3>
+<p>其实 Docker 镜像是由一系列镜像层（layer）组成的，每一层代表了镜像构建过程中的一次提交。下面以一个镜像构建的 Dockerfile 来说明镜像是如何分层的。</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#a2f;font-weight:bold">FROM</span><span style="color:#b44"> busybox</span><span style="">
+</span><span style=""></span><span style="color:#a2f;font-weight:bold">COPY</span> <span style="color:#a2f">test</span> /tmp/test<span style="">
+</span><span style=""></span><span style="color:#a2f;font-weight:bold">RUN</span> mkdir /tmp/testdir<span style="">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>上面的 Dockerfile 由三步组成：</p>
+<p>第一行基于 busybox 创建一个镜像层；</p>
+<p>第二行拷贝本机 test 文件到镜像内；</p>
+<p>第三行在 /tmp 文件夹下创建一个目录 testdir。</p>
+<p>使用<code>docker build</code>命令构建一个镜像：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker build -t mybusybox .
+
+Sending build context to Docker daemon  3.072kB
+Step 1/3 : FROM busybox
+ ---&gt; 69593048aa3a
+Step 2/3 : COPY <span style="color:#a2f">test</span> /tmp/test
+ ---&gt; f6a4590b5421
+Step 3/3 : RUN mkdir /tmp/testdir
+ ---&gt; Running in d9593eb73570
+Removing intermediate container d9593eb73570
+ ---&gt; 543a49a4f148
+Successfully built 543a49a4f148
+Successfully tagged mybusybox:latest
+</code></pre></td></tr></table>
+</div>
+</div><p>这里我的 Docker 使用的是 overlay2 文件驱动，进入到/var/lib/docker/overlay2目录下使用tree .命令查看产生的镜像文件：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">$ tree .
+<span style="color:#080;font-style:italic"># 以下为 tree . 命令输出内容</span>
+|-- 3e89b959f921227acab94f5ab4524252ae0a829ff8a3687178e3aca56d605679
+|   |-- diff  <span style="color:#080;font-style:italic"># 这一层为基础层，对应上述 Dockerfile 第一行，包含 busybox 镜像所有文件内容，例如 /etc,/bin,/var 等目录</span>
+... 此次省略部分原始镜像文件内容
+|   <span style="color:#b44">`</span>-- link 
+|-- 6591d4e47eb2488e6297a0a07a2439f550cdb22845b6d2ddb1be2466ae7a9391
+|   |-- diff   <span style="color:#080;font-style:italic"># 这一层对应上述 Dockerfile 第二行，拷贝 test 文件到 /tmp 文件夹下，因此 diff 文件夹下有了 /tmp/test 文件</span>
+|   |   <span style="color:#b44">`</span>-- tmp
+|   |       <span style="color:#b44">`</span>-- <span style="color:#a2f">test</span>
+|   |-- link
+|   |-- lower
+|   <span style="color:#b44">`</span>-- work
+|-- backingFsBlockDev
+|-- bec6a018080f7b808565728dee8447b9e86b3093b16ad5e6a1ac3976528a8bb1
+|   |-- diff  <span style="color:#080;font-style:italic"># 这一层对应上述 Dockerfile 第三行，在 /tmp 文件夹下创建 testdir 文件夹，因此 diff 文件夹下有了 /tmp/testdir 文件夹</span>
+|   |   <span style="color:#b44">`</span>-- tmp
+|   |       <span style="color:#b44">`</span>-- testdir
+|   |-- link
+|   |-- lower
+|   <span style="color:#b44">`</span>-- work
+...
+</code></pre></td></tr></table>
+</div>
+</div><p>通过上面的目录结构可以看到，Dockerfile 的每一行命令，都生成了一个镜像层，每一层的 diff 夹下只存放了增量数据</p>
+<p><img src="https://s0.lgstatic.com/i/image/M00/4A/AD/CgqCHl9SDmGACBEjAABkgtnn_hE625.png" alt="Lark20200904-175137.png"></p>
+<p>分层的结构使得 Docker 镜像非常轻量，每一层根据镜像的内容都有一个唯一的 ID 值，当不同的镜像之间有相同的镜像层时，便可以实现不同的镜像之间共享镜像层的效果。</p>
+<p>总结一下， Docker 镜像是静态的分层管理的文件组合，镜像底层的实现依赖于联合文件系统（UnionFS）。充分掌握镜像的原理，可以帮助我们在生产实践中构建出最优的镜像，同时也可以帮助我们更好地理解容器和镜像的关系。</p>
+<p>镜像的实现原理：
+镜像是由一系列的镜像层（layer ）组成，每一层代表了镜像构建过程中的一次提交，当我们需要修改镜像内的某个文件时，只需要在当前镜像层的基础上新建一个镜像层，并且只存放修改过的文件内容。分层结构使得镜像间共享镜像层变得非常简单和方便。</p>
+<h2 id="容器的基本操作">容器的基本操作</h2>
+<h3 id="什么是容器">什么是容器</h3>
+<p>容器是基于镜像创建的可运行实例，并且单独存在，一个镜像可以创建出多个容器。运行容器化环境时，实际上是在容器内部创建该文件系统的读写副本。 这将添加一个容器层，该层允许修改镜像的整个副本。</p>
+<p><img src="https://s0.lgstatic.com/i/image/M00/4C/D1/CgqCHl9YmlSAGgF0AABXUH--rM4624.png" alt="image.png"></p>
+<h3 id="容器的生命周期">容器的生命周期</h3>
+<p>容器的生命周期分为5种：</p>
+<ol>
+<li>
+<p>created：初建状态</p>
+</li>
+<li>
+<p>running：运行状态</p>
+</li>
+<li>
+<p>stopped：停止状态</p>
+</li>
+<li>
+<p>paused： 暂停状态</p>
+</li>
+<li>
+<p>deleted：删除状态</p>
+</li>
+</ol>
+<p><img src="https://s0.lgstatic.com/i/image/M00/55/BF/CgqCHl9qxcuANmQGAADHS_nfwJE810.png" alt="Lark20200923-114857.png"></p>
+<h3 id="容器的操作">容器的操作</h3>
+<ol>
+<li>
+<p>创建并启动容器</p>
+<pre><code>docker create -it --name=busybox busybox
+</code></pre><pre><code>docker start busybox
+</code></pre><p>启动容器的两种方式：</p>
+<ol>
+<li>
+<p>使用docker start 命令基于已经创建好的容器直接启动。</p>
+</li>
+<li>
+<p>使用docker run 命令直接基于一个镜像创建一个容器并启动，相当于先执行docker create命令从镜像创建容器，然后再执行docker start命令启动容器。</p>
+<pre><code>docker run -it --name=busybox busybox
+</code></pre></li>
+</ol>
+<p>当使用docker run创建并启动容器时，Docker 后台执行的流程为：</p>
+<ul>
+<li>
+<p>Docker 会检查本地是否存在 busybox 镜像，如果镜像不存在则从 Docker Hub 拉取 busybox 镜像；</p>
+</li>
+<li>
+<p>使用 busybox 镜像创建并启动一个容器；</p>
+</li>
+<li>
+<p>分配文件系统，并且在镜像只读层外创建一个读写层；</p>
+</li>
+<li>
+<p>从 Docker IP 池中分配一个 IP 给容器；</p>
+</li>
+<li>
+<p>执行用户的启动命令运行镜像。</p>
+</li>
+</ul>
+<p><strong>杀死容器中的主进程，则容器也会被杀死。</strong></p>
+</li>
+<li>
+<p>终止容器</p>
+<pre><code>docker stop busybox
+</code></pre><p>重启docker</p>
+<pre><code>docker restart busybox
+</code></pre></li>
+<li>
+<p>进入容器</p>
+<ul>
+<li>
+<p>docker attach</p>
+<p>当我们同时使用docker attach命令同时在多个终端运行时，所有的终端窗口将同步显示相同内容，当某个命令行窗口的命令阻塞时，其他命令行窗口同样也无法操作。现一般用exec命令</p>
+</li>
+<li>
+<p>docker exec</p>
+<p>一般使用<code>docker exec -it CONTAINER</code>的方式进入到一个已经运行中的容器</p>
+</li>
+</ul>
+</li>
+<li>
+<p>删除容器</p>
+<pre><code>docker rm busybox
+   
+强制删除
+docker rm -f busybox
+</code></pre></li>
+<li>
+<p>导入导出容器</p>
+<ul>
+<li>
+<p>导出容器</p>
+<p>我们可以使用docker export CONTAINER命令导出一个容器到文件，不管此时该容器是否处于运行中的状态。导出容器前我们先进入容器，创建一个文件，过程如下。</p>
+<p>首先进入容器创建文件</p>
+<pre><code>docker exec -it busybox sh
+cd /tmp &amp;&amp; touch test
+</code></pre><p>然后执行导出命令</p>
+<pre><code>docker export busybox &gt; busybox.tar
+</code></pre><p>执行以上命令后会在当前文件夹下生成 busybox.tar 文件，我们可以将该文件拷贝到其他机器上，通过导入命令实现容器的迁移。</p>
+</li>
+<li>
+<p>导入容器</p>
+<p>使用docker import命令导入，执行完docker import后会变为本地镜像，最后再使用docker run命令启动该镜像，这样我们就实现了容器的迁移。</p>
+<p>导入容器的命令格式为<code> docker import [OPTIONS] file|URL [REPOSITORY[:TAG]]</code>。接下来我们一步步将上一步导出的镜像文件导入到其他机器的 Docker 中并启动它。</p>
+<p>首先，使用docker import命令导入上一步导出的容器</p>
+<pre><code>docker import busybox.tar busybox:test
+</code></pre><p>此时，busybox.tar 被导入成为新的镜像，镜像名称为 busybox:test 。下面，我们使用docker run命令启动并进入容器，查看上一步创建的临时文件</p>
+<pre><code>docker run -it busybox:test sh
+     
+ls /tmp/
+test
+</code></pre><p>可以看到我们之前在 /tmp 目录下创建的 test 文件也被迁移过来了。这样我们就通过docker export和docker import命令配合实现了容器的迁移。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="搭建自己的仓库">搭建自己的仓库</h2>
+<h3 id="什么是仓库">什么是仓库</h3>
+<p>仓库（Repository）是存储和分发 Docker 镜像的地方。镜像仓库类似于代码仓库，Docker Hub 的命名来自 GitHub，Github 是我们常用的代码存储和分发的地方。同样 Docker Hub 是用来提供 Docker 镜像存储和分发的地方</p>
+<h3 id="公有镜像仓库">公有镜像仓库</h3>
+<p>Docker Hub、阿里云</p>
+<h3 id="搭建私有仓库">搭建私有仓库</h3>
+<h3 id="持久化镜像存储">持久化镜像存储</h3>
+<h3 id="构建外部可访问的镜像仓库">构建外部可访问的镜像仓库</h3>
+<h3 id="私有仓库进阶">私有仓库进阶</h3>
+<p>Harbor</p>
+<h2 id="如何编写最优的dockerfile">如何编写最优的Dockerfile</h2>
+<p>生产实践中一定优先使用 Dockerfile 的方式构建镜像。 因为使用 Dockerfile 构建镜像可以带来很多好处：</p>
+<ul>
+<li>易于版本化管理，Dockerfile本身是一个文本文件，方便存放在代码仓库做版本管理，可以很方便的找到各个版本之间的变更历史；</li>
+<li>过程可追溯，Dockerfile的每一行指令代表一个镜像层，根据Dockerfile的内容可以很明确地查看镜像的完整构建过程；</li>
+<li>屏蔽构建环境异构，使用Dockerfile构建镜像无需考虑构建环境，基于相同的Dockerfile无论在哪里运行，构建结果都一致。</li>
+</ul>
+<p>虽然有这么多好处，但是如果你 Dockerfile 使用不当也会引发很多问题。比如镜像构建时间过长，甚至镜像构建失败；镜像层数过多，导致镜像文件过大。</p>
+<h3 id="docker书写原则">Docker书写原则</h3>
+<ol>
+<li>
+<p><strong>单一职责</strong></p>
+<p>由于容器的本质是进程，一个容器代表一个进程，因此不同功能的应用应该尽量拆分为不同的容器，每个容器只负责单一业务进程。</p>
+</li>
+<li>
+<p><strong>提供注释信息</strong></p>
+<p>Dockerfile 也是一种代码，我们应该保持良好的代码编写习惯，晦涩难懂的代码尽量添加注释，让协作者可以一目了然地知道每一行代码的作用，并且方便扩展和使用。</p>
+</li>
+<li>
+<p><strong>保持容器最小化</strong></p>
+<p>应该避免安装无用的软件包，比如在一个 nginx 镜像中，我并不需要安装 vim 、gcc 等开发编译工具。这样不仅可以加快容器构建速度，而且可以避免镜像体积过大。</p>
+</li>
+<li>
+<p><strong>合理选择基础镜像</strong></p>
+<p>容器的核心是应用，因此只要基础镜像能够满足应用的运行环境即可。例如一个Java类型的应用运行时只需要JRE，并不需要JDK，因此我们的基础镜像只需要安装JRE环境即可。</p>
+</li>
+<li>
+<p><strong>使用.dockerignore文件</strong></p>
+<p>在使用git时，我们可以使用.gitignore文件忽略一些不需要做版本管理的文件。同理，使用.dockerignore文件允许我们在构建时，忽略一些不需要参与构建的文件，从而提升构建效率。.dockerignore的定义类似于.gitignore。</p>
+<p>.dockerignore的本质是文本文件，Docker 构建时可以使用换行符来解析文件定义，每一行可以忽略一些文件或者文件夹。具体使用方式如下：</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>规则</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#</td>
+<td># 开头的表示注释，# 后面所有内容将会被忽略</td>
+</tr>
+<tr>
+<td>/tmp</td>
+<td>匹配当前目录下任何以 tmp 开头的文件或者文件夹</td>
+</tr>
+<tr>
+<td>*.md</td>
+<td>匹配以 .md 为后缀的任意文件</td>
+</tr>
+<tr>
+<td>tem?</td>
+<td>匹配以 tem 开头并且以任意字符结尾的文件，？代表任意一个字符</td>
+</tr>
+<tr>
+<td>!README.md</td>
+<td>表示排除忽略。<!-- raw HTML omitted -->例如 .dockerignore 定义如下：<!-- raw HTML omitted --><!-- raw HTML omitted -->*.md<!-- raw HTML omitted -->!README.md<!-- raw HTML omitted --><!-- raw HTML omitted -->表示除了 README.md 文件外所有以 .md 结尾的文件。</td>
+</tr>
+</tbody>
+</table>
+<ol start="6">
+<li>
+<p>尽量使用构建缓存</p>
+<p>Docker 构建过程中，每一条 Dockerfile 指令都会提交为一个镜像层，下一条指令都是基于上一条指令构建的。如果构建时发现要构建的镜像层的父镜像层已经存在，并且下一条命令使用了相同的指令，即可命中构建缓存。</p>
+<p>Docker 构建时判断是否需要使用缓存的规则如下：</p>
+<ul>
+<li>从当前构建层开始，比较所有的子镜像，检查所有的构建指令是否与当前完全一致，如果不一致，则不使用缓存；</li>
+<li>一般情况下，只需要比较构建指令即可判断是否需要使用缓存，但是有些指令除外（例如ADD和COPY）；</li>
+<li>对于ADD和COPY指令不仅要校验命令是否一致，还要为即将拷贝到容器的文件计算校验和（根据文件内容计算出的一个数值，如果两个文件计算的数值一致，表示两个文件内容一致 ），命令和校验和完全一致，才认为命中缓存。</li>
+</ul>
+<p>因此，基于 Docker 构建时的缓存特性，我们可以把<strong>不轻易改变的指令放到 Dockerfile 前面</strong>（例如安装软件包），而可能<strong>经常发生改变的指令放在 Dockerfile 末尾</strong>（例如编译应用程序）。</p>
+<p>例如，我们想要定义一些环境变量并且安装一些软件包，可以按照如下顺序编写 Dockerfile：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#a2f;font-weight:bold">FROM</span><span style="color:#b44"> centos:7</span><span style="">
+</span><span style=""></span><span style="color:#080;font-style:italic"># 设置环境变量指令放前面</span><span style="">
+</span><span style=""></span><span style="color:#a2f;font-weight:bold">ENV</span> PATH /usr/local/bin:<span style="color:#b8860b">$PATH</span><span style="">
+</span><span style=""></span><span style="color:#080;font-style:italic"># 安装软件指令放前面</span><span style="">
+</span><span style=""></span><span style="color:#a2f;font-weight:bold">RUN</span> yum install -y make<span style="">
+</span><span style=""></span><span style="color:#080;font-style:italic"># 把业务软件的配置,版本等经常变动的步骤放最后</span><span style="">
+</span><span style=""></span>...<span style="">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>按照上面原则编写的 Dockerfile 在构建镜像时，前面步骤命中缓存的概率会增加，可以大大缩短镜像构建时间。</p>
+</li>
+<li>
+<p>正确设置时区</p>
+<p>我们从 Docker Hub 拉取的官方操作系统镜像大多数都是 UTC 时间（世界标准时间）。如果你想要在容器中使用中国区标准时间（东八区），请根据使用的操作系统修改相应的时区信息，下面我介绍几种常用操作系统的修改方式：</p>
+<ul>
+<li>
+<p>Ubuntu和Debian系统</p>
+<p>向 Dockerfile 中添加以下指令：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#a2f;font-weight:bold">RUN</span> ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime<span style="">
+</span><span style=""></span><span style="color:#a2f;font-weight:bold">RUN</span> <span style="color:#a2f">echo</span> <span style="color:#b44">&#34;Asia/Shanghai&#34;</span> &gt;&gt; /etc/timezone<span style="">
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>CentOS系统</p>
+<p>向 Dockerfile 中添加以下指令：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#a2f;font-weight:bold">RUN</span> ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime<span style="">
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>
+<p>使用国内镜像源加快镜像速度</p>
+</li>
+<li>
+<p>最小化镜像层数</p>
+<p>在构建镜像时尽可能地减少 Dockerfile 指令行数。例如我们要在 CentOS 系统中安装<code>make</code>和<code>net-tools</code>两个软件包，应该在 Dockerfile 中使用以下指令：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#a2f;font-weight:bold">RUN</span> yum install -y make net-tools<span style="">
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h3 id="dockerfile指令书写建议">Dockerfile指令书写建议</h3>
+<ol>
+<li>
+<p>RUN</p>
+<p><code>RUN</code>指令在构建时将会生成一个新的镜像层并且执行<code>RUN</code>指令后面的内容。</p>
+<p>使用<code>RUN</code>指令时应该尽量遵循以下原则：</p>
+<ul>
+<li>当<code>RUN</code>指令后面跟的内容比较复杂时，建议使用反斜杠（\） 结尾并且换行；</li>
+<li><code>RUN</code>指令后面的内容尽量按照字母顺序排序，提高可读性。</li>
+</ul>
+<p>例如，我想在官方的 CentOS 镜像下安装一些软件，一个建议的 Dockerfile 指令如下：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#a2f;font-weight:bold">FROM</span><span style="color:#b44"> centos:7</span><span style="">
+</span><span style=""></span><span style="color:#a2f;font-weight:bold">RUN</span> yum install -y automake <span style="color:#b62;font-weight:bold">\
+</span><span style="color:#b62;font-weight:bold"></span>                   curl <span style="color:#b62;font-weight:bold">\
+</span><span style="color:#b62;font-weight:bold"></span>                   python <span style="color:#b62;font-weight:bold">\
+</span><span style="color:#b62;font-weight:bold"></span>                   vim<span style="">
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>CMD和ENTRYPOINT</p>
+<p><code>CMD</code>和<code>ENTRYPOINT</code>指令都是容器运行的命令入口，这两个指令使用中有很多相似的地方，但是也有一些区别。</p>
+<p>这两个指令的相同之处，<code>CMD</code>和<code>ENTRYPOINT</code>的基本使用格式分为两种。</p>
+<ul>
+<li>第一种为<code>CMD</code>/<code>ENTRYPOINT</code>[&ldquo;command&rdquo; , &ldquo;param&rdquo;]。这种格式是使用 Linux 的<code>exec</code>实现的， 一般称为<code>exec</code>模式，这种书写格式为<code>CMD</code>/<code>ENTRYPOINT</code>后面跟 json 数组，也是Docker 推荐的使用格式。</li>
+<li>另外一种格式为<code>CMD</code>/<code>ENTRYPOINT</code>command param ，这种格式是基于 shell 实现的， 通常称为<code>shell</code>模式。当使用<code>shell</code>模式时，Docker 会以 /bin/sh -c command 的方式执行命令。</li>
+</ul>
+<blockquote>
+<p>使用 exec 模式启动容器时，容器的 1 号进程就是 CMD/ENTRYPOINT 中指定的命令，而使用 shell 模式启动容器时相当于我们把启动命令放在了 shell 进程中执行，等效于执行 /bin/sh -c &ldquo;task command&rdquo; 命令。因此 shell 模式启动的进程在容器中实际上并不是 1 号进程。</p>
+</blockquote>
+<p>这两个指令的区别：</p>
+<ul>
+<li>Dockerfile 中如果使用了<code>ENTRYPOINT</code>指令，启动 Docker 容器时需要使用 &ndash;entrypoint 参数才能覆盖 Dockerfile 中的<code>ENTRYPOINT</code>指令 ，而使用<code>CMD</code>设置的命令则可以被<code>docker run</code>后面的参数直接覆盖。</li>
+<li><code>ENTRYPOINT</code>指令可以结合<code>CMD</code>指令使用，也可以单独使用，而<code>CMD</code>指令只能单独使用。</li>
+</ul>
+<p>如果你希望你的镜像足够灵活，推荐使用<code>CMD</code>指令。如果你的镜像只执行单一的具体程序，并且不希望用户在执行<code>docker run</code>时覆盖默认程序，建议使用<code>ENTRYPOINT</code>。</p>
+<p>最后再强调一下，无论使用<code>CMD</code>还是<code>ENTRYPOINT</code>，都尽量使用<code>exec</code>模式。</p>
+</li>
+<li>
+<p>ADD和COPY</p>
+<p><code>ADD</code>和<code>COPY</code>指令功能类似，都是从外部往容器内添加文件。但是<code>COPY</code>指令只支持基本的文件和文件夹拷贝功能，<code>ADD</code>则支持更多文件来源类型，比如自动提取 tar 包，并且可以支持源文件为 URL 格式。</p>
+<p>那么在日常应用中，我们应该使用哪个命令向容器里添加文件呢？你可能在想，既然<code>ADD</code>指令支持的功能更多，当然应该使用<code>ADD</code>指令了。然而事实恰恰相反，我更推荐你使用<code>COPY</code>指令，因为<code>COPY</code>指令更加透明，仅支持本地文件向容器拷贝，而且使用<code>COPY</code>指令可以更好地利用构建缓存，有效减小镜像体积。</p>
+<p>当你想要使用<code>ADD</code>向容器中添加 URL 文件时，请尽量考虑使用其他方式替代。例如你想要在容器中安装 memtester（一种内存压测工具），你应该避免使用以下格式：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#a2f;font-weight:bold">ADD</span> http://pyropus.ca/software/memtester/old-versions/memtester-4.3.0.tar.gz /tmp/<span style="">
+</span><span style=""></span><span style="color:#a2f;font-weight:bold">RUN</span> tar -xvf /tmp/memtester-4.3.0.tar.gz -C /tmp<span style="">
+</span><span style=""></span><span style="color:#a2f;font-weight:bold">RUN</span> make -C /tmp/memtester-4.3.0 <span style="color:#666">&amp;&amp;</span> make -C /tmp/memtester-4.3.0 install<span style="">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>下面是推荐写法：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dockerfile" data-lang="dockerfile"><span style="color:#a2f;font-weight:bold">RUN</span> wget -O /tmp/memtester-4.3.0.tar.gz http://pyropus.ca/software/memtester/old-versions/memtester-4.3.0.tar.gz <span style="color:#b62;font-weight:bold">\
+</span><span style="color:#b62;font-weight:bold"></span><span style="color:#666">&amp;&amp;</span> tar -xvf /tmp/memtester-4.3.0.tar.gz -C /tmp <span style="color:#b62;font-weight:bold">\
+</span><span style="color:#b62;font-weight:bold"></span><span style="color:#666">&amp;&amp;</span> make -C /tmp/memtester-4.3.0 <span style="color:#666">&amp;&amp;</span> make -C /tmp/memtester-4.3.0 install<span style="">
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>WORKDIR</p>
+<p>为了使构建过程更加清晰明了，推荐使用 WORKDIR 来指定容器的工作路径，应该尽量避免使用 RUN cd /work/path &amp;&amp; do some work 这样的指令。</p>
+</li>
+</ol>
+<p>最后给出几个常用软件的官方 Dockerfile 示例链接，希望可以对你有所帮助。</p>
+<ul>
+<li><a href="https://github.com/docker-library/golang/blob/4d68c4dd8b51f83ce4fdce0f62484fdc1315bfa8/1.15/buster/Dockerfile">Go</a></li>
+<li><a href="https://github.com/nginxinc/docker-nginx/blob/9774b522d4661effea57a1fbf64c883e699ac3ec/mainline/buster/Dockerfile">Nginx</a></li>
+<li><a href="https://github.com/hylang/docker-hylang/blob/f9c873b7f71f466e5af5ea666ed0f8f42835c688/dockerfiles-generated/Dockerfile.python3.8-buster">Hy</a></li>
+</ul>
+<h2 id="基于内核的弱隔离系统如何保障安全性">基于内核的弱隔离系统如何保障安全性</h2>
+<h3 id="docker与虚拟机的区别">Docker与虚拟机的区别</h3>
+<p><img src="https://s0.lgstatic.com/i/image/M00/56/B7/Ciqc1F9sDDSAQhNcAAD8rL1NLXc02.jpeg" alt="WechatIMG1632.jpeg"></p>
+<p>从图可以看出，虚拟机是通过管理系统(Hypervisor)模拟出 CPU、内存、网络等硬件，然后在这些模拟的硬件上创建客户内核和操作系统。这样做的好处就是虚拟机有自己的内核和操作系统，并且硬件都是通过虚拟机管理系统模拟出来的，用户程序无法直接使用到主机的操作系统和硬件资源，因此虚拟机也对隔离性和安全性有着更好的保证。</p>
+<p>而 Docker 容器则是通过 Linux 内核的 Namespace 技术实现了文件系统、进程、设备以及网络的隔离，然后再通过 Cgroups 对 CPU、 内存等资源进行限制，最终实现了容器之间相互不受影响，由于容器的隔离性仅仅依靠内核来提供，因此容器的隔离性也远弱于虚拟机。</p>
+<p>你可能会问，既然虚拟机安全性这么好，为什么我们还要用容器呢？这是因为容器与虚拟机相比，容器的性能损耗非常小，并且镜像也非常小，而且在业务快速开发和迭代的今天，容器秒级的启动等特性也非常匹配业务快速迭代的业务场景。</p>
+<h3 id="容器的安全问题">容器的安全问题</h3>
+<h4 id="1-docker自身安全">1. Docker自身安全</h4>
+<p>Docker 作为一款容器引擎，本身也会存在一些安全漏洞，CVE 目前已经记录了多项与 Docker 相关的安全漏洞，主要有权限提升、信息泄露等几类安全问题。</p>
+<blockquote>
+<p>CVE 的维基百科定义：CVE 是公共漏洞和暴露（英语：CVE, Common Vulnerabilities and Exposures）又称常见漏洞与披露，是一个与信息安全有关的数据库，收集各种信息安全弱点及漏洞并给予编号以便于公众查阅。此数据库现由美国非营利组织 MITRE 所属的 National Cybersecurity FFRDC 所营运维护 。</p>
+</blockquote>
+<h4 id="2-镜像安全">2. 镜像安全</h4>
+<p>由于 Docker 容器是基于镜像创建并启动，因此镜像的安全直接影响到容器的安全。具体影响镜像安全的总结如下。</p>
+<ul>
+<li>镜像软件存在安全漏洞：由于容器需要安装基础的软件包，如果软件包存在漏洞，则可能会被不法分子利用并且侵入容器，影响其他容器或主机安全。</li>
+<li>仓库漏洞：无论是 Docker 官方的镜像仓库还是我们私有的镜像仓库，都有可能被攻击，然后篡改镜像，当我们使用镜像时，就可能成为攻击者的目标对象。</li>
+<li>用户程序漏洞：用户自己构建的软件包可能存在漏洞或者被植入恶意脚本，这样会导致运行时提权影响其他容器或主机安全。</li>
+</ul>
+<h4 id="3-linux-内核隔离性不够">3. Linux 内核隔离性不够</h4>
+<p>尽管目前 Namespace 已经提供了非常多的资源隔离类型，但是仍有部分关键内容没有被完全隔离，其中包括一些系统的关键性目录（如 /sys、/proc 等），这些关键性的目录可能会泄露主机上一些关键性的信息，让攻击者利用这些信息对整个主机甚至云计算中心发起攻击。</p>
+<p>而且仅仅依靠 Namespace 的隔离是远远不够的，因为一旦内核的 Namespace 被突破，使用者就有可能直接提权获取到主机的超级权限，从而影响主机安全。</p>
+<h4 id="4-所有容器共享主机内核">4. 所有容器共享主机内核</h4>
+<p>由于同一宿主机上所有容器共享主机内核，所以攻击者可以利用一些特殊手段导致内核崩溃，进而导致主机宕机影响主机上其他服务。</p>
+<p>既然容器有这么多安全上的问题，那么我们应该如何做才能够既享受到容器的便利性同时也可以保障容器安全呢？下面我带你来逐步了解下如何解决容器的安全问题。</p>
+<h3 id="如何解决容器的安全问题">如何解决容器的安全问题</h3>
+<h4 id="1-docker自身安全性改进">1. Docker自身安全性改进</h4>
+<p>事实上，Docker 从 2013 年诞生到现在，在安全性上面已经做了非常多的努力。目前 Docker 在默认配置和默认行为下是足够安全的。</p>
+<p>Docker 自身是基于 Linux 的多种 Namespace 实现的，其中有一个很重要的 Namespace 叫作 User Namespace，User Namespace 主要是用来做容器内用户和主机的用户隔离的。在过去容器里的 root 用户就是主机上的 root 用户，如果容器受到攻击，或者容器本身含有恶意程序，在容器内就可以直接获取到主机 root 权限。Docker 从 1.10 版本开始，使用 User Namespace 做用户隔离，实现了容器中的 root 用户映射到主机上的非 root 用户，从而大大减轻了容器被突破的风险。</p>
+<p>因此，我们尽可能地使用 Docker 最新版本就可以得到更好的安全保障。</p>
+<h4 id="2-加强镜像安全">2. 加强镜像安全</h4>
+<p>为保障镜像安全，我们可以在私有镜像仓库安装镜像安全扫描组件，对上传的镜像进行检查，通过与 CVE 数据库对比，一旦发现有漏洞的镜像及时通知用户或阻止非安全镜像继续构建和分发。同时为了确保我们使用的镜像足够安全，在拉取镜像时，要确保只从受信任的镜像仓库拉取，并且与镜像仓库通信一定要使用 HTTPS 协议。</p>
+<h4 id="3-加强内核安全和管理">3. 加强内核安全和管理</h4>
+<p>由于仅仅依赖内核的隔离可能会引发安全问题，因此我们对于内核的安全应该更加重视。可以从以下几个方面进行加强。</p>
+<p><strong>宿主机及时升级内核漏洞</strong></p>
+<p>宿主机内核应该尽量安装最新补丁，因为更新的内核补丁往往有着更好的安全性和稳定性。</p>
+<p><strong>使用 Capabilities 划分权限</strong></p>
+<p>Capabilities 是 Linux 内核的概念，Linux 将系统权限分为了多个 Capabilities，它们都可以单独地开启或关闭，Capabilities 实现了系统更细粒度的访问控制。</p>
+<p>容器和虚拟机在权限控制上还是有一些区别的，在虚拟机内我们可以赋予用户所有的权限，例如设置 cron 定时任务、操作内核模块、配置网络等权限。而容器则需要针对每一项 Capabilities 更细粒度的去控制权限，例如：</p>
+<ul>
+<li>
+<p>cron 定时任务可以在容器内运行，设置定时任务的权限也仅限于容器内部；</p>
+</li>
+<li>
+<p>由于容器是共享主机内核的，因此在容器内部一般不允许直接操作主机内核；</p>
+</li>
+<li>
+<p>容器的网络管理在容器外部，这就意味着一般情况下，我们在容器内部是不需要执行<code>ifconfig</code>、<code>route</code>等命令的 。</p>
+</li>
+</ul>
+<p>由于容器可以按照需求逐项添加 Capabilities 权限，因此在大多数情况下，容器并不需要主机的 root 权限，Docker 默认情况下也是不开启额外特权的。</p>
+<p>最后，在执行<code>docker run</code>命令启动容器时，如非特殊可控情况，&ndash;privileged 参数不允许设置为 true，其他特殊权限可以使用 &ndash;cap-add 参数，根据使用场景适当添加相应的权限。</p>
+<p><strong>使用安全加固组件</strong></p>
+<p>Linux 的 SELinux、AppArmor、GRSecurity 组件都是 Docker 官方推荐的安全加固组件。下面我对这三个组件做简单介绍。</p>
+<ul>
+<li>
+<p>SELinux (Secure Enhanced Linux): 是 Linux 的一个内核安全模块，提供了安全访问的策略机制，通过设置 SELinux 策略可以实现某些进程允许访问某些文件。</p>
+</li>
+<li>
+<p>AppArmor: 类似于 SELinux，也是一个 Linux 的内核安全模块，普通的访问控制仅能控制到用户的访问权限，而 AppArmor 可以控制到用户程序的访问权限。</p>
+</li>
+<li>
+<p>GRSecurity: 是一个对内核的安全扩展，可通过智能访问控制，提供内存破坏防御，文件系统增强等多种防御形式。</p>
+</li>
+</ul>
+<p>这三个组件可以限制一个容器对主机的内核或其他资源的访问控制。目前，容器报告的一些安全漏洞中，很多都是通过对内核进行加强访问和隔离来实现的。</p>
+<p><strong>资源限制</strong></p>
+<p>在生产环境中，建议每个容器都添加相应的资源限制。下面给出一些执行docker run命令启动容器时可以传递的资源限制参数：</p>
+<pre><code>  --cpus                          限制 CPU 配额
+  -m, --memory                    限制内存配额
+  --pids-limit                    限制容器的 PID 个数
+</code></pre><p>例如我想要启动一个 1 核 2G 的容器，并且限制在容器内最多只能创建 1000 个 PID，启动命令如下：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker run -it --cpus<span style="color:#666">=</span><span style="color:#666">1</span> -m<span style="color:#666">=</span>2048m --pids-limit<span style="color:#666">=</span><span style="color:#666">1000</span> busybox sh
+</code></pre></td></tr></table>
+</div>
+</div><p>推荐在生产环境中限制 CPU、内存、PID 等资源，这样即便应用程序有漏洞，也不会导致主机的资源完全耗尽，最大限度降低安全风险。</p>
+<h4 id="4-使用安全容器">4. 使用安全容器</h4>
+<p>容器有着轻便快速启动的优点，虚拟机有着安全隔离的优点，有没有一种技术可以兼顾两者的优点，做到既轻量又安全呢？</p>
+<p>答案是有，那就是安全容器。安全容器是相较于普通容器的，安全容器与普通容器的主要区别在于，安全容器中的每个容器都运行在一个单独的微型虚拟机中，拥有独立的操作系统和内核，并且有虚拟化层的安全隔离。</p>
+<p>安全容器目前推荐的技术方案是 Kata Containers，Kata Container 并不包含一个完整的操作系统，只有一个精简版的 Guest Kernel 运行着容器本身的应用，并且通过减少不必要的内存，尽量共享可以共享的内存来进一步减少内存的开销。另外，Kata Container 实现了 OCI 规范，可以直接使用 Docker 的镜像启动 Kata 容器，具有开销更小、秒级启动、安全隔离等许多优点。</p>
+<h3 id="总结">总结</h3>
+<p><img src="https://s0.lgstatic.com/i/image/M00/51/28/Ciqc1F9keVSAHuDTAADaB11MKbU710.png" alt="Lark20200918-170906.png"></p>
+<h2 id="容器监控容器监控原理及-cadvisor-的安装与使用">容器监控：容器监控原理及 cAdvisor 的安装与使用</h2>
+<p>生产环境中监控容器的运行状况十分重要，通过监控我们可以随时掌握容器的运行状态，做到线上隐患和问题早发现，早解决。所以今天我就和你分享关于容器监控的知识（原理及工具 cAdvisor）。</p>
+<p>虽然传统的物理机和虚拟机监控已经有了比较成熟的监控方案，但是容器的监控面临着更大的挑战，因为容器的行为和本质与传统的虚拟机是不一样的，总的来说，容器具有以下特性：</p>
+<ul>
+<li>
+<p>容器是短期存活的，并且可以动态调度；</p>
+</li>
+<li>
+<p>容器的本质是进程，而不是一个完整操作系统；</p>
+</li>
+<li>
+<p>由于容器非常轻量，容器的创建和销毁也会比传统虚拟机更加频繁。</p>
+</li>
+</ul>
+<p>Docker 容器的监控方案有很多，除了 Docker 自带的docker stats命令，还有很多开源的解决方案，例如 sysdig、cAdvisor、Prometheus 等，都是非常优秀的监控工具。</p>
+<p>下面我们首先来看下，不借助任何外部工具，如何用 Docker 自带的docker stats命令实现容器的监控。</p>
+<h3 id="使用docekr-stats命令">使用docekr stats命令</h3>
+<p>使用 Docker 自带的docker stats命令可以很方便地看到主机上所有容器的 CPU、内存、网络 IO、磁盘 IO、PID 等资源的使用情况。下面我们可以具体操作看看。</p>
+<p>首先在主机上使用以下命令启动一个资源限制为 1 核 2G 的 nginx 容器：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker run --cpus<span style="color:#666">=</span><span style="color:#666">1</span> -m<span style="color:#666">=</span>2g --name<span style="color:#666">=</span>nginx  -d nginx
+</code></pre></td></tr></table>
+</div>
+</div><p>容器启动后，可以使用docker stats命令查看容器的资源使用状态:</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker stats nginx
+</code></pre></td></tr></table>
+</div>
+</div><p>通过<code>docker stats</code>命令可以看到容器的运行状态如下：</p>
+<pre><code>CONTAINER           CPU %               MEM USAGE / LIMIT   MEM %               NET I/O             BLOCK I/O           PIDS
+f742a467b6d8        0.00%               1.387 MiB / 2 GiB   0.07%               656 B / 656 B       0 B / 9.22 kB       2
+</code></pre><p>从容器的运行状态可以看出，docker stats命令确实可以获取并显示 Docker 容器运行状态。但是它的缺点也很明显，因为它只能获取本机数据，无法查看历史监控数据，没有可视化展示面板。</p>
+<p>因此，生产环境中我们通常使用另一种容器监控解决方案 cAdvisor。</p>
+<h3 id="cadvisor">cAdvisor</h3>
+<p>cAdvisor 是谷歌开源的一款通用的容器监控解决方案。cAdvisor 不仅可以采集机器上所有运行的容器信息，还提供了基础的查询界面和 HTTP 接口，更方便与外部系统结合。所以，cAdvisor很快成了容器指标监控最常用组件，并且 Kubernetes 也集成了 cAdvisor 作为容器监控指标的默认工具。</p>
+<h3 id="cadvisor-的安装与使用">cAdvisor 的安装与使用</h3>
+<p>下面我们以 cAdvisor 0.37.0 版本为例，演示一下 cAdvisor 的安装与使用。</p>
+<p>cAdvisor 官方提供了 Docker 镜像，我们只需要拉取镜像并且启动镜像即可。</p>
+<p>由于 cAdvisor 镜像存放在谷歌的 gcr.io 镜像仓库中，国内无法访问到。这里我把打好的镜像放在了 Docker Hub。你可以使用 docker pull lagoudocker/cadvisor:v0.37.0 命令从 Docker Hub 拉取。</p>
+<p>首先使用以下命令启动 cAdvisor：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker run <span style="color:#b62;font-weight:bold">\
+</span><span style="color:#b62;font-weight:bold"></span>  --volume<span style="color:#666">=</span>/:/rootfs:ro <span style="color:#b62;font-weight:bold">\
+</span><span style="color:#b62;font-weight:bold"></span>  --volume<span style="color:#666">=</span>/var/run:/var/run:ro <span style="color:#b62;font-weight:bold">\
+</span><span style="color:#b62;font-weight:bold"></span>  --volume<span style="color:#666">=</span>/sys:/sys:ro <span style="color:#b62;font-weight:bold">\
+</span><span style="color:#b62;font-weight:bold"></span>  --volume<span style="color:#666">=</span>/var/lib/docker/:/var/lib/docker:ro <span style="color:#b62;font-weight:bold">\
+</span><span style="color:#b62;font-weight:bold"></span>  --volume<span style="color:#666">=</span>/dev/disk/:/dev/disk:ro <span style="color:#b62;font-weight:bold">\
+</span><span style="color:#b62;font-weight:bold"></span>  --publish<span style="color:#666">=</span>8080:8080 <span style="color:#b62;font-weight:bold">\
+</span><span style="color:#b62;font-weight:bold"></span>  --detach<span style="color:#666">=</span><span style="color:#a2f">true</span> <span style="color:#b62;font-weight:bold">\
+</span><span style="color:#b62;font-weight:bold"></span>  --name<span style="color:#666">=</span>cadvisor <span style="color:#b62;font-weight:bold">\
+</span><span style="color:#b62;font-weight:bold"></span>  --privileged <span style="color:#b62;font-weight:bold">\
+</span><span style="color:#b62;font-weight:bold"></span>  --device<span style="color:#666">=</span>/dev/kmsg <span style="color:#b62;font-weight:bold">\
+</span><span style="color:#b62;font-weight:bold"></span>  lagoudocker/cadvisor:v0.37.0
+</code></pre></td></tr></table>
+</div>
+</div><p>此时，cAdvisor 已经成功启动，我们可以通过访问 http://localhost:8080 访问到 cAdvisor 的 Web 界面。</p>
+<p><img src="https://s0.lgstatic.com/i/image/M00/56/18/Ciqc1F9rCXSAQEwLAADKlh0at8o307.png" alt="Drawing 0.png"></p>
+<p>cAdvisor 不仅可以监控容器的资源使用情况，还可以监控主机的资源使用情况。下面我们就先看下它是如何查看主机资源使用情况的。</p>
+<h4 id="使用-cadvisor-查看主机监控">使用 cAdvisor 查看主机监控</h4>
+<p>访问 http://localhost:8080/containers/ 地址，在首页可以看到主机的资源使用情况，包含 CPU、内存、文件系统、网络等资源，如下图所示。</p>
+<p><img src="https://s0.lgstatic.com/i/image/M00/56/23/CgqCHl9rCX2ANrtaAADIGkeKKPc100.png" alt="Drawing 1.png"></p>
+<h4 id="使用-cadvisor-查看容器监控">使用 cAdvisor 查看容器监控</h4>
+<p>如果你想要查看主机上运行的容器资源使用情况，可以访问 http://localhost:8080/docker/，这个页面会列出 Docker 的基本信息和运行的容器情况，如下图所示。</p>
+<p><img src="https://s0.lgstatic.com/i/image/M00/56/18/Ciqc1F9rCZyAN8hYAAGAOL1FGcg401.png" alt="Drawing 2.png"></p>
+<p>在上图中的 Subcontainers 下会列出当前主机上运行的所有容器，点击其中一个容器即可查看该容器的详细运行状态</p>
+<p>总体来说，使用 cAdvisor 监控容器具有以下特点：</p>
+<ul>
+<li>
+<p>可以同时采集物理机和容器的状态；</p>
+</li>
+<li>
+<p>可以展示监控历史数据。</p>
+</li>
+</ul>
+<p>了解 Docker 的监控工具，你是否想问，这些监控数据是怎么来的呢？下面我就带你了解一下容器监控的原理。</p>
+<h3 id="监控原理">监控原理</h3>
+<p>我们知道 Docker 是基于 Namespace、Cgroups 和联合文件系统实现的。其中 Cgroups 不仅可以用于容器资源的限制，还可以提供容器的资源使用率。无论何种监控方案的实现，底层数据都来源于 Cgroups。</p>
+<p>Cgroups 的工作目录为/sys/fs/cgroup，/sys/fs/cgroup目录下包含了 Cgroups 的所有内容。Cgroups包含很多子系统，可以用来对不同的资源进行限制。例如对CPU、内存、PID、磁盘 IO等资源进行限制和监控。</p>
+<p>为了更详细的了解 Cgroups 的子系统，我们通过 ls -l 命令查看/sys/fs/cgroup文件夹，可以看到很多目录：</p>
+<pre><code>$ sudo ls -l /sys/fs/cgroup/
+total 0
+dr-xr-xr-x 5 root root  0 Jul  9 19:32 blkio
+lrwxrwxrwx 1 root root 11 Jul  9 19:32 cpu -&gt; cpu,cpuacct
+dr-xr-xr-x 5 root root  0 Jul  9 19:32 cpu,cpuacct
+lrwxrwxrwx 1 root root 11 Jul  9 19:32 cpuacct -&gt; cpu,cpuacct
+dr-xr-xr-x 3 root root  0 Jul  9 19:32 cpuset
+dr-xr-xr-x 5 root root  0 Jul  9 19:32 devices
+dr-xr-xr-x 3 root root  0 Jul  9 19:32 freezer
+dr-xr-xr-x 3 root root  0 Jul  9 19:32 hugetlb
+dr-xr-xr-x 5 root root  0 Jul  9 19:32 memory
+lrwxrwxrwx 1 root root 16 Jul  9 19:32 net_cls -&gt; net_cls,net_prio
+dr-xr-xr-x 3 root root  0 Jul  9 19:32 net_cls,net_prio
+lrwxrwxrwx 1 root root 16 Jul  9 19:32 net_prio -&gt; net_cls,net_prio
+dr-xr-xr-x 3 root root  0 Jul  9 19:32 perf_event
+dr-xr-xr-x 5 root root  0 Jul  9 19:32 pids
+dr-xr-xr-x 5 root root  0 Jul  9 19:32 systemd
+</code></pre><p>这些目录代表了 Cgroups 的子系统，Docker 会在每一个 Cgroups 子系统下创建 docker 文件夹。这里如果你对 Cgroups 子系统不了解的话，不要着急，后续我会在第 10 课时对 Cgroups 子系统做详细讲解，这里你只需要明白容器监控数据来源于 Cgroups 即可。</p>
+<h3 id="监控系统是如何获取容器的内存限制的">监控系统是如何获取容器的内存限制的？</h3>
+<p>下面我们以 memory 子系统（memory 子系统是Cgroups 众多子系统的一个，主要用来限制内存使用，Cgroups 会在第十课时详细讲解）为例，讲解一下监控组件是如何获取到容器的资源限制和使用状态的（即容器的内存限制）。</p>
+<p>我们首先在主机上使用以下命令启动一个资源限制为 1 核 2G 的 nginx 容器：</p>
+<pre><code>$ docker run --name=nginx --cpus=1 -m=2g --name=nginx  -d nginx
+## 这里输出的是容器 ID
+51041a74070e9260e82876974762b8c61c5ed0a51832d74fba6711175f89ede1
+</code></pre><p>容器启动后，我们通过命令行的输出可以得到容器的 ID，同时 Docker 会在/sys/fs/cgroup/memory/docker目录下以容器 ID 为名称创建对应的文件夹。</p>
+<p>下面我们查看一下/sys/fs/cgroup/memory/docker目录下的文件：</p>
+<pre><code>$ sudo ls -l /sys/fs/cgroup/memory/docker
+total 0
+drwxr-xr-x 2 root root 0 Sep  2 15:12 51041a74070e9260e82876974762b8c61c5ed0a51832d74fba6711175f89ede1
+-rw-r--r-- 1 root root 0 Sep  2 14:57 cgroup.clone_children
+--w--w--w- 1 root root 0 Sep  2 14:57 cgroup.event_control
+-rw-r--r-- 1 root root 0 Sep  2 14:57 cgroup.procs
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.failcnt
+--w------- 1 root root 0 Sep  2 14:57 memory.force_empty
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.kmem.failcnt
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.kmem.limit_in_bytes
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.kmem.max_usage_in_bytes
+-r--r--r-- 1 root root 0 Sep  2 14:57 memory.kmem.slabinfo
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.kmem.tcp.failcnt
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.kmem.tcp.limit_in_bytes
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.kmem.tcp.max_usage_in_bytes
+-r--r--r-- 1 root root 0 Sep  2 14:57 memory.kmem.tcp.usage_in_bytes
+-r--r--r-- 1 root root 0 Sep  2 14:57 memory.kmem.usage_in_bytes
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.limit_in_bytes
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.max_usage_in_bytes
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.memsw.failcnt
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.memsw.limit_in_bytes
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.memsw.max_usage_in_bytes
+-r--r--r-- 1 root root 0 Sep  2 14:57 memory.memsw.usage_in_bytes
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.move_charge_at_immigrate
+-r--r--r-- 1 root root 0 Sep  2 14:57 memory.numa_stat
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.oom_control
+---------- 1 root root 0 Sep  2 14:57 memory.pressure_level
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.soft_limit_in_bytes
+-r--r--r-- 1 root root 0 Sep  2 14:57 memory.stat
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.swappiness
+-r--r--r-- 1 root root 0 Sep  2 14:57 memory.usage_in_bytes
+-rw-r--r-- 1 root root 0 Sep  2 14:57 memory.use_hierarchy
+-rw-r--r-- 1 root root 0 Sep  2 14:57 notify_on_release
+-rw-r--r-- 1 root root 0 Sep  2 14:57 tasks
+</code></pre><p>可以看到 Docker 已经创建了以容器 ID 为名称的目录，我们再使用 ls 命令查看一下该目录的内容：</p>
+<pre><code>$ sudo ls -l /sys/fs/cgroup/memory/docker/51041a74070e9260e82876974762b8c61c5ed0a51832d74fba6711175f89ede1
+total 0
+-rw-r--r-- 1 root root 0 Sep  2 15:21 cgroup.clone_children
+--w--w--w- 1 root root 0 Sep  2 15:13 cgroup.event_control
+-rw-r--r-- 1 root root 0 Sep  2 15:12 cgroup.procs
+-rw-r--r-- 1 root root 0 Sep  2 15:12 memory.failcnt
+--w------- 1 root root 0 Sep  2 15:21 memory.force_empty
+-rw-r--r-- 1 root root 0 Sep  2 15:21 memory.kmem.failcnt
+-rw-r--r-- 1 root root 0 Sep  2 15:12 memory.kmem.limit_in_bytes
+-rw-r--r-- 1 root root 0 Sep  2 15:21 memory.kmem.max_usage_in_bytes
+-r--r--r-- 1 root root 0 Sep  2 15:21 memory.kmem.slabinfo
+-rw-r--r-- 1 root root 0 Sep  2 15:21 memory.kmem.tcp.failcnt
+-rw-r--r-- 1 root root 0 Sep  2 15:21 memory.kmem.tcp.limit_in_bytes
+-rw-r--r-- 1 root root 0 Sep  2 15:21 memory.kmem.tcp.max_usage_in_bytes
+-r--r--r-- 1 root root 0 Sep  2 15:21 memory.kmem.tcp.usage_in_bytes
+-r--r--r-- 1 root root 0 Sep  2 15:21 memory.kmem.usage_in_bytes
+-rw-r--r-- 1 root root 0 Sep  2 15:12 memory.limit_in_bytes
+-rw-r--r-- 1 root root 0 Sep  2 15:12 memory.max_usage_in_bytes
+-rw-r--r-- 1 root root 0 Sep  2 15:21 memory.memsw.failcnt
+-rw-r--r-- 1 root root 0 Sep  2 15:12 memory.memsw.limit_in_bytes
+-rw-r--r-- 1 root root 0 Sep  2 15:21 memory.memsw.max_usage_in_bytes
+-r--r--r-- 1 root root 0 Sep  2 15:21 memory.memsw.usage_in_bytes
+-rw-r--r-- 1 root root 0 Sep  2 15:21 memory.move_charge_at_immigrate
+-r--r--r-- 1 root root 0 Sep  2 15:21 memory.numa_stat
+-rw-r--r-- 1 root root 0 Sep  2 15:13 memory.oom_control
+---------- 1 root root 0 Sep  2 15:21 memory.pressure_level
+-rw-r--r-- 1 root root 0 Sep  2 15:21 memory.soft_limit_in_bytes
+-r--r--r-- 1 root root 0 Sep  2 15:21 memory.stat
+-rw-r--r-- 1 root root 0 Sep  2 15:21 memory.swappiness
+-r--r--r-- 1 root root 0 Sep  2 15:12 memory.usage_in_bytes
+-rw-r--r-- 1 root root 0 Sep  2 15:21 memory.use_hierarchy
+-rw-r--r-- 1 root root 0 Sep  2 15:21 notify_on_release
+-rw-r--r-- 1 root root 0 Sep  2 15:21 tasks
+</code></pre><p>由上可以看到，容器 ID 的目录下有很多文件，其中 memory.limit_in_bytes 文件代表该容器内存限制大小，单位为 byte，我们使用 cat 命令（cat 命令可以查看文件内容）查看一下文件内容：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo cat /sys/fs/cgroup/memory/docker/51041a74070e9260e82876974762b8c61c5ed0a51832d74fba6711175f89ede1/memory.limit_in_bytes
+<span style="color:#666">2147483648</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这里可以看到memory.limit_in_bytes 的值为2147483648，转换单位后正好为 2G，符合我们启动容器时的内存限制 2G。</p>
+<p>通过 memory 子系统的例子，我们可以知道<strong>监控组件通过读取</strong> <strong>memory.limit_in_bytes 文件即可获取到容器内存的限制值</strong>。了解完容器的内存限制我们来了解一下容器的内存使用情况。</p>
+<p>监控系统是如何获取容器的内存使用状态的？</p>
+<p>内存使用情况存放在 memory.usage_in_bytes 文件里，同样我们也使用 cat 命令查看一下文件内容:</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo cat /sys/fs/cgroup/memory/docker/51041a74070e9260e82876974762b8c61c5ed0a51832d74fba6711175f89ede1/memory.usage_in_bytes
+<span style="color:#666">4259840</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到当前内存的使用大小为 4259840 byte，约为 4 M。了解了内存的监控，下面我们来了解下网络的监控数据来源。</p>
+<p>网络的监控数据来源是从 /proc/{PID}/net/dev 目录下读取的，其中 PID 为容器在主机上的进程 ID。下面我们首先使用 docker inspect 命令查看一下上面启动的 nginx 容器的 PID，命令如下：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ docker inspect nginx |grep Pid
+            <span style="color:#b44">&#34;Pid&#34;</span>: 27348,
+            <span style="color:#b44">&#34;PidMode&#34;</span>: <span style="color:#b44">&#34;&#34;</span>,
+            <span style="color:#b44">&#34;PidsLimit&#34;</span>: 0,
+</code></pre></td></tr></table>
+</div>
+</div><p>可以看到容器的 PID 为 27348，使用 cat 命令查看一下 /proc/27348/net/dev 的内容：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo cat /proc/27348/net/dev
+Inter-|   Receive                                                |  Transmit
+ face |bytes    packets errs drop fifo frame compressed multicast|bytes    packets errs drop fifo colls carrier compressed
+    lo:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          <span style="color:#666">0</span>
+  eth0:       0       0    0    0    0     0          0         0        0       0    0    0    0     0       0          <span style="color:#666">0</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>/proc/27348/net/dev 文件记录了该容器里每一个网卡的流量接收和发送情况，以及错误数、丢包数等信息。可见容器的网络监控数据都是定时从这里读取并展示的。</p>
+<p>总结一下，<strong>容器的监控原理其实就是定时读取 Linux 主机上相关的文件并展示给用户。</strong></p>
 
         </div>
 
@@ -206,15 +1282,15 @@
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/Docker/Docker-03/">Docker 01</a></li>
-        
-        <li><a href="/post/Docker/Docker-02/">Docker 01</a></li>
-        
-        <li><a href="/post/Docker%E7%9F%A5%E8%AF%86/">Docker知识</a></li>
+        <li><a href="/post/Docker/Docker%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">Docker基础知识</a></li>
         
         <li><a href="/post/markdown%E4%B8%AD%E7%9A%84emoji%E5%9B%BE%E6%A0%87%E6%A0%87%E7%AD%BE%E8%A1%A8/">Markdown中的emoji图标标签表</a></li>
         
-        <li><a href="/post/Golang-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/">Golang Struct 内存对齐</a></li>
+        <li><a href="/post/Golang/Golang-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/">Golang Struct 内存对齐</a></li>
+        
+        <li><a href="/post/Golang/Golang-Slice%E5%8E%9F%E7%90%86/">Golang Slice原理</a></li>
+        
+        <li><a href="/post/Golang/Golang-Map%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/">Golang Map的实现原理</a></li>
         
     </ul>
 </div>
@@ -222,7 +1298,11 @@
 
         <div class="post-meta meta-tags">
             
-            没有标签
+            <ul class="clearfix">
+                
+                <li><a href='https://aszhc.github.io/tags/%E5%AE%B9%E5%99%A8%E5%8C%96'>容器化</a></li>
+                
+            </ul>
             
         </div>
     </article>
@@ -260,19 +1340,23 @@
 <ul class="widget-list">
     
     <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-01/" title="Docker 01">Docker 01</a>
+        <a href="https://aszhc.github.io/post/Docker/Docker-02/" title="Docker 底层实现原理及关键技术">Docker 底层实现原理及关键技术</a>
     </li>
     
     <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-02/" title="Docker 01">Docker 01</a>
+        <a href="https://aszhc.github.io/post/CircleCI/" title="使用CircleCI&#43;GitHub 进行CI/CD">使用CircleCI&#43;GitHub 进行CI/CD</a>
     </li>
     
     <li>
-        <a href="https://aszhc.github.io/post/Docker/Docker-03/" title="Docker 01">Docker 01</a>
+        <a href="https://aszhc.github.io/post/Golang/Golang-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="Golang 单元测试">Golang 单元测试</a>
     </li>
     
     <li>
-        <a href="https://aszhc.github.io/post/Docker%E7%9F%A5%E8%AF%86/" title="Docker知识">Docker知识</a>
+        <a href="https://aszhc.github.io/post/%E9%85%8D%E7%BD%AE%E5%9B%BE%E5%BA%8A/" title="linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床">linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Docker/Docker-01/" title="容器的基础概念与操作">容器的基础概念与操作</a>
     </li>
     
     <li>
@@ -280,23 +1364,19 @@
     </li>
     
     <li>
-        <a href="https://aszhc.github.io/post/Golang-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/" title="Golang Struct 内存对齐">Golang Struct 内存对齐</a>
+        <a href="https://aszhc.github.io/post/Golang/Golang-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/" title="Golang Struct 内存对齐">Golang Struct 内存对齐</a>
     </li>
     
     <li>
-        <a href="https://aszhc.github.io/post/Golang-Slice%E5%8E%9F%E7%90%86/" title="Golang Slice原理">Golang Slice原理</a>
+        <a href="https://aszhc.github.io/post/Golang/Golang-Slice%E5%8E%9F%E7%90%86/" title="Golang Slice原理">Golang Slice原理</a>
     </li>
     
     <li>
-        <a href="https://aszhc.github.io/post/Golang-Map%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" title="Golang Map的实现原理">Golang Map的实现原理</a>
+        <a href="https://aszhc.github.io/post/Golang/Golang-Map%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" title="Golang Map的实现原理">Golang Map的实现原理</a>
     </li>
     
     <li>
-        <a href="https://aszhc.github.io/post/Golang%E4%B8%ADmake%E4%B8%8Enew%E6%9C%89%E4%BD%95%E5%8C%BA%E5%88%AB/" title="Golang中make与new有何区别？">Golang中make与new有何区别？</a>
-    </li>
-    
-    <li>
-        <a href="https://aszhc.github.io/post/%E5%93%88%E5%B8%8C%E6%98%A0%E5%B0%84%E5%92%8C%E9%9B%86%E5%90%88%E7%BB%83%E4%B9%A0/" title="哈希映射和集合练习">哈希映射和集合练习</a>
+        <a href="https://aszhc.github.io/post/Golang/Golang%E4%B8%ADmake%E4%B8%8Enew%E6%9C%89%E4%BD%95%E5%8C%BA%E5%88%AB/" title="Golang中make与new有何区别？">Golang中make与new有何区别？</a>
     </li>
     
 </ul>
@@ -308,7 +1388,11 @@
         <h3 class="widget-title">分类</h3>
 <ul class="widget-list">
     
-    <li><a href="https://aszhc.github.io/categories/Docker/">Docker (1)</a></li>
+    <li><a href="https://aszhc.github.io/categories/CI/CD/">CI/CD (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/Docker/">Docker (3)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">安装与配置 (1)</a></li>
     
     <li><a href="https://aszhc.github.io/categories/%E5%B7%A5%E5%85%B7/">工具 (1)</a></li>
     
@@ -318,7 +1402,7 @@
     
     <li><a href="https://aszhc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络 (1)</a></li>
     
-    <li><a href="https://aszhc.github.io/categories/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/">语言基础 (4)</a></li>
+    <li><a href="https://aszhc.github.io/categories/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/">语言基础 (5)</a></li>
     
 </ul>
     </section>
@@ -331,9 +1415,15 @@
     
     <a href="https://aszhc.github.io/tags/markdown/">markdown</a>
     
+    <a href="https://aszhc.github.io/tags/markdown/">markdown</a>
+    
     <a href="https://aszhc.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
     
+    <a href="https://aszhc.github.io/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">单元测试</a>
+    
     <a href="https://aszhc.github.io/tags/%E5%93%88%E5%B8%8C/">哈希</a>
+    
+    <a href="https://aszhc.github.io/tags/%E5%9B%BE%E5%BA%8A/">图床</a>
     
     <a href="https://aszhc.github.io/tags/%E5%AE%B9%E5%99%A8%E5%8C%96/">容器化</a>
     
@@ -343,7 +1433,11 @@
     
     <a href="https://aszhc.github.io/tags/%E7%AC%94%E8%AE%B0/">笔记</a>
     
+    <a href="https://aszhc.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
+    
     <a href="https://aszhc.github.io/tags/%E9%80%92%E5%BD%92/">递归</a>
+    
+    <a href="https://aszhc.github.io/tags/%E9%83%A8%E7%BD%B2/">部署</a>
     
     <a href="https://aszhc.github.io/tags/%E9%93%BE%E6%8E%A5/">链接</a>
     
@@ -396,9 +1490,9 @@
     </div>
     <footer id="footer">
     <div class="container">
-        &copy; 2021 <a href="https://aszhc.github.io">學而 By 周闖</a>.
+        &copy; 2021 <a href="https://aszhc.github.io">PHOENIX By 周闖</a>.
         Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
-        <a href="https://www.flysnow.org/" target="_blank"></a>         备案号 | 辽ICP备18005500号-2	</a>.
+        <a href="https://www.flysnow.org/" target="_blank"></a>         	</a>.
         
     </div>
 </footer>

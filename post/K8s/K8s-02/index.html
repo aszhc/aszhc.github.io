@@ -1,0 +1,1488 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title> | PHOENIX</title>
+    <meta property="og:title" content=" - PHOENIX">
+    <meta property="og:type" content="article">
+        
+        
+    <meta name="Keywords" content="golang,go语言,go语言笔记,博客,项目管理,python,公众号">
+    <meta name="description" content="">
+        
+    <meta name="author" content="周闖">
+    <meta property="og:url" content="https://aszhc.github.io/post/K8s/K8s-02/">
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-4031353640611810",
+        enable_page_level_ads: true
+    });
+    </script>
+    
+
+
+    
+    
+        <link rel="stylesheet" href='/css/douban.css'>
+    
+        <link rel="stylesheet" href='/css/other.css'>
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://aszhc.github.io">
+                        PHOENIX
+                    </a>
+                
+                <p class="description">Computers do not solve problems, they execute solutions.</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://aszhc.github.io">首页</a>
+                    
+                    <a  href="https://aszhc.github.io/collect/" title="搜集">搜集</a>
+                    
+                    <a  href="https://aszhc.github.io/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://aszhc.github.io/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 250px;
+        margin-left: -300px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ol>
+    <li><a href="#pod控制器详解">Pod控制器详解</a>
+      <ol>
+        <li><a href="#pod控制器介绍">Pod控制器介绍</a></li>
+        <li><a href="#replicasetrs">ReplicaSet(RS)</a></li>
+        <li><a href="#deploymentdeploy">Deployment(Deploy)</a></li>
+        <li><a href="#horizontal-pod-autoscalerhpa">Horizontal Pod Autoscaler(HPA)</a></li>
+        <li><a href="#daemonsetds">DaemonSet(DS)</a></li>
+        <li><a href="#job">Job</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title"></h1>
+        </header>
+        <date class="post-meta meta-date">
+            1年1月1日
+        </date>
+        
+        
+        <div class="post-meta">
+            <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
+                    阅读</span></span>
+        </div>
+        
+        
+        <div class="post-content">
+            <h2 id="pod控制器详解">Pod控制器详解</h2>
+<h3 id="pod控制器介绍">Pod控制器介绍</h3>
+<p>Pod是kubernetes的最小管理单元，在kubernetes中，按照pod的创建方式可以将其分为两类：</p>
+<ul>
+<li>自主式pod：kubernetes直接创建出来的Pod，这种pod删除后就没有了，也不会重建</li>
+<li>控制器创建的pod：kubernetes通过控制器创建的pod，这种pod删除之后还会自动重建</li>
+</ul>
+<p><strong>什么是Pod控制器</strong></p>
+<p>Pod控制器是管理pod的中间层，使用Pod控制器之后，只需要告诉Pod控制器，想要多少个什么样的Pod就可以了，它会创建出满足条件的Pod并确保每一个Pod资源处于用户期望的目标状态。如果Pod资源在运行中出现故障，它会基于指定策略重新编排Pod。</p>
+<p>在kubernetes中，有很多类型的pod控制器，每种都有自己的适合的场景，常见的有下面这些：</p>
+<ul>
+<li>ReplicationController：比较原始的pod控制器，已经被废弃，由ReplicaSet替代</li>
+<li>ReplicaSet：保证副本数量一直维持在期望值，并支持pod数量扩缩容，镜像版本升级</li>
+<li>Deployment：通过控制ReplicaSet来控制Pod，并支持滚动升级、回退版本</li>
+<li>Horizontal Pod Autoscaler：可以根据集群负载自动水平调整Pod的数量，实现削峰填谷</li>
+<li>DaemonSet：在集群中的指定Node上运行且仅运行一个副本，一般用于守护进程类的任务</li>
+<li>Job：它创建出来的pod只要完成任务就立即退出，不需要重启或重建，用于执行一次性任务</li>
+<li>Cronjob：它创建的Pod负责周期性任务控制，不需要持续后台运行</li>
+<li>StatefulSet：管理有状态应用</li>
+</ul>
+<h3 id="replicasetrs">ReplicaSet(RS)</h3>
+<p>ReplicaSet的主要作用是保证一定数量的pod正常运行，它会持续监听这些Pod的运行状态，一旦Pod发生故障，就会重启或重建。同时它还支持对pod数量的扩缩容和镜像版本的升降级。</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210705091704.png" alt="在这里插入图片描述"></p>
+<p>ReplicaSet的资源清单文件：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#a2f;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>apps/v1<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 版本号</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>ReplicaSet<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 类型       </span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">metadata</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 元数据</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># rs名称 </span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">namespace</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 所属命名空间 </span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">labels</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic">#标签</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">controller</span>:<span style="color:#bbb"> </span>rs<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">spec</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 详情描述</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">replicas</span>:<span style="color:#bbb"> </span><span style="color:#666">3</span><span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 副本数量</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">selector</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 选择器，通过它指定该控制器管理哪些pod</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">matchLabels</span>:<span style="color:#bbb">      </span><span style="color:#080;font-style:italic"># Labels匹配规则</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">app</span>:<span style="color:#bbb"> </span>nginx-pod<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">matchExpressions</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># Expressions匹配规则</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- {<span style="color:#a2f;font-weight:bold">key: app, operator: In, values</span>:<span style="color:#bbb"> </span>[nginx-pod]}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">template</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 模板，当副本数量不足时，会根据下面的模板创建pod副本</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">metadata</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">labels</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">app</span>:<span style="color:#bbb"> </span>nginx-pod<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">containers</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>nginx<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">image</span>:<span style="color:#bbb"> </span>nginx:<span style="color:#666">1.17.1</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">ports</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>- <span style="color:#a2f;font-weight:bold">containerPort</span>:<span style="color:#bbb"> </span><span style="color:#666">80</span><span style="color:#bbb">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>在这里面，需要新了解的配置项就是spec下面几个选项：</p>
+<ul>
+<li>replicas：指定副本数量，其实就是当前rs创建出来的pod的数量，默认为1</li>
+<li>selector：选择器，它的作用是建立pod控制器和pod之间的关联关系，采用的Label Selector机制。在pod模板上定义label，在控制器上定义选择器，就可以表明当前控制器能管理哪些pod了</li>
+<li>template：模板，就是当前控制器创建pod所使用的模板板，里面其实就是前一章学过的pod的定义</li>
+</ul>
+<p>创建pc-replicaset.yaml文件，内容如下：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#a2f;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>apps/v1<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>ReplicaSet<span style="color:#bbb">   
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">metadata</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>pc-replicaset<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">namespace</span>:<span style="color:#bbb"> </span>dev<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">replicas</span>:<span style="color:#bbb"> </span><span style="color:#666">3</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">selector</span>:<span style="color:#bbb"> 
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">matchLabels</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">app</span>:<span style="color:#bbb"> </span>nginx-pod<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">template</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">metadata</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">labels</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">app</span>:<span style="color:#bbb"> </span>nginx-pod<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">containers</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>nginx<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">image</span>:<span style="color:#bbb"> </span>nginx:<span style="color:#666">1.17.1</span><span style="color:#bbb">
+</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#080;font-style:italic"># 创建rs</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl create -f pc-replicaset.yaml</span>
+replicaset.apps/pc-replicaset created
+
+<span style="color:#080;font-style:italic"># 查看rs</span>
+<span style="color:#080;font-style:italic"># DESIRED:期望副本数量</span>  
+<span style="color:#080;font-style:italic"># CURRENT:当前副本数量</span>  
+<span style="color:#080;font-style:italic"># READY:已经准备好提供服务的副本数量</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get rs pc-replicaset -n dev -o wide</span>
+NAME          DESIRED   CURRENT READY AGE   CONTAINERS   IMAGES             SELECTOR
+pc-replicaset <span style="color:#666">3</span>         <span style="color:#666">3</span>       <span style="color:#666">3</span>     22s   nginx        nginx:1.17.1       <span style="color:#b8860b">app</span><span style="color:#666">=</span>nginx-pod
+
+<span style="color:#080;font-style:italic"># 查看当前控制器创建出来的pod</span>
+<span style="color:#080;font-style:italic"># 这里发现控制器创建出来的pod的名称是在控制器名称后面拼接了-xxxxx随机码</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get pod -n dev</span>
+NAME                          READY   STATUS    RESTARTS   AGE
+pc-replicaset-6vmvt   1/1     Running   <span style="color:#666">0</span>          54s
+pc-replicaset-fmb8f   1/1     Running   <span style="color:#666">0</span>          54s
+pc-replicaset-snrk2   1/1     Running   <span style="color:#666">0</span>          54s
+</code></pre></td></tr></table>
+</div>
+</div><p>扩缩容</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#080;font-style:italic"># 编辑rs的副本数量，修改spec:replicas: 6即可</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl edit rs pc-replicaset -n dev</span>
+replicaset.apps/pc-replicaset edited
+
+<span style="color:#080;font-style:italic"># 查看pod</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get pods -n dev</span>
+NAME                          READY   STATUS    RESTARTS   AGE
+pc-replicaset-6vmvt   1/1     Running   <span style="color:#666">0</span>          114m
+pc-replicaset-cftnp   1/1     Running   <span style="color:#666">0</span>          10s
+pc-replicaset-fjlm6   1/1     Running   <span style="color:#666">0</span>          10s
+pc-replicaset-fmb8f   1/1     Running   <span style="color:#666">0</span>          114m
+pc-replicaset-s2whj   1/1     Running   <span style="color:#666">0</span>          10s
+pc-replicaset-snrk2   1/1     Running   <span style="color:#666">0</span>          114m
+
+<span style="color:#080;font-style:italic"># 当然也可以直接使用命令实现</span>
+<span style="color:#080;font-style:italic"># 使用scale命令实现扩缩容， 后面--replicas=n直接指定目标数量即可</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl scale rs pc-replicaset --replicas=2 -n dev</span>
+replicaset.apps/pc-replicaset scaled
+
+<span style="color:#080;font-style:italic"># 命令运行完毕，立即查看，发现已经有4个开始准备退出了</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get pods -n dev</span>
+NAME                       READY   STATUS        RESTARTS   AGE
+pc-replicaset-6vmvt   0/1     Terminating   <span style="color:#666">0</span>          118m
+pc-replicaset-cftnp   0/1     Terminating   <span style="color:#666">0</span>          4m17s
+pc-replicaset-fjlm6   0/1     Terminating   <span style="color:#666">0</span>          4m17s
+pc-replicaset-fmb8f   1/1     Running       <span style="color:#666">0</span>          118m
+pc-replicaset-s2whj   0/1     Terminating   <span style="color:#666">0</span>          4m17s
+pc-replicaset-snrk2   1/1     Running       <span style="color:#666">0</span>          118m
+
+<span style="color:#080;font-style:italic">#稍等片刻，就只剩下2个了</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get pods -n dev</span>
+NAME                       READY   STATUS    RESTARTS   AGE
+pc-replicaset-fmb8f   1/1     Running   <span style="color:#666">0</span>          119m
+pc-replicaset-snrk2   1/1     Running   <span style="color:#666">0</span>          119m
+</code></pre></td></tr></table>
+</div>
+</div><p>镜像升级</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#080;font-style:italic"># 编辑rs的容器镜像 - image: nginx:1.17.2</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>[root@master<span style="color:#bbb"> </span>~]<span style="color:#080;font-style:italic"># kubectl edit rs pc-replicaset -n dev</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic"># 修改相关内容</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>replicaset.apps/pc-replicaset<span style="color:#bbb"> </span>edited<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic"># 再次查看，发现镜像版本已经变更了</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>[root@master<span style="color:#bbb"> </span>~]<span style="color:#080;font-style:italic"># kubectl get rs -n dev -o wide</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>NAME<span style="color:#bbb">                </span>DESIRED<span style="color:#bbb">  </span>CURRENT<span style="color:#bbb">   </span>READY<span style="color:#bbb">   </span>AGE<span style="color:#bbb">    </span>CONTAINERS<span style="color:#bbb">   </span>IMAGES<span style="color:#bbb">        </span>...<span style="color:#bbb">
+</span><span style="color:#bbb"></span>pc-replicaset<span style="color:#bbb">       </span><span style="color:#666">2</span><span style="color:#bbb">        </span><span style="color:#666">2</span><span style="color:#bbb">         </span><span style="color:#666">2</span><span style="color:#bbb">       </span>140m<span style="color:#bbb">   </span>nginx<span style="color:#bbb">         </span>nginx:<span style="color:#666">1.17.2</span><span style="color:#bbb">  </span>...<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic"># 同样的道理，也可以使用命令完成这个工作</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic"># kubectl set image rs rs名称 容器=镜像版本 -n namespace</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>[root@master<span style="color:#bbb"> </span>~]<span style="color:#080;font-style:italic"># kubectl set image rs pc-replicaset nginx=nginx:1.17.1  -n dev</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>replicaset.apps/pc-replicaset<span style="color:#bbb"> </span>image<span style="color:#bbb"> </span>updated<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic"># 再次查看，发现镜像版本已经变更了</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>[root@master<span style="color:#bbb"> </span>~]<span style="color:#080;font-style:italic"># kubectl get rs -n dev -o wide</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>NAME<span style="color:#bbb">                 </span>DESIRED<span style="color:#bbb">  </span>CURRENT<span style="color:#bbb">   </span>READY<span style="color:#bbb">   </span>AGE<span style="color:#bbb">    </span>CONTAINERS<span style="color:#bbb">   </span>IMAGES<span style="color:#bbb">            </span>...<span style="color:#bbb">
+</span><span style="color:#bbb"></span>pc-replicaset<span style="color:#bbb">        </span><span style="color:#666">2</span><span style="color:#bbb">        </span><span style="color:#666">2</span><span style="color:#bbb">         </span><span style="color:#666">2</span><span style="color:#bbb">       </span>145m<span style="color:#bbb">   </span>nginx<span style="color:#bbb">        </span>nginx:<span style="color:#666">1.17.1</span><span style="color:#bbb"> </span>...<span style="color:#bbb"> 
+</span></code></pre></td></tr></table>
+</div>
+</div><p>删除ReplicaSet</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#080;font-style:italic"># 使用kubectl delete命令会删除此RS以及它管理的Pod</span>
+<span style="color:#080;font-style:italic"># 在kubernetes删除RS前，会将RS的replicasclear调整为0，等待所有的Pod被删除后，在执行RS对象的删除</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl delete rs pc-replicaset -n dev</span>
+replicaset.apps <span style="color:#b44">&#34;pc-replicaset&#34;</span> deleted
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get pod -n dev -o wide</span>
+No resources found in dev namespace.
+
+<span style="color:#080;font-style:italic"># 如果希望仅仅删除RS对象（保留Pod），可以使用kubectl delete命令时添加--cascade=false选项（不推荐）。</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl delete rs pc-replicaset -n dev --cascade=false</span>
+replicaset.apps <span style="color:#b44">&#34;pc-replicaset&#34;</span> deleted
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get pods -n dev</span>
+NAME                  READY   STATUS    RESTARTS   AGE
+pc-replicaset-cl82j   1/1     Running   <span style="color:#666">0</span>          75s
+pc-replicaset-dslhb   1/1     Running   <span style="color:#666">0</span>          75s
+
+<span style="color:#080;font-style:italic"># 也可以使用yaml直接删除(推荐)</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl delete -f pc-replicaset.yaml</span>
+replicaset.apps <span style="color:#b44">&#34;pc-replicaset&#34;</span> deleted
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="deploymentdeploy">Deployment(Deploy)</h3>
+<p>为了更好的解决服务编排的问题，kubernetes在V1.2版本开始，引入了Deployment控制器。值得一提的是，这种控制器并不直接管理pod，而是通过管理ReplicaSet来简介管理Pod，即：Deployment管理ReplicaSet，ReplicaSet管理Pod。所以Deployment比ReplicaSet功能更加强大。</p>
+<p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210705101426.png" alt="在这里插入图片描述"></p>
+<p>Deployment主要功能有下面几个:</p>
+<ul>
+<li>支持Replicaset的所有功能</li>
+<li>支持发布的停止、继续</li>
+<li>支持滚动升级和回滚版本</li>
+</ul>
+<p>Deployment的资源清单文件：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#a2f;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>apps/v1<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 版本号</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Deployment<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 类型       </span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">metadata</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 元数据</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># rs名称 </span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">namespace</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 所属命名空间 </span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">labels</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic">#标签</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">controller</span>:<span style="color:#bbb"> </span>deploy<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">spec</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 详情描述</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">replicas</span>:<span style="color:#bbb"> </span><span style="color:#666">3</span><span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 副本数量</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">revisionHistoryLimit</span>:<span style="color:#bbb"> </span><span style="color:#666">3</span><span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 保留历史版本</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">paused</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">false</span><span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 暂停部署，默认是false</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">progressDeadlineSeconds</span>:<span style="color:#bbb"> </span><span style="color:#666">600</span><span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 部署超时时间（s），默认是600</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">strategy</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 策略</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">type</span>:<span style="color:#bbb"> </span>RollingUpdate<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 滚动更新策略</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">rollingUpdate</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 滚动更新</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">maxSurge</span>:<span style="color:#bbb"> </span><span style="color:#666">30</span>%<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 最大额外可以存在的副本数，可以为百分比，也可以为整数</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">maxUnavailable</span>:<span style="color:#bbb"> </span><span style="color:#666">30</span>%<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 最大不可用状态的 Pod 的最大值，可以为百分比，也可以为整数</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">selector</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 选择器，通过它指定该控制器管理哪些pod</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">matchLabels</span>:<span style="color:#bbb">      </span><span style="color:#080;font-style:italic"># Labels匹配规则</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">app</span>:<span style="color:#bbb"> </span>nginx-pod<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">matchExpressions</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># Expressions匹配规则</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- {<span style="color:#a2f;font-weight:bold">key: app, operator: In, values</span>:<span style="color:#bbb"> </span>[nginx-pod]}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">template</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 模板，当副本数量不足时，会根据下面的模板创建pod副本</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">metadata</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">labels</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">app</span>:<span style="color:#bbb"> </span>nginx-pod<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">containers</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>nginx<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">image</span>:<span style="color:#bbb"> </span>nginx:<span style="color:#666">1.17.1</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">ports</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>- <span style="color:#a2f;font-weight:bold">containerPort</span>:<span style="color:#bbb"> </span><span style="color:#666">80</span><span style="color:#bbb">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>创建deployment</p>
+<p>创建pc-deployment.yaml，内容如下：</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#a2f;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>apps/v1<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Deployment<span style="color:#bbb">      
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">metadata</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>pc-deployment<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">namespace</span>:<span style="color:#bbb"> </span>dev<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">spec</span>:<span style="color:#bbb"> 
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">replicas</span>:<span style="color:#bbb"> </span><span style="color:#666">3</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">selector</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">matchLabels</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">app</span>:<span style="color:#bbb"> </span>nginx-pod<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">template</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">metadata</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">labels</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">app</span>:<span style="color:#bbb"> </span>nginx-pod<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">containers</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>nginx<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">image</span>:<span style="color:#bbb"> </span>nginx:<span style="color:#666">1.17.1</span><span style="color:#bbb">
+</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#080;font-style:italic"># 创建deployment</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl create -f pc-deployment.yaml --record=true</span>
+deployment.apps/pc-deployment created
+
+<span style="color:#080;font-style:italic"># 查看deployment</span>
+<span style="color:#080;font-style:italic"># UP-TO-DATE 最新版本的pod的数量</span>
+<span style="color:#080;font-style:italic"># AVAILABLE  当前可用的pod的数量</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get deploy pc-deployment -n dev</span>
+NAME            READY   UP-TO-DATE   AVAILABLE   AGE
+pc-deployment   3/3     <span style="color:#666">3</span>            <span style="color:#666">3</span>           15s
+
+<span style="color:#080;font-style:italic"># 查看rs</span>
+<span style="color:#080;font-style:italic"># 发现rs的名称是在原来deployment的名字后面添加了一个10位数的随机串</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get rs -n dev</span>
+NAME                       DESIRED   CURRENT   READY   AGE
+pc-deployment-6696798b78   <span style="color:#666">3</span>         <span style="color:#666">3</span>         <span style="color:#666">3</span>       23s
+
+<span style="color:#080;font-style:italic"># 查看pod</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get pods -n dev</span>
+NAME                             READY   STATUS    RESTARTS   AGE
+pc-deployment-6696798b78-d2c8n   1/1     Running   <span style="color:#666">0</span>          107s
+pc-deployment-6696798b78-smpvp   1/1     Running   <span style="color:#666">0</span>          107s
+pc-deployment-6696798b78-wvjd8   1/1     Running   <span style="color:#666">0</span>          107s
+</code></pre></td></tr></table>
+</div>
+</div><p>扩缩容</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#080;font-style:italic"># 变更副本数量为5个</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>[root@master<span style="color:#bbb"> </span>~]<span style="color:#080;font-style:italic"># kubectl scale deploy pc-deployment --replicas=5  -n dev</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>deployment.apps/pc-deployment<span style="color:#bbb"> </span>scaled<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic"># 查看deployment</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>[root@master<span style="color:#bbb"> </span>~]<span style="color:#080;font-style:italic"># kubectl get deploy pc-deployment -n dev</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>NAME<span style="color:#bbb">            </span>READY<span style="color:#bbb">   </span>UP-TO-DATE<span style="color:#bbb">   </span>AVAILABLE<span style="color:#bbb">   </span>AGE<span style="color:#bbb">
+</span><span style="color:#bbb"></span>pc-deployment<span style="color:#bbb">   </span><span style="color:#666">5</span>/<span style="color:#666">5</span><span style="color:#bbb">     </span><span style="color:#666">5</span><span style="color:#bbb">            </span><span style="color:#666">5</span><span style="color:#bbb">           </span>2m<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic"># 查看pod</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>[root@master<span style="color:#bbb"> </span>~]<span style="color:#080;font-style:italic">#  kubectl get pods -n dev</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>NAME<span style="color:#bbb">                             </span>READY<span style="color:#bbb">   </span>STATUS<span style="color:#bbb">    </span>RESTARTS<span style="color:#bbb">   </span>AGE<span style="color:#bbb">
+</span><span style="color:#bbb"></span>pc-deployment-6696798b78-d2c8n<span style="color:#bbb">   </span><span style="color:#666">1</span>/<span style="color:#666">1</span><span style="color:#bbb">     </span>Running<span style="color:#bbb">   </span><span style="color:#666">0</span><span style="color:#bbb">          </span>4m19s<span style="color:#bbb">
+</span><span style="color:#bbb"></span>pc-deployment-6696798b78-jxmdq<span style="color:#bbb">   </span><span style="color:#666">1</span>/<span style="color:#666">1</span><span style="color:#bbb">     </span>Running<span style="color:#bbb">   </span><span style="color:#666">0</span><span style="color:#bbb">          </span>94s<span style="color:#bbb">
+</span><span style="color:#bbb"></span>pc-deployment-6696798b78-mktqv<span style="color:#bbb">   </span><span style="color:#666">1</span>/<span style="color:#666">1</span><span style="color:#bbb">     </span>Running<span style="color:#bbb">   </span><span style="color:#666">0</span><span style="color:#bbb">          </span>93s<span style="color:#bbb">
+</span><span style="color:#bbb"></span>pc-deployment-6696798b78-smpvp<span style="color:#bbb">   </span><span style="color:#666">1</span>/<span style="color:#666">1</span><span style="color:#bbb">     </span>Running<span style="color:#bbb">   </span><span style="color:#666">0</span><span style="color:#bbb">          </span>4m19s<span style="color:#bbb">
+</span><span style="color:#bbb"></span>pc-deployment-6696798b78-wvjd8<span style="color:#bbb">   </span><span style="color:#666">1</span>/<span style="color:#666">1</span><span style="color:#bbb">     </span>Running<span style="color:#bbb">   </span><span style="color:#666">0</span><span style="color:#bbb">          </span>4m19s<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic"># 编辑deployment的副本数量，修改spec:replicas: 4即可</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>[root@master<span style="color:#bbb"> </span>~]<span style="color:#080;font-style:italic"># kubectl edit deploy pc-deployment -n dev</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>deployment.apps/pc-deployment<span style="color:#bbb"> </span>edited<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#080;font-style:italic"># 查看pod</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>[root@master<span style="color:#bbb"> </span>~]<span style="color:#080;font-style:italic"># kubectl get pods -n dev</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span>NAME<span style="color:#bbb">                             </span>READY<span style="color:#bbb">   </span>STATUS<span style="color:#bbb">    </span>RESTARTS<span style="color:#bbb">   </span>AGE<span style="color:#bbb">
+</span><span style="color:#bbb"></span>pc-deployment-6696798b78-d2c8n<span style="color:#bbb">   </span><span style="color:#666">1</span>/<span style="color:#666">1</span><span style="color:#bbb">     </span>Running<span style="color:#bbb">   </span><span style="color:#666">0</span><span style="color:#bbb">          </span>5m23s<span style="color:#bbb">
+</span><span style="color:#bbb"></span>pc-deployment-6696798b78-jxmdq<span style="color:#bbb">   </span><span style="color:#666">1</span>/<span style="color:#666">1</span><span style="color:#bbb">     </span>Running<span style="color:#bbb">   </span><span style="color:#666">0</span><span style="color:#bbb">          </span>2m38s<span style="color:#bbb">
+</span><span style="color:#bbb"></span>pc-deployment-6696798b78-smpvp<span style="color:#bbb">   </span><span style="color:#666">1</span>/<span style="color:#666">1</span><span style="color:#bbb">     </span>Running<span style="color:#bbb">   </span><span style="color:#666">0</span><span style="color:#bbb">          </span>5m23s<span style="color:#bbb">
+</span><span style="color:#bbb"></span>pc-deployment-6696798b78-wvjd8<span style="color:#bbb">   </span><span style="color:#666">1</span>/<span style="color:#666">1</span><span style="color:#bbb">     </span>Running<span style="color:#bbb">   </span><span style="color:#666">0</span><span style="color:#bbb">          </span>5m23s<span style="color:#bbb">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>镜像更新</p>
+<p>deployment支持两种更新策略：重建更新和滚动更新，可以通过strategy指定策略类型，支持两种属性：</p>
+<p>strategy：指定新的Pod替换旧的Pod的策略， 支持两个属性：</p>
+<pre><code>type：指定策略类型，支持两种策略
+  Recreate：在创建出新的Pod之前会先杀掉所有已存在的Pod
+  RollingUpdate：滚动更新，就是杀死一部分，就启动一部分，在更新过程中，存在两个版本Pod
+rollingUpdate：当type为RollingUpdate时生效，用于为RollingUpdate设置参数，支持两个属性：
+  maxUnavailable：用来指定在升级过程中不可用Pod的最大数量，默认为25%。
+  maxSurge： 用来指定在升级过程中可以超过期望的Pod的最大数量，默认为25%。
+</code></pre><p>重建更新</p>
+<ol>
+<li>
+<p>编辑pc-deployment.yaml,在spec节点下添加更新策略</p>
+<pre><code>spec:
+  strategy: # 策略
+    type: Recreate # 重建更新
+</code></pre></li>
+<li>
+<p>创建deploy进行验证</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#080;font-style:italic"># 变更镜像</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl set image deployment pc-deployment nginx=nginx:1.17.2 -n dev</span>
+deployment.apps/pc-deployment image updated
+   
+<span style="color:#080;font-style:italic"># 观察升级过程</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic">#  kubectl get pods -n dev -w</span>
+NAME                             READY   STATUS    RESTARTS   AGE
+pc-deployment-5d89bdfbf9-65qcw   1/1     Running   <span style="color:#666">0</span>          31s
+pc-deployment-5d89bdfbf9-w5nzv   1/1     Running   <span style="color:#666">0</span>          31s
+pc-deployment-5d89bdfbf9-xpt7w   1/1     Running   <span style="color:#666">0</span>          31s
+   
+pc-deployment-5d89bdfbf9-xpt7w   1/1     Terminating   <span style="color:#666">0</span>          41s
+pc-deployment-5d89bdfbf9-65qcw   1/1     Terminating   <span style="color:#666">0</span>          41s
+pc-deployment-5d89bdfbf9-w5nzv   1/1     Terminating   <span style="color:#666">0</span>          41s
+   
+pc-deployment-675d469f8b-grn8z   0/1     Pending       <span style="color:#666">0</span>          0s
+pc-deployment-675d469f8b-hbl4v   0/1     Pending       <span style="color:#666">0</span>          0s
+pc-deployment-675d469f8b-67nz2   0/1     Pending       <span style="color:#666">0</span>          0s
+   
+pc-deployment-675d469f8b-grn8z   0/1     ContainerCreating   <span style="color:#666">0</span>          0s
+pc-deployment-675d469f8b-hbl4v   0/1     ContainerCreating   <span style="color:#666">0</span>          0s
+pc-deployment-675d469f8b-67nz2   0/1     ContainerCreating   <span style="color:#666">0</span>          0s
+   
+pc-deployment-675d469f8b-grn8z   1/1     Running             <span style="color:#666">0</span>          1s
+pc-deployment-675d469f8b-67nz2   1/1     Running             <span style="color:#666">0</span>          1s
+pc-deployment-675d469f8b-hbl4v   1/1     Running             <span style="color:#666">0</span>          2s
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<p>滚动更新</p>
+<ol>
+<li>
+<p>编辑pc-deployment.yaml,在spec节点下添加更新策略</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#a2f;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">strategy</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 策略</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">type</span>:<span style="color:#bbb"> </span>RollingUpdate<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 滚动更新策略</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">rollingUpdate</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">maxSurge</span>:<span style="color:#bbb"> </span><span style="color:#666">25</span>%<span style="color:#bbb"> 
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">maxUnavailable</span>:<span style="color:#bbb"> </span><span style="color:#666">25</span>%<span style="color:#bbb">
+</span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>创建deploy进行验证</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#080;font-style:italic"># 变更镜像</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl set image deployment pc-deployment nginx=nginx:1.17.3 -n dev</span>
+deployment.apps/pc-deployment image updated
+   
+<span style="color:#080;font-style:italic"># 观察升级过程</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get pods -n dev -w</span>
+NAME                           READY   STATUS    RESTARTS   AGE
+pc-deployment-c848d767-8rbzt   1/1     Running   <span style="color:#666">0</span>          31m
+pc-deployment-c848d767-h4p68   1/1     Running   <span style="color:#666">0</span>          31m
+pc-deployment-c848d767-hlmz4   1/1     Running   <span style="color:#666">0</span>          31m
+pc-deployment-c848d767-rrqcn   1/1     Running   <span style="color:#666">0</span>          31m
+   
+pc-deployment-966bf7f44-226rx   0/1     Pending             <span style="color:#666">0</span>          0s
+pc-deployment-966bf7f44-226rx   0/1     ContainerCreating   <span style="color:#666">0</span>          0s
+pc-deployment-966bf7f44-226rx   1/1     Running             <span style="color:#666">0</span>          1s
+pc-deployment-c848d767-h4p68    0/1     Terminating         <span style="color:#666">0</span>          34m
+   
+pc-deployment-966bf7f44-cnd44   0/1     Pending             <span style="color:#666">0</span>          0s
+pc-deployment-966bf7f44-cnd44   0/1     ContainerCreating   <span style="color:#666">0</span>          0s
+pc-deployment-966bf7f44-cnd44   1/1     Running             <span style="color:#666">0</span>          2s
+pc-deployment-c848d767-hlmz4    0/1     Terminating         <span style="color:#666">0</span>          34m
+   
+pc-deployment-966bf7f44-px48p   0/1     Pending             <span style="color:#666">0</span>          0s
+pc-deployment-966bf7f44-px48p   0/1     ContainerCreating   <span style="color:#666">0</span>          0s
+pc-deployment-966bf7f44-px48p   1/1     Running             <span style="color:#666">0</span>          0s
+pc-deployment-c848d767-8rbzt    0/1     Terminating         <span style="color:#666">0</span>          34m
+   
+pc-deployment-966bf7f44-dkmqp   0/1     Pending             <span style="color:#666">0</span>          0s
+pc-deployment-966bf7f44-dkmqp   0/1     ContainerCreating   <span style="color:#666">0</span>          0s
+pc-deployment-966bf7f44-dkmqp   1/1     Running             <span style="color:#666">0</span>          2s
+pc-deployment-c848d767-rrqcn    0/1     Terminating         <span style="color:#666">0</span>          34m
+   
+<span style="color:#080;font-style:italic"># 至此，新版本的pod创建完毕，就版本的pod销毁完毕</span>
+<span style="color:#080;font-style:italic"># 中间过程是滚动进行的，也就是边销毁边创建</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://gitee.com/aszh/Gitee-Pages/raw/master/img/20210705140916" alt="在这里插入图片描述"></p>
+</li>
+</ol>
+<p>镜像更新中rs的变化</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#080;font-style:italic"># 查看rs,发现原来的rs的依旧存在，只是pod数量变为了0，而后又新产生了一个rs，pod数量为4</span>
+<span style="color:#080;font-style:italic"># 其实这就是deployment能够进行版本回退的奥妙所在，后面会详细解释</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get rs -n dev</span>
+NAME                       DESIRED   CURRENT   READY   AGE
+pc-deployment-6696798b78   <span style="color:#666">0</span>         <span style="color:#666">0</span>         <span style="color:#666">0</span>       7m37s
+pc-deployment-6696798b11   <span style="color:#666">0</span>         <span style="color:#666">0</span>         <span style="color:#666">0</span>       5m37s
+pc-deployment-c848d76789   <span style="color:#666">4</span>         <span style="color:#666">4</span>         <span style="color:#666">4</span>       72s
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>版本回退</strong></p>
+<p>deployment支持版本升级过程中的暂停、继续功能以及版本回退等诸多功能，下面具体来看.</p>
+<p>kubectl rollout： 版本升级相关功能，支持下面的选项：</p>
+<ul>
+<li><strong>status</strong> 		显示当前升级状态</li>
+<li><strong>history</strong>       显示  升级历史记录</li>
+<li><strong>pause</strong>       暂停版本升级过程</li>
+<li><strong>resume</strong>    继续已经暂停的版本升级过程</li>
+<li><strong>restart</strong>      重启版本升级过程</li>
+<li><strong>undo</strong>        回滚到上一级版本（可以使用&ndash;to-revision回滚到指定版本）</li>
+</ul>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#080;font-style:italic"># 查看当前升级版本的状态</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl rollout status deploy pc-deployment -n dev</span>
+deployment <span style="color:#b44">&#34;pc-deployment&#34;</span> successfully rolled out
+
+<span style="color:#080;font-style:italic"># 查看升级历史记录</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl rollout history deploy pc-deployment -n dev</span>
+deployment.apps/pc-deployment
+REVISION  CHANGE-CAUSE
+<span style="color:#666">1</span>         kubectl create --filename<span style="color:#666">=</span>pc-deployment.yaml --record<span style="color:#666">=</span><span style="color:#a2f">true</span>
+<span style="color:#666">2</span>         kubectl create --filename<span style="color:#666">=</span>pc-deployment.yaml --record<span style="color:#666">=</span><span style="color:#a2f">true</span>
+<span style="color:#666">3</span>         kubectl create --filename<span style="color:#666">=</span>pc-deployment.yaml --record<span style="color:#666">=</span><span style="color:#a2f">true</span>
+<span style="color:#080;font-style:italic"># 可以发现有三次版本记录，说明完成过两次升级</span>
+<span style="color:#080;font-style:italic"># 版本回滚</span>
+<span style="color:#080;font-style:italic"># 这里直接使用--to-revision=1回滚到了1版本， 如果省略这个选项，就是回退到上个版本，就是2版本</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl rollout undo deployment pc-deployment --to-revision=1 -n dev</span>
+deployment.apps/pc-deployment rolled back
+
+<span style="color:#080;font-style:italic"># 查看发现，通过nginx镜像版本可以发现到了第一版</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get deploy -n dev -o wide</span>
+NAME            READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS   IMAGES         
+pc-deployment   4/4     <span style="color:#666">4</span>            <span style="color:#666">4</span>           74m   nginx        nginx:1.17.1   
+
+<span style="color:#080;font-style:italic"># 查看rs，发现第一个rs中有4个pod运行，后面两个版本的rs中pod为运行</span>
+<span style="color:#080;font-style:italic"># 其实deployment之所以可是实现版本的回滚，就是通过记录下历史rs来实现的，</span>
+<span style="color:#080;font-style:italic"># 一旦想回滚到哪个版本，只需要将当前版本pod数量降为0，然后将回滚版本的pod提升为目标数量就可以了</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get rs -n dev</span>
+NAME                       DESIRED   CURRENT   READY   AGE
+pc-deployment-6696798b78   <span style="color:#666">4</span>         <span style="color:#666">4</span>         <span style="color:#666">4</span>       78m
+pc-deployment-966bf7f44    <span style="color:#666">0</span>         <span style="color:#666">0</span>         <span style="color:#666">0</span>       37m
+pc-deployment-c848d767     <span style="color:#666">0</span>         <span style="color:#666">0</span>         <span style="color:#666">0</span>       71m
+</code></pre></td></tr></table>
+</div>
+</div><p>金丝雀发布
+Deployment控制器支持控制更新过程中的控制，如“暂停(pause)”或“继续(resume)”更新操作。
+比如有一批新的Pod资源创建完成后立即暂停更新过程，此时，仅存在一部分新版本的应用，主体部分还是旧的版本。然后，再筛选一小部分的用户请求路由到新版本的Pod应用，继续观察能否稳定地按期望的方式运行。确定没问题之后再继续完成余下的Pod资源滚动更新，否则立即回滚更新操作。这就是所谓的金丝雀发布。</p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#080;font-style:italic"># 更新deployment的版本，并配置暂停deployment</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic">#  kubectl set image deploy pc-deployment nginx=nginx:1.17.4 -n dev &amp;&amp; kubectl rollout pause deployment pc-deployment  -n dev</span>
+deployment.apps/pc-deployment image updated
+deployment.apps/pc-deployment paused
+
+<span style="color:#080;font-style:italic">#观察更新状态</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl rollout status deploy pc-deployment -n dev</span>　
+Waiting <span style="color:#a2f;font-weight:bold">for</span> deployment <span style="color:#b44">&#34;pc-deployment&#34;</span> rollout to finish: <span style="color:#666">2</span> out of <span style="color:#666">4</span> new replicas have been updated...
+
+<span style="color:#080;font-style:italic"># 监控更新的过程，可以看到已经新增了一个资源，但是并未按照预期的状态去删除一个旧的资源，就是因为使用了pause暂停命令</span>
+
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get rs -n dev -o wide</span>
+NAME                       DESIRED   CURRENT   READY   AGE     CONTAINERS   IMAGES         
+pc-deployment-5d89bdfbf9   <span style="color:#666">3</span>         <span style="color:#666">3</span>         <span style="color:#666">3</span>       19m     nginx        nginx:1.17.1   
+pc-deployment-675d469f8b   <span style="color:#666">0</span>         <span style="color:#666">0</span>         <span style="color:#666">0</span>       14m     nginx        nginx:1.17.2   
+pc-deployment-6c9f56fcfb   <span style="color:#666">2</span>         <span style="color:#666">2</span>         <span style="color:#666">2</span>       3m16s   nginx        nginx:1.17.4   
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get pods -n dev</span>
+NAME                             READY   STATUS    RESTARTS   AGE
+pc-deployment-5d89bdfbf9-rj8sq   1/1     Running   <span style="color:#666">0</span>          7m33s
+pc-deployment-5d89bdfbf9-ttwgg   1/1     Running   <span style="color:#666">0</span>          7m35s
+pc-deployment-5d89bdfbf9-v4wvc   1/1     Running   <span style="color:#666">0</span>          7m34s
+pc-deployment-6c9f56fcfb-996rt   1/1     Running   <span style="color:#666">0</span>          3m31s
+pc-deployment-6c9f56fcfb-j2gtj   1/1     Running   <span style="color:#666">0</span>          3m31s
+
+<span style="color:#080;font-style:italic"># 确保更新的pod没问题了，继续更新</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl rollout resume deploy pc-deployment -n dev</span>
+deployment.apps/pc-deployment resumed
+
+<span style="color:#080;font-style:italic"># 查看最后的更新情况</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get rs -n dev -o wide</span>
+NAME                       DESIRED   CURRENT   READY   AGE     CONTAINERS   IMAGES         
+pc-deployment-5d89bdfbf9   <span style="color:#666">0</span>         <span style="color:#666">0</span>         <span style="color:#666">0</span>       21m     nginx        nginx:1.17.1   
+pc-deployment-675d469f8b   <span style="color:#666">0</span>         <span style="color:#666">0</span>         <span style="color:#666">0</span>       16m     nginx        nginx:1.17.2   
+pc-deployment-6c9f56fcfb   <span style="color:#666">4</span>         <span style="color:#666">4</span>         <span style="color:#666">4</span>       5m11s   nginx        nginx:1.17.4   
+
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl get pods -n dev</span>
+NAME                             READY   STATUS    RESTARTS   AGE
+pc-deployment-6c9f56fcfb-7bfwh   1/1     Running   <span style="color:#666">0</span>          37s
+pc-deployment-6c9f56fcfb-996rt   1/1     Running   <span style="color:#666">0</span>          5m27s
+pc-deployment-6c9f56fcfb-j2gtj   1/1     Running   <span style="color:#666">0</span>          5m27s
+pc-deployment-6c9f56fcfb-rf84v   1/1     Running   <span style="color:#666">0</span>          37s
+
+
+删除Deployment
+<span style="color:#080;font-style:italic"># 删除deployment，其下的rs和pod也将被删除</span>
+<span style="color:#666">[</span>root@master ~<span style="color:#666">]</span><span style="color:#080;font-style:italic"># kubectl delete -f pc-deployment.yaml</span>
+deployment.apps <span style="color:#b44">&#34;pc-deployment&#34;</span> deleted
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="horizontal-pod-autoscalerhpa">Horizontal Pod Autoscaler(HPA)</h3>
+<h3 id="daemonsetds">DaemonSet(DS)</h3>
+<h3 id="job">Job</h3>
+<p>Job，主要用于负责批量处理(一次要处理指定数量任务)短暂的一次性(每个任务仅运行一次就结束)任务。Job特点如下：</p>
+<ul>
+<li>当Job创建的pod执行成功结束时，Job将记录成功结束的pod数量</li>
+<li>当成功结束的pod达到指定的数量时，Job将完成执行</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20210423234737850.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3VuaXF1ZV9wZXJmZWN0,size_16,color_FFFFFF,t_70" alt=""></p>
+<div class="highlight"><div style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">Job的资源清单文件：<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">apiVersion</span>:<span style="color:#bbb"> </span>batch/v1<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 版本号</span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">kind</span>:<span style="color:#bbb"> </span>Job<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 类型       </span><span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">metadata</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 元数据</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># rs名称 </span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">namespace</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 所属命名空间 </span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">labels</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic">#标签</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">controller</span>:<span style="color:#bbb"> </span>job<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">spec</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 详情描述</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">completions: 1 # 指定job需要成功运行Pods的次数。默认值</span>:<span style="color:#bbb"> </span><span style="color:#666">1</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">parallelism: 1 # 指定job在任一时刻应该并发运行Pods的数量。默认值</span>:<span style="color:#bbb"> </span><span style="color:#666">1</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">activeDeadlineSeconds</span>:<span style="color:#bbb"> </span><span style="color:#666">30</span><span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 指定job可运行的时间期限，超过时间还未结束，系统将会尝试进行终止。</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">backoffLimit</span>:<span style="color:#bbb"> </span><span style="color:#666">6</span><span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 指定job失败后进行重试的次数。默认是6</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">manualSelector</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 是否可以使用selector选择器选择pod，默认是false</span><span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">selector</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 选择器，通过它指定该控制器管理哪些pod</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">matchLabels</span>:<span style="color:#bbb">      </span><span style="color:#080;font-style:italic"># Labels匹配规则</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">app</span>:<span style="color:#bbb"> </span>counter-pod<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">matchExpressions</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># Expressions匹配规则</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- {<span style="color:#a2f;font-weight:bold">key: app, operator: In, values</span>:<span style="color:#bbb"> </span>[counter-pod]}<span style="color:#bbb">
+</span><span style="color:#bbb">  </span><span style="color:#a2f;font-weight:bold">template</span>:<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 模板，当副本数量不足时，会根据下面的模板创建pod副本</span><span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">metadata</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">labels</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">app</span>:<span style="color:#bbb"> </span>counter-pod<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">spec</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">restartPolicy</span>:<span style="color:#bbb"> </span>Never<span style="color:#bbb"> </span><span style="color:#080;font-style:italic"># 重启策略只能设置为Never或者OnFailure</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">containers</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>counter<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">image</span>:<span style="color:#bbb"> </span>busybox:<span style="color:#666">1.30</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">command</span>:<span style="color:#bbb"> </span>[&#34;bin/s<span style="color:#bbb">
+</span><span style="color:#bbb">
+</span></code></pre></td></tr></table>
+</div>
+</div>
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/Docker/Docker-02/">Docker 底层实现原理及关键技术</a></li>
+        
+        <li><a href="/post/CircleCI/">使用CircleCI&#43;GitHub 进行CI/CD</a></li>
+        
+        <li><a href="/post/Golang/Golang-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">Golang 单元测试</a></li>
+        
+        <li><a href="/post/%E9%85%8D%E7%BD%AE%E5%9B%BE%E5%BA%8A/">linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床</a></li>
+        
+        <li><a href="/post/Docker/Docker-01/">容器的基础概念与操作</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            没有标签
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "aszhc/aszhc.github.io"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
+</div>
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://aszhc.github.io/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://aszhc.github.io">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Docker/Docker-02/" title="Docker 底层实现原理及关键技术">Docker 底层实现原理及关键技术</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/CircleCI/" title="使用CircleCI&#43;GitHub 进行CI/CD">使用CircleCI&#43;GitHub 进行CI/CD</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Golang/Golang-%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="Golang 单元测试">Golang 单元测试</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/%E9%85%8D%E7%BD%AE%E5%9B%BE%E5%BA%8A/" title="linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床">linux 下安装配置 Typora &#43; gitee &#43; PicGo-Core 图床</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Docker/Docker-01/" title="容器的基础概念与操作">容器的基础概念与操作</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/markdown%E4%B8%AD%E7%9A%84emoji%E5%9B%BE%E6%A0%87%E6%A0%87%E7%AD%BE%E8%A1%A8/" title="Markdown中的emoji图标标签表">Markdown中的emoji图标标签表</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Golang/Golang-struct-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90/" title="Golang Struct 内存对齐">Golang Struct 内存对齐</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Golang/Golang-Slice%E5%8E%9F%E7%90%86/" title="Golang Slice原理">Golang Slice原理</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Golang/Golang-Map%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" title="Golang Map的实现原理">Golang Map的实现原理</a>
+    </li>
+    
+    <li>
+        <a href="https://aszhc.github.io/post/Golang/Golang%E4%B8%ADmake%E4%B8%8Enew%E6%9C%89%E4%BD%95%E5%8C%BA%E5%88%AB/" title="Golang中make与new有何区别？">Golang中make与new有何区别？</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">分类</h3>
+<ul class="widget-list">
+    
+    <li><a href="https://aszhc.github.io/categories/CI/CD/">CI/CD (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/Docker/">Docker (3)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">安装与配置 (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E5%B7%A5%E5%85%B7/">工具 (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库 (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E7%AE%97%E6%B3%95/">算法 (5)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络 (1)</a></li>
+    
+    <li><a href="https://aszhc.github.io/categories/%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/">语言基础 (5)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
+    
+    <a href="https://aszhc.github.io/tags/Golang/">Golang</a>
+    
+    <a href="https://aszhc.github.io/tags/markdown/">markdown</a>
+    
+    <a href="https://aszhc.github.io/tags/markdown/">markdown</a>
+    
+    <a href="https://aszhc.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">动态规划</a>
+    
+    <a href="https://aszhc.github.io/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">单元测试</a>
+    
+    <a href="https://aszhc.github.io/tags/%E5%93%88%E5%B8%8C/">哈希</a>
+    
+    <a href="https://aszhc.github.io/tags/%E5%9B%BE%E5%BA%8A/">图床</a>
+    
+    <a href="https://aszhc.github.io/tags/%E5%AE%B9%E5%99%A8%E5%8C%96/">容器化</a>
+    
+    <a href="https://aszhc.github.io/tags/%E6%95%B0%E7%BB%84/">数组</a>
+    
+    <a href="https://aszhc.github.io/tags/%E6%A0%88/">栈</a>
+    
+    <a href="https://aszhc.github.io/tags/%E7%AC%94%E8%AE%B0/">笔记</a>
+    
+    <a href="https://aszhc.github.io/tags/%E8%BF%90%E7%BB%B4/">运维</a>
+    
+    <a href="https://aszhc.github.io/tags/%E9%80%92%E5%BD%92/">递归</a>
+    
+    <a href="https://aszhc.github.io/tags/%E9%83%A8%E7%BD%B2/">部署</a>
+    
+    <a href="https://aszhc.github.io/tags/%E9%93%BE%E6%8E%A5/">链接</a>
+    
+    <a href="https://aszhc.github.io/tags/%E9%93%BE%E8%A1%A8/">链表</a>
+    
+    <a href="https://aszhc.github.io/tags/%E9%98%9F%E5%88%97/">队列</a>
+    
+    <a href="https://aszhc.github.io/tags/%E9%9B%86%E5%90%88/">集合</a>
+    
+</div>
+    </section>
+
+    
+<section class="widget">
+    <h3 class="widget-title">友情链接</h3>
+    <ul class="widget-list">
+        
+        <li>
+            <a target="_blank" href="https://blog.csdn.net/Andrew_ZhouC" title="我的CSDN博客">我的CSDN博客</a>
+        </li>
+        
+        <li>
+            <a target="_blank" href="https://github.com/aszhc" title="我的github">我的github</a>
+        </li>
+        
+    </ul>
+</section>
+
+	
+	<section class="widget">
+        <h3 class="widget-title">公众号</h3>
+		<ul class="widget-list">
+        <li>
+            
+                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJ%0AChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/%0A2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgo%0AKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABkAGQDASIAAhEBAxEB/8QA%0AHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUF%0ABAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkK%0AFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1%0Adnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXG%0Ax8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEB%0AAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAEC%0AAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRom%0AJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOE%0AhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU%0A1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6jvLqCytJ%0Arq8mjgtoEaSWWVgqRqBksxPAAHJJrmf+FkeB/wDocfDn/gzh/wDiqX4tf8kr%0A8Y/9ga8/9EPXzJ4h1rwv4C8B+AZJfAOgaxdarpKXE89zGFcsAuSTtOSc0AfT%0A9r8QfBt1cxW9r4s8PzTyuI4449RhZnYnAUANkknjFaE/ibQrddRafWtNiXTS%0Aq3pe6RRaljhRJk/JntnGa+Wmm0DxB4O8A+J9J8K6VoF7J4ytbN/sUYBKLk4L%0AYBwTg49hR8Vvhb8T9V8deLpvDlhM2g6xcI8iJfwxpcqgG3chcHg5xkUAfWwu%0AoDaC6E0ZtinmiXcNmzGd2emMc5rP0LxLoXiAzDQdZ03UzBt837HdJN5ec43b%0A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%0AigAooooAKKKKACiiigD/2Q==">
+           
+        </li>
+    </ul>
+    </section>
+	
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://aszhc.github.io/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+    <footer id="footer">
+    <div class="container">
+        &copy; 2021 <a href="https://aszhc.github.io">PHOENIX By 周闖</a>.
+        Powered by <a rel="nofollow noreferer noopener" href="https://gohugo.io" target="_blank">Hugo</a>.
+        <a href="https://www.flysnow.org/" target="_blank"></a>         	</a>.
+        
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+
+
+    <script type="text/javascript" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+
+
+
+    <script src='/js/douban.js'></script>
+
+</body>
+
+</html>
